@@ -8,7 +8,6 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="17dp"
     android:paddingTop="@dimen/activity_vertical_margin"
-<<<<<<< HEAD
     tools:context="pickit.com.pickit.SplashActivity"
     android:background="@drawable/splash">
 
@@ -16,7 +15,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!" />
-=======
-    tools:context="pickit.com.pickit.SplashActivity">
->>>>>>> cb089dedaa7810ce2a1dbead938dd18bf510d88e
+
 </RelativeLayout>
