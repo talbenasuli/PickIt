@@ -1,9 +1,14 @@
 package pickit.com.pickit;
 
+
 import android.os.Handler;
+
+import android.content.Intent;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -16,6 +21,12 @@ public class SplashActivity extends AppCompatActivity {
         moveToNextActivityByTime();
     }
 
+    protected void moveToNextActivity(Class nextActivity){
+        Intent intent = new Intent(this, nextActivity);
+        startActivity(intent);
+        finish();
+    }
+
     //Moving to the next activity after delayTime.
     private void moveToNextActivityByTime(){
         final Handler handler = new Handler();
@@ -23,7 +34,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             //This is the function that happens after delayTime.
             public void run() {
-
+                moveToNextActivity(MainActivity.class);
             }
         }, delayTime);
     }
