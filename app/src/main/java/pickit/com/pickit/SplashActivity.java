@@ -13,11 +13,11 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        moveToNextActivity();
+        moveToNextActivityByTime();
     }
 
     //Moving to the next activity after delayTime.
-    private void moveToNextActivity(){
+    private void moveToNextActivityByTime(){
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
