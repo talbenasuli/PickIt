@@ -11,14 +11,14 @@ import android.view.ViewGroup;
  * Created by or on 17/01/2017.
  */
 
-public class ReccomendationsFragment extends Fragment {
-    public static final String TAG = "ReccomendationsFragment";
+public class RecommendationsFragment extends Fragment {
+    public static final String TAG = "RecommendationsFragment";
 
-    public static ReccomendationsFragment newInstance() {
+    public static RecommendationsFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        ReccomendationsFragment fragment = new ReccomendationsFragment();
+        RecommendationsFragment fragment = new RecommendationsFragment();
         fragment.setArguments(args);
         return fragment;
     }

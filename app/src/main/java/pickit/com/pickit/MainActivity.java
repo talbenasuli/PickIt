@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     //fragments:
     HomeFragment homeFragment;
     GameFragment gameFragment;
-    ReccomendationsFragment recommendations;
+    RecommendationsFragment recommendations;
     SocialFragment socialFragment;
     ProfileFragment profileFragment;
 
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         homeFragment = HomeFragment.newInstance();
         gameFragment = GameFragment.newInstance();
         socialFragment = SocialFragment.newInstance();
-        recommendations = ReccomendationsFragment.newInstance();
+        recommendations = RecommendationsFragment.newInstance();
         profileFragment = ProfileFragment.newInstance();
 
         //loading home fragment
@@ -109,13 +109,13 @@ public class MainActivity extends AppCompatActivity {
                 tag = GameFragment.TAG;
                 break;
             case "RECOMMENDATIONS":
-                if (ReccomendationsFragment.TAG == null){
-                    fragment = ReccomendationsFragment.newInstance();
+                if (RecommendationsFragment.TAG == null){
+                    fragment = RecommendationsFragment.newInstance();
                 }
                 else{
                     fragment = recommendations;
                 }
-                tag = ReccomendationsFragment.TAG;
+                tag = RecommendationsFragment.TAG;
                 break;
             case "SOCIAL":
                 if (SocialFragment.TAG == null) {
