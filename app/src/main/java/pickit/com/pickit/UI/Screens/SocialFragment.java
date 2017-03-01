@@ -1,7 +1,5 @@
-package pickit.com.pickit;
+package pickit.com.pickit.UI.Screens;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,23 +7,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class ProfileFragment extends Fragment {
-    public static final String TAG = "ProfileFragment";
+import pickit.com.pickit.R;
 
-    public static ProfileFragment newInstance() {
+/**
+ * Created by yottam on 17-01-17.
+ */
+
+public class SocialFragment extends Fragment {
+    public static final String TAG = "SocialFragment";
+
+    public static SocialFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        ProfileFragment fragment = new ProfileFragment();
+        SocialFragment fragment = new SocialFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.from(getContext()).inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.from(getContext()).inflate(R.layout.fragment_social, container, false);
         return view;
     }
 
@@ -34,4 +37,6 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
     }
+
+
 }

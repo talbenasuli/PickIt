@@ -1,4 +1,4 @@
-package pickit.com.pickit;
+package pickit.com.pickit.UI.Screens;
 
 
 import android.os.Handler;
@@ -7,7 +7,8 @@ import android.content.Intent;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TextView;
+
+import pickit.com.pickit.R;
 
 
 public class SplashActivity extends AppCompatActivity {

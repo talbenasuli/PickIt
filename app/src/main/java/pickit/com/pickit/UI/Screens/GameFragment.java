@@ -1,4 +1,4 @@
-package pickit.com.pickit;
+package pickit.com.pickit.UI.Screens;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,19 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Created by or on 17/01/2017.
- */
+import pickit.com.pickit.R;
 
-public class HomeFragment extends Fragment {
+public class GameFragment extends Fragment {
 
-    public static final String TAG = "HomeFragment";
+    public static final String TAG = "GameFragment";
 
-    public static HomeFragment newInstance() {
+    public static GameFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        HomeFragment fragment = new HomeFragment();
+        GameFragment fragment = new GameFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -28,13 +26,12 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-       View view = inflater.from(getContext()).inflate(R.layout.fragment_home, container, false);
+        View view = inflater.from(getContext()).inflate(R.layout.fragment_game, container, false);
         return view;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 }

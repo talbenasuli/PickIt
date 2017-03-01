@@ -1,4 +1,4 @@
-package pickit.com.pickit;
+package pickit.com.pickit.UI.Screens;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,26 +7,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import pickit.com.pickit.R;
+
 /**
- * Created by yottam on 17-01-17.
+ * Created by or on 17/01/2017.
  */
 
-public class SocialFragment extends Fragment {
-    public static final String TAG = "SocialFragment";
+public class RecommendationsFragment extends Fragment {
+    public static final String TAG = "RecommendationsFragment";
 
-    public static SocialFragment newInstance() {
+    public static RecommendationsFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        SocialFragment fragment = new SocialFragment();
+        RecommendationsFragment fragment = new RecommendationsFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.from(getContext()).inflate(R.layout.fragment_social, container, false);
+        View view = inflater.from(getContext()).inflate(R.layout.fragment_reccomendations, container, false);
         return view;
     }
 
@@ -35,6 +38,4 @@ public class SocialFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
     }
-
-
 }

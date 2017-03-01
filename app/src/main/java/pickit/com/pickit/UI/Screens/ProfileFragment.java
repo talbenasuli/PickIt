@@ -1,7 +1,5 @@
-package pickit.com.pickit;
+package pickit.com.pickit.UI.Screens;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,15 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class GameFragment extends Fragment {
+import pickit.com.pickit.R;
 
-    public static final String TAG = "GameFragment";
+public class ProfileFragment extends Fragment {
+    public static final String TAG = "ProfileFragment";
 
-    public static GameFragment newInstance() {
+    public static ProfileFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        GameFragment fragment = new GameFragment();
+        ProfileFragment fragment = new ProfileFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -26,12 +25,13 @@ public class GameFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.from(getContext()).inflate(R.layout.fragment_game, container, false);
+        View view = inflater.from(getContext()).inflate(R.layout.fragment_profile, container, false);
         return view;
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
     }
 }
