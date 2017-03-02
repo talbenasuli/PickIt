@@ -9,6 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import pickit.com.pickit.Adapters.PISongsListAdapter;
+import pickit.com.pickit.Data.PISong;
 import pickit.com.pickit.R;
 
 /**
@@ -33,11 +38,19 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        List<PISong> songList = new ArrayList<PISong>();
+        PISong song = new PISong();
+        song.songName = "or hagever";
+        song.authorName = "yotal";
+        song.songId = 1;
+        song.picksCount = 67;
+
+        songList.add(song);
 
         View view = inflater.from(getContext()).inflate(R.layout.fragment_home, container, false);
         ListView list = (ListView)view.findViewById(R.id.songList);
-        String[] items = new String[] {"Item 1", "yotam gay!!!", "Item 3"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, items);
+        PISongsListAdapter adapter = new PISongsListAdapter(getContext(), R.layout.pi_songs_list_cell);
+        adapter.setSongsList(songList);
         list.setAdapter(adapter);
 
         return view;
