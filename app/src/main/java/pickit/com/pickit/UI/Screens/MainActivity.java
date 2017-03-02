@@ -13,7 +13,7 @@ import pickit.com.pickit.R;
  * Created by or on 12/01/2017.
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     //buttons:
     Button navBarHomeButton;
@@ -48,51 +48,27 @@ public class MainActivity extends AppCompatActivity {
 
         //creating navigation bars buttons and setting its listeners
         navBarHomeButton = (Button)findViewById(R.id.home_button);
-        navBarHomeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openFragment("HOME");
-            }
-        });
+        navBarHomeButton.setOnClickListener(this);
 
         navBarGameButton = (Button)findViewById(R.id.game_button);
-        navBarGameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openFragment("GAME");
-            }
-        });
+        navBarGameButton.setOnClickListener(this);
 
         navBarRecommendationButton = (Button)findViewById(R.id.reccomendations_button);
-        navBarRecommendationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openFragment("RECOMMENDATIONS");
-            }
-        });
+        navBarRecommendationButton.setOnClickListener(this);
 
         navBarSocialButton = (Button)findViewById(R.id.social_button);
-        navBarSocialButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openFragment("SOCIAL");
-            }
-        });
+        navBarSocialButton.setOnClickListener(this);
 
         navBarProfileButton =(Button)findViewById(R.id.profile_button);
-        navBarProfileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openFragment("PROFILE");
-            }
-        });
+        navBarProfileButton.setOnClickListener(this);
     }
 
-    private void openFragment(String key){
+    @Override
+    public void onClick(View v) {
         Fragment fragment = new Fragment();
         String tag  = new String();
-        switch (key) {
-            case "HOME":
+        switch (v.getId()) {
+            case R.id.home_button:
                 if (HomeFragment.TAG == null) {
                     fragment = HomeFragment.newInstance();
                 }
@@ -101,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 tag = HomeFragment.TAG;
                 break;
-            case "GAME":
+            case R.id.game_button:
                 if (GameFragment.TAG == null){
                     fragment = GameFragment.newInstance();
                 }
@@ -110,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 tag = GameFragment.TAG;
                 break;
-            case "RECOMMENDATIONS":
+            case R.id.reccomendations_button:
                 if (RecommendationsFragment.TAG == null){
                     fragment = RecommendationsFragment.newInstance();
                 }
@@ -119,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 tag = RecommendationsFragment.TAG;
                 break;
-            case "SOCIAL":
+            case R.id.social_button:
                 if (SocialFragment.TAG == null) {
                     fragment = SocialFragment.newInstance();
                 }
@@ -128,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 tag = SocialFragment.TAG;
                 break;
-            case "PROFILE":
+            case R.id.profile_button:
                 if (ProfileFragment.TAG == null){
                     fragment = ProfileFragment.newInstance();
                 }
@@ -143,4 +119,6 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.fragmets_container, fragment, tag)
                 .commit();
     }
+
+
 }
