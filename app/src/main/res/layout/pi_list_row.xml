@@ -23,7 +23,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             app:srcCompat="@drawable/common_google_signin_btn_icon_dark_focused"
-            android:id="@+id/songImageView" />
+            android:id="@+id/listRowImage" />
         
         <LinearLayout
             android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
                 android:text="The name of the song"
                 android:layout_marginTop="7dp"
                 android:textSize="15dp"
-                android:id="@+id/songNameTextView"/>
+                android:id="@+id/topTextView"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
                 android:text="The name of the Author"
                 android:textSize="10dp"
                 android:layout_marginTop="5dp"
-                android:id="@+id/authorNameTextView"/>
+                android:id="@+id/bottomTextView"/>
         </LinearLayout>
 
         <LinearLayout
@@ -59,14 +59,14 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="20dp"
-                android:id="@+id/pickitCounterTextView"
+                android:id="@+id/rightTextView"
                 android:text="16"/>
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/circle"
-                android:id="@+id/pickitButton"
+                android:id="@+id/rightImageButton"
                 android:background="@color/colorTransparent"
                 android:layout_marginRight="10dp"/>
 

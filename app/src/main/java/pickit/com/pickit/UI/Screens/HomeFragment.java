@@ -6,14 +6,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import pickit.com.pickit.Adapters.PISongsListAdapter;
-import pickit.com.pickit.Data.PISong;
+import pickit.com.pickit.Adapters.PIListAdapter;
+import pickit.com.pickit.Data.PIBaseData;
+import pickit.com.pickit.Data.PIListRowData;
 import pickit.com.pickit.R;
 
 /**
@@ -40,49 +40,49 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        List<PISong> songList = new ArrayList<PISong>();
+        List<PIBaseData> songList = new ArrayList<PIBaseData>();
         //************ only for test******************
-        PISong song = new PISong();
-        song.songName = "tal hagever";
-        song.authorName = "yotal";
+        PIListRowData song = new PIListRowData();
+        song.topText = "tal hagever";
+        song.bottomText = "yotal";
         song.songId = 1;
-        song.picksCount = 67;
+        song.rightText = "67";
 
-        PISong song2 = new PISong();
-        song2.songName = "tal hagever";
-        song2.authorName = "yotal";
+        PIListRowData song2 = new PIListRowData();
+        song2.topText = "tal hagever";
+        song2.bottomText = "yotal";
         song2.songId = 2;
-        song2.picksCount = 67;
+        song2.rightText = "67";
 
-        PISong song3 = new PISong();
-        song3.songName = "yotam hagever";
-        song3.authorName = "yotal";
-        song3.songId = 3;
-        song3.picksCount = 67;
+        PIListRowData song3 = new PIListRowData();
+        song3.topText = "tal hagever";
+        song3.bottomText = "yotal";
+        song3.songId = 2;
+        song3.rightText = "67";
 
-        PISong song4 = new PISong();
-        song4.songName = "yossi hagever";
-        song4.authorName = "yotal";
-        song4.songId = 4;
-        song4.picksCount = 67;
+        PIListRowData song4 = new PIListRowData();
+        song4.topText = "tal hagever";
+        song4.bottomText = "yotal";
+        song4.songId = 2;
+        song4.rightText = "67";
 
-        PISong song5 = new PISong();
-        song5.songName = "shomob hagever";
-        song5.authorName = "yotal";
-        song5.songId = 5;
-        song5.picksCount = 67;
+        PIListRowData song5 = new PIListRowData();
+        song5.topText = "tal hagever";
+        song5.bottomText = "yotal";
+        song5.songId = 2;
+        song5.rightText = "67";
 
-        PISong song6 = new PISong();
-        song6.songName = "hhhh hagever";
-        song6.authorName = "yotal";
-        song6.songId = 6;
-        song6.picksCount = 67;
+        PIListRowData song6 = new PIListRowData();
+        song6.topText = "tal hagever";
+        song6.bottomText = "yotal";
+        song6.songId = 2;
+        song6.rightText = "67";
 
-        PISong song7 = new PISong();
-        song7.songName = "oaaar hagever";
-        song7.authorName = "yotal";
-        song7.songId = 7;
-        song7.picksCount = 67;
+        PIListRowData song7 = new PIListRowData();
+        song7.topText = "tal hagever";
+        song7.bottomText = "yotal";
+        song7.songId = 2;
+        song7.rightText = "67";
 
         songList.add(song);
         songList.add(song2);
@@ -95,8 +95,8 @@ public class HomeFragment extends Fragment {
 
         View homeFragmentView = inflater.from(getContext()).inflate(R.layout.fragment_home, container, false);
         ListView songsTableListView = (ListView)homeFragmentView.findViewById(R.id.songList);
-        PISongsListAdapter listAdapter = new PISongsListAdapter(getContext(), R.layout.pi_songs_list_cell);
-        listAdapter.setSongsList(songList);
+        PIListAdapter listAdapter = new PIListAdapter(getContext(), R.layout.pi_list_row);
+        listAdapter.setDataList(songList);
         songsTableListView.setAdapter(listAdapter);
 
         return homeFragmentView;
