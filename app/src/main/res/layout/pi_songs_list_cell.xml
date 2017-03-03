@@ -10,10 +10,18 @@
         android:background="@color/colorPrimaryDark"
         android:orientation="horizontal">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="15dp"
+            android:id="@+id/position"
+            android:text="1"/>
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="10dp"
             app:srcCompat="@drawable/common_google_signin_btn_icon_dark_focused"
             android:id="@+id/songImageView" />
         
@@ -40,20 +48,29 @@
                 android:id="@+id/authorNameTextView"/>
         </LinearLayout>
 
-        <ImageButton
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/circle"
-            android:id="@+id/pickitButton"
-            android:layout_marginLeft="70dp"/>
+            android:layoutDirection="rtl"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/pickitCounterTextView"
-            android:text="16"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="20dp"
+                android:id="@+id/pickitCounterTextView"
+                android:text="16"/>
 
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/circle"
+                android:id="@+id/pickitButton"
+                android:background="@color/colorTransparent"
+                android:layout_marginRight="10dp"/>
+
+        </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>
