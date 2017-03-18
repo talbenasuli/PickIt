@@ -35,7 +35,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             //This is the function that happens after delayTime.
             public void run() {
-                moveToNextActivity(MainActivity.class);
+                moveToNextActivity(PILoginActivity.class);
             }
         }, delayTime);
     }

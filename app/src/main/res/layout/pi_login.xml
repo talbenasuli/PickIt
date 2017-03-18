@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome to PickIt"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        android:textSize="30dp"
+        android:id="@+id/topTextView"/>
+
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="270dp"
+        android:id="@+id/viewPager">
+    </android.support.v4.view.ViewPager>
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="35dp"
+        android:inputType="textPersonName"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:text="Name"
+        android:ems="10"
+        android:textSize="15dp"
+        android:id="@+id/userNameEditText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginBottom="-10dp"
+        android:text="Forgot your password?"
+        android:id="@+id/forgotYourNumberText" />
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="35dp"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:text="password Here"
+        android:textSize="15dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:id="@+id/passwordEditText" />
+
+    <ImageButton
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        app:srcCompat="@drawable/circle"
+        android:layout_gravity="center"
+        android:id="@+id/loginImageButton" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:srcCompat="@drawable/facebook_icon"
+            android:layout_gravity="center"
+            android:layout_marginLeft="85dp"
+            android:id="@+id/facebookImageButton" />
+
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:srcCompat="@drawable/circle"
+            android:layout_gravity="center"
+            android:layout_marginLeft="140dp"
+            android:id="@+id/pickItImageButton" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="login with facebook "
+        android:layout_marginLeft="45dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="login with pickIt "
+            android:layout_marginLeft="45dp"/>
+    </LinearLayout>
+
+</LinearLayout>
