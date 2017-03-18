@@ -3,12 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="@color/colorWhite">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Welcome to PickIt"
+        android:textColor="@color/colorBlack"
         android:layout_marginTop="15dp"
         android:layout_gravity="center"
         android:textSize="30dp"
@@ -27,7 +29,9 @@
         android:inputType="textPersonName"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:text="Name"
+        android:hint="Name"
+        android:textColor="@color/colorBlack"
+        android:textColorHint="@color/colorGray"
         android:ems="10"
         android:textSize="15dp"
         android:id="@+id/userNameEditText" />
@@ -39,6 +43,7 @@
         android:layout_marginLeft="70dp"
         android:layout_marginBottom="-10dp"
         android:text="Forgot your password?"
+        android:textColor="@color/colorBlack"
         android:id="@+id/forgotYourNumberText" />
 
     <EditText
@@ -46,8 +51,10 @@
         android:layout_height="35dp"
         android:inputType="textPassword"
         android:ems="10"
-        android:text="password Here"
+        android:hint="password"
         android:textSize="15dp"
+        android:textColor="@color/colorBlack"
+        android:textColorHint="@color/colorGray"
         android:layout_gravity="center"
         android:layout_marginTop="15dp"
         android:id="@+id/passwordEditText" />
@@ -87,12 +94,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="login with facebook "
+        android:textColor="@color/colorBlack"
         android:layout_marginLeft="45dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="login with pickIt "
+            android:textColor="@color/colorBlack"
             android:layout_marginLeft="45dp"/>
     </LinearLayout>
 
