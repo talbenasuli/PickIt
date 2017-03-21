@@ -24,6 +24,9 @@ public class HomeFragment extends Fragment {
 
     //Parameters:
     public static final String TAG = "HomeFragment";
+    List<PIBaseData> songList;
+    ListView songsTableListView;
+    PIListAdapter listAdapter;
 
     /**
      * creating new instance of HomeFragment
@@ -40,8 +43,17 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        List<PIBaseData> songList = new ArrayList<PIBaseData>();
-        //************ only for test******************
+
+        View homeFragmentView = inflater.from(getContext()).inflate(R.layout.fragment_home, container, false);
+        return homeFragmentView;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        songList = new ArrayList<PIBaseData>();
+        //************ only for test in future we will get this data from server******************
         PIListRowData song = new PIListRowData();
         song.topText = "tal hagever";
         song.bottomText = "yotal";
@@ -91,21 +103,11 @@ public class HomeFragment extends Fragment {
         songList.add(song5);
         songList.add(song6);
         songList.add(song7);
-        //*******************************
 
-        View homeFragmentView = inflater.from(getContext()).inflate(R.layout.fragment_home, container, false);
-        ListView songsTableListView = (ListView)homeFragmentView.findViewById(R.id.songList);
-        PIListAdapter listAdapter = new PIListAdapter(getContext(), R.layout.pi_list_row);
+        songsTableListView = (ListView)view.findViewById(R.id.songList);
+        listAdapter = new PIListAdapter(getContext(), R.layout.pi_list_row);
         listAdapter.setDataList(songList);
         songsTableListView.setAdapter(listAdapter);
-
-        return homeFragmentView;
     }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
 
 }

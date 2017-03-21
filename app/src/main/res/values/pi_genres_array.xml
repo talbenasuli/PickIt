@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="genereArray">
+    <string-array name="genreArray">
         <item>Middle-Eastern</item>
         <item>Rock</item>
         <item>House</item>

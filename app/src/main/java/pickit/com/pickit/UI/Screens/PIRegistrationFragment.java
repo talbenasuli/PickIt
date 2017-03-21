@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +19,9 @@ import pickit.com.pickit.UI.Display.PIMultiSelectionSpinner;
 
 public class PIRegistrationFragment extends Fragment {
     public static final String TAG = "RegistrationFragment";
+    PIMultiSelectionSpinner spinner;
+    String[] genres;
+    List<String> list;
 
     public static PIRegistrationFragment newInstance(){
         Bundle args = new Bundle();
@@ -30,15 +32,19 @@ public class PIRegistrationFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View registrationFragmentView = inflater.from(getContext()).inflate(R.layout.pi_fragment_registration, container, false);
-        String[] geners = getResources().getStringArray(R.array.genereArray);
-        List<String> list = new ArrayList<String>();
-        for(String g : geners){
+        return registrationFragmentView;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        genres = getResources().getStringArray(R.array.genreArray);
+        list = new ArrayList<String>();
+        for(String g : genres){
             list.add(g);
         }
-        PIMultiSelectionSpinner spinner = (PIMultiSelectionSpinner)registrationFragmentView.findViewById(R.id.genreSpinner);
-        spinner.setPrompt("aaaaaaa");
-
+        spinner = (PIMultiSelectionSpinner)view.findViewById(R.id.genreSpinner);
         spinner.setItems(list);
-        return registrationFragmentView;
     }
 }

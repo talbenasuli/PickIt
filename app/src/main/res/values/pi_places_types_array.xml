@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="placeTypesArray">
+        <item>Pub</item>
+        <item>Resturant</item>
+        <item>Hotel</item>
+        <item>Dance Bar</item>
+        <item>Dance Clab</item>
+    </string-array>
+
+</resources>
