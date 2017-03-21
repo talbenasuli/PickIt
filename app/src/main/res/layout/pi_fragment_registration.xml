@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="pickit registration"
+        android:textSize="25dp"
+        android:textColor="@color/colorBlack"
+        android:layout_marginTop="10dp"
+        android:id="@+id/title"
+        android:gravity="center_horizontal"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="First Name"
+            android:textColor="@color/colorBlack"
+            android:layout_marginLeft="15dp"
+            android:textSize="20dp"
+            android:id="@+id/firstNameTextView"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:hint="First Name"
+            android:textColorHint="@color/colorGray"
+            android:textColor="@color/colorBlack"
+            android:id="@+id/firstNameEditText"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Last Name"
+            android:textColor="@color/colorBlack"
+            android:layout_marginLeft="15dp"
+            android:textSize="20dp"
+            android:id="@+id/lastNameTextView"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:hint="Last Name"
+            android:textColorHint="@color/colorGray"
+            android:textColor="@color/colorBlack"
+            android:id="@+id/lastNameEditText"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="E-Mail"
+            android:textColor="@color/colorBlack"
+            android:layout_marginLeft="15dp"
+            android:textSize="20dp"
+            android:id="@+id/emailTextView"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:inputType="textEmailAddress"
+            android:hint="E-mail@mail.com"
+            android:textColorHint="@color/colorGray"
+            android:textColor="@color/colorBlack"
+            android:id="@+id/emailEditText"/>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password"
+            android:textColor="@color/colorBlack"
+            android:layout_marginLeft="15dp"
+            android:textSize="20dp"
+            android:id="@+id/passwordTextView"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:hint="password"
+            android:textColorHint="@color/colorGray"
+            android:inputType="textPassword"
+            android:textColor="@color/colorBlack"
+            android:id="@+id/passwordEditText"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Repete Password"
+            android:textColor="@color/colorBlack"
+            android:layout_marginLeft="15dp"
+            android:textSize="20dp"
+            android:id="@+id/repetePasswordTextView"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:hint="repete password"
+            android:textColorHint="@color/colorGray"
+            android:inputType="textPassword"
+            android:textColor="@color/colorBlack"
+            android:id="@+id/repetePasswordEditText"/>
+
+        <pickit.com.pickit.UI.Display.PIMultiSelectionSpinner
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:id="@+id/genreSpinner"
+            android:background="@drawable/drop_down_spinner_style"
+            />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

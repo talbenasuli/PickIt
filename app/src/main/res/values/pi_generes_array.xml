@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="genereArray">
+        <item>Middle-Eastern</item>
+        <item>Rock</item>
+        <item>House</item>
+        <item>Hip Hop</item>
+        <item>Pop</item>
+        <item>Jazz</item>
+        <item>Indie</item>
+        <item>Country</item>
+    </string-array>
+</resources>
