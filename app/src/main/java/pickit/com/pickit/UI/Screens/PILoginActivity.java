@@ -40,7 +40,7 @@ public class PILoginActivity extends AppCompatActivity
     @Override
     public void onRegistrationClicked() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.loginContainerFrame, registrationFragment, PIRegistrationFragment.TAG)
+                .add(R.id.loginContainerFrame, registrationFragment, PIRegistrationFragment.TAG).addToBackStack(null)
                 .commit();
     }
 }

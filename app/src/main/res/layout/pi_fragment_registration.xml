@@ -149,6 +149,15 @@
             android:textColor="@color/colorBlack"
             android:id="@+id/repetePasswordEditText"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Genere"
+            android:textColor="@color/colorBlack"
+            android:layout_marginLeft="15dp"
+            android:textSize="20dp"
+            android:id="@+id/genereTextView"/>
+
         <pickit.com.pickit.UI.Display.PIMultiSelectionSpinner
             android:layout_width="match_parent"
             android:layout_height="30dp"
