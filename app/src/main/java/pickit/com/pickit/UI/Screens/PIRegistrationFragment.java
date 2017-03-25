@@ -23,7 +23,7 @@ public class PIRegistrationFragment extends Fragment {
     String[] genres;
     List<String> list;
 
-    public static PIRegistrationFragment newInstance(){
+    public static PIRegistrationFragment newInstance() {
         Bundle args = new Bundle();
         PIRegistrationFragment fragment = new PIRegistrationFragment();
         fragment.setArguments(args);
@@ -41,10 +41,10 @@ public class PIRegistrationFragment extends Fragment {
 
         genres = getResources().getStringArray(R.array.genreArray);
         list = new ArrayList<String>();
-        for(String g : genres){
+        for (String g : genres) {
             list.add(g);
         }
-        spinner = (PIMultiSelectionSpinner)view.findViewById(R.id.genreSpinner);
-        spinner.setItems(list);
+        spinner = (PIMultiSelectionSpinner) view.findViewById(R.id.genreSpinner);
+        spinner.initialize(list);
     }
 }

@@ -70,9 +70,9 @@ public class RecommendationsFragment extends Fragment {
         }
 
         //assigning the lists to the spinners
-        genreSpinner.setItems(genreList);
+        genreSpinner.initialize(genreList);
 
-        placeTypesSpinner.setItems(placeTypesList);
+        placeTypesSpinner.initialize(placeTypesList);
 
         //only for tests creating the places list (in future we will get the list from the server)
         placesList = new ArrayList<PIBaseData>();
