@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     GameFragment gameFragment;
     RecommendationsFragment recommendations;
     SocialFragment socialFragment;
-    ProfileFragment profileFragment;
+    PIProfileFragment profileFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         gameFragment = GameFragment.newInstance();
         socialFragment = SocialFragment.newInstance();
         recommendations = RecommendationsFragment.newInstance();
-        profileFragment = ProfileFragment.newInstance();
+        profileFragment = PIProfileFragment.newInstance();
 
         //loading home fragment
         getSupportFragmentManager().beginTransaction()
@@ -105,8 +105,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 tag = SocialFragment.TAG;
                 break;
             case R.id.profile_button:
-                if (ProfileFragment.TAG == null){
-                    fragment = ProfileFragment.newInstance();
+                if (PIProfileFragment.TAG == null){
+                    fragment = PIProfileFragment.newInstance();
                 }
                 else{
                     fragment = profileFragment;

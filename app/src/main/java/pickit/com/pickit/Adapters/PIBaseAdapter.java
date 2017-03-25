@@ -59,6 +59,7 @@ public class PIBaseAdapter extends ArrayAdapter<PIBaseData> {
      * @param postion the index of the row.
      */
     public PIBaseData getItem(int position) {
+
         return dataList.get(position);
     }
 }
