@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     HomeFragment homeFragment;
     GameFragment gameFragment;
     RecommendationsFragment recommendations;
-    SocialFragment socialFragment;
+    PISocialFragment socialFragment;
     PIProfileFragment profileFragment;
 
     @Override
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //fragments instances creation
         homeFragment = HomeFragment.newInstance();
         gameFragment = GameFragment.newInstance();
-        socialFragment = SocialFragment.newInstance();
+        socialFragment = PISocialFragment.newInstance();
         recommendations = RecommendationsFragment.newInstance();
         profileFragment = PIProfileFragment.newInstance();
 
@@ -96,13 +96,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 tag = RecommendationsFragment.TAG;
                 break;
             case R.id.social_button:
-                if (SocialFragment.TAG == null) {
-                    fragment = SocialFragment.newInstance();
+                if (PISocialFragment.TAG == null) {
+                    fragment = PISocialFragment.newInstance();
                 }
                 else{
                     fragment = socialFragment;
                 }
-                tag = SocialFragment.TAG;
+                tag = PISocialFragment.TAG;
                 break;
             case R.id.profile_button:
                 if (PIProfileFragment.TAG == null){
