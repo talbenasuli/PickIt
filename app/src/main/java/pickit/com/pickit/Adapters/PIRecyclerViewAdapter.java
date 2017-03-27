@@ -29,8 +29,8 @@ public class PIRecyclerViewAdapter extends RecyclerView.Adapter<PIRecyclerViewAd
 
         public ViewHolder(View view) {
             super(view);
-            topText = (TextView) view.findViewById(R.id.auothorName);
-            bottomText = (TextView) view.findViewById(R.id.songName);
+            topText = (TextView) view.findViewById(R.id.topText);
+            bottomText = (TextView) view.findViewById(R.id.bottomText);
         }
     }
 

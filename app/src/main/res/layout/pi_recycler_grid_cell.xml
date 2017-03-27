@@ -18,8 +18,9 @@
         android:layout_marginRight="15dp"
         android:textSize="15dp"
         android:text="Eyal Golan"
+        android:textColor="@color/colorBlack"
         android:layout_gravity="center"
-        android:id="@+id/auothorName"/>
+        android:id="@+id/topText"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -28,8 +29,9 @@
         android:layout_marginRight="15dp"
         android:textSize="15dp"
         android:gravity="center"
+        android:textColor="@color/colorBlack"
         android:text="Besof Kol Yom"
-        android:id="@+id/songName"/>
+        android:id="@+id/bottomText"/>
 
 
 </LinearLayout>
