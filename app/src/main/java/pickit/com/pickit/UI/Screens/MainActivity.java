@@ -13,7 +13,10 @@ import pickit.com.pickit.R;
  * Created by or on 12/01/2017.
  */
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity
+        implements View.OnClickListener,PIProfileFragment.PIProfileFragmentListener
+
+{
 
     //buttons:
     Button navBarHomeButton;
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     RecommendationsFragment recommendations;
     PISocialFragment socialFragment;
     PIProfileFragment profileFragment;
+    PISettingsFragment settingsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         gameFragment = PIGameFragment.newInstance();
         recommendations = RecommendationsFragment.newInstance();
         profileFragment = PIProfileFragment.newInstance();
+        settingsFragment = PISettingsFragment.newInstance();
 
         //loading home fragment
         getSupportFragmentManager().beginTransaction()
@@ -121,4 +126,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    @Override
+    public void onSettingsImageButtonClicked() {
+        if(settingsFragment.TAG == null){
+            settingsFragment = PISettingsFragment.newInstance();
+        }
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmets_container, settingsFragment, settingsFragment.TAG).addToBackStack(null)
+                .commit();
+    }
 }

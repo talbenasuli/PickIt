@@ -1,5 +1,6 @@
 package pickit.com.pickit.UI.Screens;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,12 +22,19 @@ import pickit.com.pickit.R;
  * Created by Tal on 21/03/2017.
  */
 
-public class PIProfileFragment extends Fragment {
+public class PIProfileFragment extends Fragment implements View.OnClickListener {
 
     RecyclerView recyclerView;
     PIRecyclerViewAdapter adapter;
+    ImageButton settingsImageButton;
 
     public static final String TAG = "PIProfileFragment";
+
+    private PIProfileFragmentListener listener;
+
+    public interface PIProfileFragmentListener {
+        void onSettingsImageButtonClicked();
+    }
 
     public static PIProfileFragment newInstance() {
 
@@ -46,7 +55,11 @@ public class PIProfileFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView =(RecyclerView) view.findViewById(R.id.toRecyclerView);
+
+        settingsImageButton = (ImageButton)view.findViewById(R.id.settingsImageButton);
+        settingsImageButton.setOnClickListener(this);
+
+        recyclerView =(RecyclerView) view.findViewById(R.id.myPickitsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         List<PIBaseData> dataList = new ArrayList<PIBaseData>();
 
@@ -76,6 +89,24 @@ public class PIProfileFragment extends Fragment {
         adapter = new PIRecyclerViewAdapter();
         adapter.setData(dataList);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        try {
+            listener = ((PIProfileFragmentListener) activity);
+        } catch (ClassCastException e) {
+            throw  new ClassCastException("Activity " + getActivity().getClass().getName() + " must implement PILoginFragmentListener");
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == this.settingsImageButton){
+            listener.onSettingsImageButtonClicked();
+        }
     }
 }
 
