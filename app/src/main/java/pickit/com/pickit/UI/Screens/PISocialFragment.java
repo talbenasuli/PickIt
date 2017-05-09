@@ -55,9 +55,9 @@ public class PISocialFragment extends Fragment {
 
         List<PIBaseData> dataList = new ArrayList<PIBaseData>();
 
-        PIBaseData firsData = new PIBaseData();
-        firsData.topText = "m";
-        firsData.bottomText = " !!!!";
+        PIBaseData ss1 = new PIBaseData();
+        ss1.topText = "Eyal Golan";
+        ss1.bottomText = "this is how we do !!!!";
 
         PIBaseData ss = new PIBaseData();
         ss.topText = "Eyal Golan";
@@ -66,13 +66,13 @@ public class PISocialFragment extends Fragment {
         PIBaseData dd = new PIBaseData();
         dd.topText = "Eyal Golan";
         dd.bottomText = "this is how we do !!!!";
-        dataList.add(firsData);
+        dataList.add(ss1);
 
         PIBaseData ff = new PIBaseData();
         ff.topText = "Eyal Golan";
-        ff.bottomText = "th";
+        ff.bottomText = "this is how we do !!!!";
 
-        dataList.add(firsData);
+        dataList.add(ss1);
         dataList.add(ss);
         dataList.add(dd);
         dataList.add(ff);

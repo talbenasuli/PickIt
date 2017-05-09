@@ -21,7 +21,7 @@ import pickit.com.pickit.UI.Display.PIMultiSelectionSpinner;
  * Created by or on 17/01/2017.
  */
 
-public class RecommendationsFragment extends Fragment {
+public class RecommendationsFragment extends Fragment implements PIListAdapter.PIListAdapterListener {
     public static final String TAG = "RecommendationsFragment";
     PIMultiSelectionSpinner genreSpinner;
     PIMultiSelectionSpinner placeTypesSpinner;
@@ -104,8 +104,13 @@ public class RecommendationsFragment extends Fragment {
 
         //assigning the data in to the listView
         placesTableListView = (ListView)view.findViewById(R.id.placesListView);
-        listAdapter = new PIListAdapter(getContext(), R.layout.pi_list_row);
+        listAdapter = new PIListAdapter(getContext(), R.layout.pi_list_row, R.drawable.places_icon);
+        listAdapter.listener = this;
         listAdapter.setDataList(placesList);
         placesTableListView.setAdapter(listAdapter);
+    }
+
+    @Override
+    public void onClickRightButton(int position) {
     }
 }

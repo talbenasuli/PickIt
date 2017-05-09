@@ -29,6 +29,7 @@ import pickit.com.pickit.R;
 
 public class PITimerView extends View {
 
+    //prameters:
     private Paint mFillPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint mEmptyPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint mMiddlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -51,9 +52,9 @@ public class PITimerView extends View {
     private CharSequence mText = null;
 
     private int mEmptyRingColor = Color.WHITE;
-    private int mFillRingColor = Color.BLUE;
+    private int mFillRingColor = Color.rgb(98,14,142);
     private int mMiddleColor = Color.TRANSPARENT;
-    private int mTextColor = Color.BLUE;
+    private int mTextColor = Color.rgb(98,14,142);;
     private float mTextSize = 80;
 
     private boolean mCounterClockwise = false;
@@ -67,6 +68,7 @@ public class PITimerView extends View {
     private Calendar mStartTime = null;
     private Calendar mEndTime = null;
 
+    //constructors:
     public PITimerView(Context context) {
         super(context);
         init(context, null);
@@ -82,6 +84,7 @@ public class PITimerView extends View {
         init(context, attrs);
     }
 
+    //constractor for lolipop version
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public PITimerView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
@@ -89,13 +92,16 @@ public class PITimerView extends View {
     }
 
     private void init(Context context, AttributeSet attrs) {
+        //the method getDisplayMetrics returns general information about display. the density is the density of the screen.
+        // we need the density because we need the drawing will be drawn the same no matter the screen size.
         float multi = context.getResources().getDisplayMetrics().density;
 
-        mRingRadius *= multi;
-        mRingThickness *= multi;
-        mDotRadius *= multi;
+        mRingRadius *= multi;// the radius of the ring.
+        mRingThickness *= multi; // the thickness of the ring
+        mDotRadius *= multi;// the do radius
         mTextPadding *= multi;
 
+        //getting all the arrtributes from R.styleable.
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.PITimerView, 0, 0);
         try {
             mEmptyRingColor = ta.getColor(R.styleable.PITimerView_tickEmptyRingColor, mEmptyRingColor);
@@ -113,8 +119,10 @@ public class PITimerView extends View {
             mCounterClockwise = ta.getBoolean(R.styleable.PITimerView_tickMoveCounterClockwise, mCounterClockwise);
             mCircleDuration = ta.getInt(R.styleable.PITimerView_tickCircleDuration, mCircleDuration);
         } finally {
-            ta.recycle();
+            ta.recycle();//beacause we going to reuse ta, we need to do recycle, It is used to make the data associated with "ta" ready for garbage collection so memory/data is not inefficiently bound to "ta" when it doesn't need to be
         }
+
+        // setting the attrs from the layoutfile and if there is not definition in this file it's take the default.
         mEmptyPaint.setColor(mEmptyRingColor);
         mFillPaint.setColor(mFillRingColor);
 
@@ -123,13 +131,13 @@ public class PITimerView extends View {
 
         mMiddlePaint.setColor(mMiddleColor);
         if (mMiddleColor == Color.TRANSPARENT) {
-            mMiddlePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+            mMiddlePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));// set the middle area clear.
         }
 
         mTextPaint.setColor(mTextColor);
         mTextPaint.setTextSize(mTextSize);
 
-        if (isInEditMode()) {
+        if (isInEditMode()) {//checks if the view is in edit mode, this situation could be while drawing on view.
             fitText(mText);
         }
 
@@ -142,32 +150,37 @@ public class PITimerView extends View {
     }
 
     private void drawInitialCircle() {
+        //Checks that canvas not null, to draw on canvas we need 3 components, a bitMap that hold the pixels, a Canvas to hold the draw,and
+        // apaint to contorol the colors.
         if (mCanvas == null || mCanvasBitmap.getWidth() != getWidth() || mCanvasBitmap.getHeight() != getHeight()) {
             if (mCanvasBitmap != null) {
                 mCanvas = null;
                 mCanvasBitmap.recycle();
                 mCanvasBitmap = null;
             }
-            mCanvasBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+            mCanvasBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);// create a bit map that eatch pixel is stored 4 bytes.
             mCanvas = new Canvas(mCanvasBitmap);
         }
 
-        mCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-        mCanvas.drawCircle(mCenter.x, mCenter.y, mRingRadius, mEmptyPaint);
+        mCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//starts the canvas with clear color
+        mCanvas.drawCircle(mCenter.x, mCenter.y, mRingRadius, mEmptyPaint);//draw a circle.
     }
 
     private void calculateCenter() {
-        mCenter.x = ((getWidth() + getPaddingLeft()) - getPaddingRight()) / 2;
-        mCenter.y = ((getHeight() + getPaddingTop()) - getPaddingBottom()) / 2;
+        mCenter.x = ((getWidth() + getPaddingLeft()) - getPaddingRight()) / 2;// gets the x of the center.
+        mCenter.y = ((getHeight() + getPaddingTop()) - getPaddingBottom()) / 2;//gets the y of the center
     }
 
     private void calculateArc() {
-        mArc.left = mCenter.x - mRingRadius;
-        mArc.top = mCenter.y - mRingRadius;
-        mArc.right = mCenter.x + mRingRadius;
-        mArc.bottom = mCenter.y + mRingRadius;
+        mArc.left = mCenter.x - mRingRadius;// calculate the left arc
+        mArc.top = mCenter.y - mRingRadius;// calculates the arc top
+        mArc.right = mCenter.x + mRingRadius;//calculate the arc right
+        mArc.bottom = mCenter.y + mRingRadius;//claculates the arc bottom.
     }
 
+    /*
+    Called when this view should assign a size and position to all of its children
+     */
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
@@ -175,29 +188,34 @@ public class PITimerView extends View {
             calculateEverything();
         }
     }
-
+    /*
+    This is called during layout when the size of this view has changed
+    */
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
+        // getmeasuredWidth gives the width of the view want to be in its parent
         mRingRadius = ((getMeasuredWidth() - getPaddingLeft()) / 2) - mDotRadius;
         if (!TextUtils.isEmpty(mText)) {
             fitText(mText);
         }
     }
 
+    //called when the view rendered.
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         drawInitialCircle();
 
         calculateArc();
+        //the time returns in millis thats why we need to do module 6000.
         long ms = isInEditMode() ? System.currentTimeMillis() % 60000 : mTimeRemaining % 60000;
         float angle = (float) (ms * 0.006);
 
         if (mCircleDuration == DURATION_TOTAL && mStartTime != null) {
-            long totalTime = mEndTime.getTimeInMillis() - mStartTime.getTimeInMillis();
-            float percentage = (((float) mTimeRemaining) / ((float) totalTime));
-            angle = 360f * percentage;
+            long totalTime = mEndTime.getTimeInMillis() - mStartTime.getTimeInMillis();//calculate the totaltime in mills
+            float percentage = (((float) mTimeRemaining) / ((float) totalTime));//calculate the percentage of the current time from the total time.
+            angle = 360f * percentage;// 360 beacause it's a circle.
         }
 
         if (isInEditMode()) {
@@ -309,11 +327,12 @@ public class PITimerView extends View {
     }
 
     private void fitText(CharSequence text) {
+        //case there is not text.
         if (TextUtils.isEmpty(text)) {
             return;
         }
-        if (mAutoFitText) {
-            float textWidth = mFillPaint.measureText(text.toString());
+        if (mAutoFitText) {//if auto fit text is on
+            float textWidth = mFillPaint.measureText(text.toString());//returns the width of the text.
             float multi = ((mRingRadius * 2) - mTextPadding * 2) / textWidth;
             mTextPaint.setTextSize(mFillPaint.getTextSize() * multi);
         }

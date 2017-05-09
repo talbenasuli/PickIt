@@ -24,9 +24,10 @@ import pickit.com.pickit.R;
 
 public class PIProfileFragment extends Fragment implements View.OnClickListener {
 
-    RecyclerView recyclerView;
+    RecyclerView songsRecyclerView;
     PIRecyclerViewAdapter adapter;
     ImageButton settingsImageButton;
+    RecyclerView placesVisitedRecyclerView;
 
     public static final String TAG = "PIProfileFragment";
 
@@ -59,8 +60,12 @@ public class PIProfileFragment extends Fragment implements View.OnClickListener 
         settingsImageButton = (ImageButton)view.findViewById(R.id.settingsImageButton);
         settingsImageButton.setOnClickListener(this);
 
-        recyclerView =(RecyclerView) view.findViewById(R.id.myPickitsRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        songsRecyclerView =(RecyclerView) view.findViewById(R.id.myPickitsRecyclerView);
+        songsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        placesVisitedRecyclerView = (RecyclerView) view.findViewById(R.id.placesVisitedRecyclerView);
+        placesVisitedRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
         List<PIBaseData> dataList = new ArrayList<PIBaseData>();
 
         PIBaseData firsData = new PIBaseData();
@@ -88,7 +93,8 @@ public class PIProfileFragment extends Fragment implements View.OnClickListener 
 
         adapter = new PIRecyclerViewAdapter();
         adapter.setData(dataList);
-        recyclerView.setAdapter(adapter);
+        songsRecyclerView.setAdapter(adapter);
+        placesVisitedRecyclerView.setAdapter(adapter);
     }
 
     @Override

@@ -7,4 +7,7 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
     <color name="colorGray">#d1caca</color>
+    <color name="lightPurple">#0a820ec0</color>
+    <color name="purpleSVG">#2c620e8e</color>
+    <color name="purpleDark">#fc4e186b</color>
 </resources>

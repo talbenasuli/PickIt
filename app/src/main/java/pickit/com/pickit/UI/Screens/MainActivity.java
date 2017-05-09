@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 import pickit.com.pickit.R;
 
@@ -19,11 +19,11 @@ public class MainActivity extends AppCompatActivity
 {
 
     //buttons:
-    Button navBarHomeButton;
-    Button navBarGameButton;
-    Button navBarRecommendationButton;
-    Button navBarSocialButton;
-    Button navBarProfileButton;
+    ImageButton navBarHomeButton;
+    ImageButton navBarGameButton;
+    ImageButton navBarRecommendationButton;
+    ImageButton navBarSocialButton;
+    ImageButton navBarProfileButton;
 
     //fragments:
     HomeFragment homeFragment;
@@ -52,19 +52,19 @@ public class MainActivity extends AppCompatActivity
                                     .commit();
 
         //creating navigation bars buttons and setting its listeners
-        navBarHomeButton = (Button)findViewById(R.id.home_button);
+        navBarHomeButton = (ImageButton)findViewById(R.id.home_button);
         navBarHomeButton.setOnClickListener(this);
 
-        navBarGameButton = (Button)findViewById(R.id.game_button);
+        navBarGameButton = (ImageButton)findViewById(R.id.game_button);
         navBarGameButton.setOnClickListener(this);
 
-        navBarRecommendationButton = (Button)findViewById(R.id.reccomendations_button);
+        navBarRecommendationButton = (ImageButton)findViewById(R.id.reccomendations_button);
         navBarRecommendationButton.setOnClickListener(this);
 
-        navBarSocialButton = (Button)findViewById(R.id.social_button);
+        navBarSocialButton = (ImageButton)findViewById(R.id.social_button);
         navBarSocialButton.setOnClickListener(this);
 
-        navBarProfileButton =(Button)findViewById(R.id.profile_button);
+        navBarProfileButton =(ImageButton)findViewById(R.id.profile_button);
         navBarProfileButton.setOnClickListener(this);
     }
 

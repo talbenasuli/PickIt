@@ -6,20 +6,9 @@
     android:weightSum="1"
     android:background="@color/colorWhite">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Welcome to PickIt"
-        android:textColor="@color/colorBlack"
-        android:layout_marginTop="15dp"
-        android:layout_gravity="center"
-        android:textSize="30dp"
-        android:id="@+id/topTextView"/>
-
-
     <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
-        android:layout_height="270dp"
+        android:layout_height="300dp"
         android:id="@+id/viewPager">
     </android.support.v4.view.ViewPager>
 
@@ -28,9 +17,10 @@
         android:layout_height="35dp"
         android:inputType="textPersonName"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="25dp"
         android:hint="Name"
         android:textColor="@color/colorBlack"
+        android:backgroundTint="@color/purpleSVG"
         android:textColorHint="@color/colorGray"
         android:ems="10"
         android:textSize="15dp"
@@ -51,6 +41,7 @@
         android:layout_height="35dp"
         android:inputType="textPassword"
         android:ems="10"
+        android:backgroundTint="@color/purpleSVG"
         android:hint="password"
         android:textSize="15dp"
         android:textColor="@color/colorBlack"
@@ -62,12 +53,16 @@
     <ImageButton
         android:layout_width="100dp"
         android:layout_height="50dp"
-        app:srcCompat="@drawable/circle"
         android:layout_gravity="center"
+        android:src="@drawable/login"
+        android:scaleType="fitXY"
+        android:background="@color/colorTransparent"
         android:id="@+id/loginImageButton" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:orientation="horizontal">
 
         <ImageButton
@@ -75,27 +70,33 @@
             android:layout_height="30dp"
             app:srcCompat="@drawable/facebook_icon"
             android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            android:background="@color/colorTransparent"
             android:layout_marginLeft="85dp"
             android:id="@+id/facebookImageButton" />
 
         <ImageButton
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             app:srcCompat="@drawable/circle"
             android:layout_gravity="center"
+            android:src="@drawable/register_icon"
+            android:background="@color/colorTransparent"
+            android:scaleType="fitXY"
             android:layout_marginLeft="140dp"
             android:id="@+id/pickItImageButton" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="login with facebook "
-        android:textColor="@color/colorBlack"
-        android:layout_marginLeft="45dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="login with facebook "
+            android:textColor="@color/colorBlack"
+            android:layout_marginLeft="45dp"/>
 
         <TextView
             android:layout_width="wrap_content"

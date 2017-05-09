@@ -131,30 +131,10 @@ public class PIGameFragment extends Fragment {
         t2.topText = "Eyal Golan";
         t2.bottomText = "this is how we do !!!!";
 
-        PIBaseData t3 = new PIBaseData();
-        t3.topText = "Eyal Golan";
-        t3.bottomText = "this is how we do !!!!";
-
-        PIBaseData t4 = new PIBaseData();
-        t4.topText = "Eyal Golan";
-        t4.bottomText = "this is how we do !!!!";
-
-        PIBaseData t5 = new PIBaseData();
-        t5.topText = "Eyal Golan";
-        t5.bottomText = "this is how we do !!!!";
-
-        PIBaseData t6 = new PIBaseData();
-        t6.topText = "Eyal Golan";
-        t6.bottomText = "this is how we do !!!!";
-
         dataList.add(firsData);
         dataList.add(ss);
         dataList.add(dd);
         dataList.add(t1);
         dataList.add(t2);
-        dataList.add(t3);
-        dataList.add(t4);
-        dataList.add(t5);
-        dataList.add(t6);
     }
 }

@@ -2,13 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:layout_gravity="center"
-        android:src="@drawable/circle"
+        android:src="@drawable/beatless"
+        android:scaleType="centerInside"
         android:id="@+id/image"/>
 
     <TextView
