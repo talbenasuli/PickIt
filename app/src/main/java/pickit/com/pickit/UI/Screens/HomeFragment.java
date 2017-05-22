@@ -10,19 +10,24 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.android.volley.VolleyError;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import pickit.com.pickit.Adapters.PIListAdapter;
 import pickit.com.pickit.Data.PIBaseData;
 import pickit.com.pickit.Data.PIListRowData;
+import pickit.com.pickit.Networking.Requests.PIGetAllSongsRequest;
+import pickit.com.pickit.Networking.Requests.PIUpdatePickItRequest;
 import pickit.com.pickit.R;
 
 /**
  * Created by or on 17/01/2017.
  */
 
-public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapterListener, View.OnClickListener {
+public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapterListener, View.OnClickListener,
+        PIGetAllSongsRequest.PIGetAllSongsRequestListener, PIUpdatePickItRequest.PIUpdatePickItRequestListener {
 
     //Parameters:
     public static final String TAG = "HomeFragment";
@@ -31,7 +36,7 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
     PIListAdapter listAdapter;
     ImageButton searchButton;
     EditText searchEditText;
-    boolean isKeyboardVisable = false;
+    PIGetAllSongsRequest getAllSongsRequest;
 
     /**
      * creating new instance of HomeFragment
@@ -63,63 +68,9 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
         searchEditText = (EditText) view.findViewById(R.id.mainSearchEditText);
         searchButton.setOnClickListener(this);
 
-        //************ only for test in future we will get this data from server******************
-        PIListRowData song = new PIListRowData();
-        song.topText = "Money";
-        song.bottomText = "Pink Floyd";
-        song.songId = 1;
-        song.rightText = "60";
-        song.image = R.drawable.pink;
-
-        PIListRowData song2 = new PIListRowData();
-        song2.topText = "Dancing Queen";
-        song2.bottomText = "ABBA";
-        song2.songId = 2;
-        song2.rightText = "55";
-        song2.image = R.drawable.abba;
-
-        PIListRowData song3 = new PIListRowData();
-        song3.topText = "Smoke On The Water";
-        song3.bottomText = "AC-DC";
-        song3.songId = 2;
-        song3.rightText = "42";
-        song3.image = R.drawable.acdc;
-
-        PIListRowData song4 = new PIListRowData();
-        song4.topText = "Lose Yourself";
-        song4.bottomText = "Eminem";
-        song4.songId = 2;
-        song4.rightText = "40";
-        song4.image = R.drawable.eminem_lose;
-
-        PIListRowData song5 = new PIListRowData();
-        song5.topText = "When I'm Gone";
-        song5.bottomText = "Eminem";
-        song5.songId = 2;
-        song5.rightText = "36";
-        song5.image = R.drawable.eminem;
-
-        PIListRowData song6 = new PIListRowData();
-        song6.topText = "We Are The Champions";
-        song6.bottomText = "Queen";
-        song6.songId = 2;
-        song6.rightText = "15";
-        song6.image = R.drawable.queen;
-
-        PIListRowData song7 = new PIListRowData();
-        song7.topText = "All You Need Is Love";
-        song7.bottomText = "The Beatles";
-        song7.songId = 2;
-        song7.rightText = "12";
-        song7.image = R.drawable.beatless;
-
-        songList.add(song);
-        songList.add(song2);
-        songList.add(song3);
-        songList.add(song4);
-        songList.add(song5);
-        songList.add(song6);
-        songList.add(song7);
+        getAllSongsRequest = new PIGetAllSongsRequest(getContext());
+        getAllSongsRequest.listener = this;
+        getAllSongsRequest.sendRequest();
 
         songsTableListView = (ListView) view.findViewById(R.id.songList);
         listAdapter = new PIListAdapter(getContext(), R.layout.pi_list_row, R.drawable.like);
@@ -131,19 +82,8 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
     @Override
     public void onClickRightButton(int position) {
         PIListRowData presentData = (PIListRowData) songList.get(position);
-        Integer rightText = Integer.parseInt(presentData.rightText) + 1;
-        presentData.rightText = rightText.toString();
-
-
-        while (position != 1 && position != 0 && Integer.parseInt(((PIListRowData) songList.get(position)).rightText) > Integer.parseInt(((PIListRowData) songList.get(position - 1)).rightText)) {
-
-            PIListRowData temp = (PIListRowData) songList.get(position - 1);
-            songList.set(position - 1, songList.get(position));
-            songList.set(position, temp);
-            position--;
-        }
-
-        listAdapter.notifyDataSetChanged();
+        int id = presentData.songId;
+        sendUpdatePickItRequest(id);
     }
 
     @Override
@@ -153,4 +93,113 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
             searchEditText.requestFocus();
         }
     }
+
+    // PIGetAllSongsRequestListener
+    @Override
+    public void getAllSongsRequestOnResponse(List <PIBaseData> songList) {
+        this.songList = songList;
+        listAdapter.setDataList(songList);
+        listAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void getAllSongsRequestOnErrorResponse(VolleyError error) {
+        //TODO: dialog Box.
+    }
+
+    // PIUpdatePickItRequestListener
+    @Override
+    public void updatePickItRequestOnResponse( ) {
+        getAllSongsRequest.sendRequest();
+    }
+
+    @Override
+    public void updatePickItRequestOnErrorResponse(VolleyError error) {
+        //TODO: dialog Box.
+    }
+
+    private void sendUpdatePickItRequest(int songID) {
+        PIUpdatePickItRequest updatePickItRequest = new PIUpdatePickItRequest(getContext(), Integer.toString(songID));
+        updatePickItRequest.listener = this;
+        updatePickItRequest.sendRequest();
+    }
 }
+
+
+
+////************ only for test in future we will get this data from server******************
+
+
+//        PIListRowData song = new PIListRowData();
+//        song.topText = "Money";
+//        song.bottomText = "Pink Floyd";
+//        song.songId = 1;
+//        song.rightText = "60";
+//        song.image = R.drawable.pink;
+//
+//        PIListRowData song2 = new PIListRowData();
+//        song2.topText = "Dancing Queen";
+//        song2.bottomText = "ABBA";
+//        song2.songId = 2;
+//        song2.rightText = "55";
+//        song2.image = R.drawable.abba;
+//
+//        PIListRowData song3 = new PIListRowData();
+//        song3.topText = "Smoke On The Water";
+//        song3.bottomText = "AC-DC";
+//        song3.songId = 2;
+//        song3.rightText = "42";
+//        song3.image = R.drawable.acdc;
+//
+//        PIListRowData song4 = new PIListRowData();
+//        song4.topText = "Lose Yourself";
+//        song4.bottomText = "Eminem";
+//        song4.songId = 2;
+//        song4.rightText = "40";
+//        song4.image = R.drawable.eminem_lose;
+//
+//        PIListRowData song5 = new PIListRowData();
+//        song5.topText = "When I'm Gone";
+//        song5.bottomText = "Eminem";
+//        song5.songId = 2;
+//        song5.rightText = "36";
+//        song5.image = R.drawable.eminem;
+//
+//        PIListRowData song6 = new PIListRowData();
+//        song6.topText = "We Are The Champions";
+//        song6.bottomText = "Queen";
+//        song6.songId = 2;
+//        song6.rightText = "15";
+//        song6.image = R.drawable.queen;
+//
+//        PIListRowData song7 = new PIListRowData();
+//        song7.topText = "All You Need Is Love";
+//        song7.bottomText = "The Beatles";
+//        song7.songId = 2;
+//        song7.rightText = "12";
+//        song7.image = R.drawable.beatless;
+//
+//        songList.add(song);
+//        songList.add(song2);
+//        songList.add(song3);
+//        songList.add(song4);
+//        songList.add(song5);
+//        songList.add(song6);
+//        songList.add(song7);
+
+
+//    test onclicked righButton:
+//    PIListRowData presentData = (PIListRowData) songList.get(position);
+//    Integer rightText = Integer.parseInt(presentData.rightText) + 1;
+//    presentData.rightText = rightText.toString();
+//
+//
+//        while (position != 1 && position != 0 && Integer.parseInt(((PIListRowData) songList.get(position)).rightText) > Integer.parseInt(((PIListRowData) songList.get(position - 1)).rightText)) {
+//
+//        PIListRowData temp = (PIListRowData) songList.get(position - 1);
+//        songList.set(position - 1, songList.get(position));
+//        songList.set(position, temp);
+//        position--;
+//        }
+//
+//        listAdapter.notifyDataSetChanged();

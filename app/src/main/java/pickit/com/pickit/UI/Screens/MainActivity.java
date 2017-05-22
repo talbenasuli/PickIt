@@ -14,9 +14,7 @@ import pickit.com.pickit.R;
  */
 
 public class MainActivity extends AppCompatActivity
-        implements View.OnClickListener,PIProfileFragment.PIProfileFragmentListener
-
-{
+        implements View.OnClickListener,PIProfileFragment.PIProfileFragmentListener {
 
     //buttons:
     ImageButton navBarHomeButton;
