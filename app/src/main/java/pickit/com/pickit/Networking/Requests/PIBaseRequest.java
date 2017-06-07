@@ -28,8 +28,8 @@ public abstract class PIBaseRequest implements PIBaseNetworkingRequest, Response
     Context context;
 
     public PIBaseRequest (Context context) {
-        url = "http://10.0.0.1:9999/";
-        urlSufix = null;
+        url = "http://10.160.17.248:1995/";
+        urlSufix = "";
         queryParams = new HashMap();
         this.context = context;
     }
@@ -42,7 +42,7 @@ public abstract class PIBaseRequest implements PIBaseNetworkingRequest, Response
         addQueryParamsIfNeeded();
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
-        JsonObjectRequest  request = new JsonObjectRequest(Request.Method.GET, fullPath, new String(), this, this);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, fullPath, new String(), this, this);
         requestQueue.add(request);
     }
 
@@ -74,6 +74,4 @@ public abstract class PIBaseRequest implements PIBaseNetworkingRequest, Response
             }
         }
     }
-
-
 }

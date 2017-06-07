@@ -8,7 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 
@@ -19,6 +21,8 @@ import pickit.com.pickit.Adapters.PIListAdapter;
 import pickit.com.pickit.Data.PIBaseData;
 import pickit.com.pickit.Data.PIListRowData;
 import pickit.com.pickit.Networking.Requests.PIGetAllSongsRequest;
+import pickit.com.pickit.Networking.Requests.PIGetPlayingSongRequest;
+import pickit.com.pickit.Networking.Requests.PISocketIORequest;
 import pickit.com.pickit.Networking.Requests.PIUpdatePickItRequest;
 import pickit.com.pickit.R;
 
@@ -27,16 +31,28 @@ import pickit.com.pickit.R;
  */
 
 public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapterListener, View.OnClickListener,
-        PIGetAllSongsRequest.PIGetAllSongsRequestListener, PIUpdatePickItRequest.PIUpdatePickItRequestListener {
+        PIGetAllSongsRequest.PIGetAllSongsRequestListener, PIUpdatePickItRequest.PIUpdatePickItRequestListener
+        ,PISocketIORequest.PISocketIORequestListener, PIGetPlayingSongRequest.PIGetPlayingSongListener {
 
     //Parameters:
     public static final String TAG = "HomeFragment";
+    //private boolean firstTime = true ;
     List<PIBaseData> songList;
     ListView songsTableListView;
     PIListAdapter listAdapter;
     ImageButton searchButton;
     EditText searchEditText;
     PIGetAllSongsRequest getAllSongsRequest;
+    PIGetPlayingSongRequest getPlayingSongRequest;
+    View playingNowView;
+
+    // Plating song view parameters:
+    ImageButton playingNowRightImageButton;
+    ImageView playingNowImageView;
+    TextView playingNowPosition;
+    TextView playingNowTopTextView;
+    TextView playingNowBottomTextView;
+    TextView PlayingNowRightTexView;
 
     /**
      * creating new instance of HomeFragment
@@ -63,10 +79,30 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        PISocketIORequest connectRequest = new PISocketIORequest();
+        connectRequest.setListener(this);
+        connectRequest.sendSocketIOConnectRequest();
+
         songList = new ArrayList<PIBaseData>();
         searchButton = (ImageButton) view.findViewById(R.id.searchIconButton);
         searchEditText = (EditText) view.findViewById(R.id.mainSearchEditText);
         searchButton.setOnClickListener(this);
+
+        playingNowView = view.findViewById(R.id.homeFragmentSongPlayer);
+        playingNowRightImageButton     = (ImageButton) playingNowView.findViewById(R.id.rightImageButton);
+        playingNowImageView            = (ImageView) playingNowView.findViewById(R.id.listRowImage);
+        playingNowPosition             = (TextView) playingNowView.findViewById(R.id.position);
+        playingNowTopTextView          = (TextView) playingNowView.findViewById(R.id.topTextView);
+        playingNowBottomTextView       = (TextView) playingNowView.findViewById(R.id.bottomTextView);
+        PlayingNowRightTexView         = (TextView) playingNowView.findViewById(R.id.rightTextView);
+
+        playingNowRightImageButton.setImageResource(R.drawable.speaker);
+        ((ViewGroup) playingNowPosition.getParent()).removeView(playingNowPosition);
+        ((ViewGroup) PlayingNowRightTexView.getParent()).removeView(PlayingNowRightTexView);
+
+        getPlayingSongRequest = new PIGetPlayingSongRequest(getContext());
+        getPlayingSongRequest.setListener(this);
+        getPlayingSongRequest.sendRequest();
 
         getAllSongsRequest = new PIGetAllSongsRequest(getContext());
         getAllSongsRequest.listener = this;
@@ -123,6 +159,53 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
         updatePickItRequest.listener = this;
         updatePickItRequest.sendRequest();
     }
+
+    @Override
+    public void shouldUpdateList() {
+        getAllSongsRequest.sendRequest();
+        getPlayingSongRequest.sendRequest();
+    }
+
+    @Override
+    public void getPlayingSongOnResponse(PIBaseData songData) {
+        playingNowTopTextView.setText(songData.topText);
+        playingNowBottomTextView.setText(songData.bottomText);
+    }
+
+    @Override
+    public void getPlayingSongOnErrorResponse(VolleyError error) {
+        //TODO: add dialogView.
+    }
+
+//    @Override
+//    public void getSongImageRequestOnResponse(String imagePath, final PIBaseData songData) {
+//
+//        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+//
+//        ImageRequest imgRequest = new ImageRequest(imagePath, new Response.Listener<Bitmap>() {
+//            @Override
+//            public void onResponse(Bitmap response) {
+//              songData.image = response;
+//                listAdapter.notifyDataSetChanged();
+//            }
+//        }, 0, 0, ImageView.ScaleType.CENTER_CROP, Bitmap.Config.ARGB_8888,
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        //do stuff
+//                    }
+//                });
+//
+//        requestQueue.add(imgRequest);
+//
+//    }
+//
+//
+//
+//    @Override
+//    public void getSongImageRequestOnErrorResponse(VolleyError error) {
+//        // TODO: dialogBox.
+//    }
 }
 
 

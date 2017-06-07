@@ -12,10 +12,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/searchIconButton"
+        android:layout_below="@+id/homeFragmentSongPlayer"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/songList" />
+
+    <include layout="@layout/pi_list_row"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="7dp"
+        android:layout_below="@+id/searchIconButton"
+        android:id="@+id/homeFragmentSongPlayer"/>
 
     <ImageButton
         android:layout_width="30dp"
@@ -23,7 +30,7 @@
         android:src="@drawable/search_icon"
         android:id="@+id/searchIconButton"
         android:scaleType="centerCrop"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:background="@color/colorWhite"
         android:layout_below="@+id/mainPlacesButton"/>
@@ -33,22 +40,11 @@
        android:layout_height="40dp"
        android:id="@+id/mainSearchEditText"
        android:layout_below="@+id/mainPlacesButton"
-       android:layout_marginTop="20dp"
+       android:layout_marginTop="10dp"
        android:layout_toEndOf="@+id/searchIconButton"
        android:layout_toRightOf="@+id/searchIconButton"
        android:backgroundTint="@color/purpleSVG"
        android:textColor="@color/colorBlack"/>
-
-    <TextView
-        android:text="Place Name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView5"
-        android:textSize="36sp"
-        android:textColor="@color/purpleDark"
-        android:layout_marginTop="16dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
 
     <ImageButton
         android:text="Button"
@@ -62,5 +58,15 @@
         android:layout_toRightOf="@+id/searchIconButton"
         android:layout_toEndOf="@+id/searchIconButton" />
 
+    <TextView
+        android:text="Place Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView5"
+        android:textSize="36sp"
+        android:textColor="@color/purpleDark"
+        android:layout_marginTop="16dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
