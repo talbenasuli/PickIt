@@ -28,6 +28,7 @@
             android:scaleType="fitStart"
             android:layout_gravity="center"
             app:srcCompat="@drawable/common_google_signin_btn_icon_dark_focused"
+            android:src="@drawable/song_general_image"
             android:id="@+id/listRowImage"/>
         
         <LinearLayout

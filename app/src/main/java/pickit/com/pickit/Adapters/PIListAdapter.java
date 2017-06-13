@@ -11,22 +11,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
-import com.android.volley.toolbox.Volley;
-
 import java.util.HashMap;
 
 import pickit.com.pickit.Data.PIListRowData;
-import pickit.com.pickit.Networking.Requests.PIGetSongImageRequest;
 import pickit.com.pickit.R;
 /**
  * Created by Tal on 03/03/2017.
  */
 
-public class PIListAdapter extends PIBaseAdapter implements View.OnClickListener, PIGetSongImageRequest.PIGetSongImageRequestListener {
+public class PIListAdapter extends PIBaseAdapter implements View.OnClickListener{
 
     private int rightImageButtonValue;
     private PIListViewHolder viewHolder;
@@ -88,19 +81,19 @@ public class PIListAdapter extends PIBaseAdapter implements View.OnClickListener
         viewHolder.rightImageButton.setOnClickListener(this);
         viewHolder.position.setText(String.valueOf(position + 1));
 
-        if (data.bottomText != null || !data.bottomText.equals("") && imageCache.get(data.songId) == null) {
-            PIGetSongImageRequest songImageRequest = new PIGetSongImageRequest(getContext(), data.bottomText);
-            songImageRequest.setListener(this);
-            songImageRequest.sendRequest();
-        }
-
-        else if(imageCache.get(position) != null) {
-            viewHolder.image.setImageBitmap(imageCache.get(songId));
-        }
-
-        else {
-            // TODO: add default image.
-        }
+//        if (data.bottomText != null || !data.bottomText.equals("") && imageCache.get(data.songId) == null) {
+//            PIGetSongImageRequest songImageRequest = new PIGetSongImageRequest(getContext(), data.bottomText);
+//            songImageRequest.setListener(this);
+//            songImageRequest.sendRequest();
+//        }
+//
+//        else if(imageCache.get(position) != null) {
+//            viewHolder.image.setImageBitmap(imageCache.get(songId));
+//        }
+//
+//        else {
+//            // TODO: add default image.
+//        }
 
         if (rightImageButtonValue != 0) {
             viewHolder.rightImageButton.setImageResource(rightImageButtonValue);
@@ -117,32 +110,31 @@ public class PIListAdapter extends PIBaseAdapter implements View.OnClickListener
         listener.onClickRightButton(position);
     }
 
-
-    @Override
-    public void getSongImageRequestOnResponse(String imagePath) {
-
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-
-        ImageRequest imgRequest = new ImageRequest(imagePath, new Response.Listener<Bitmap>() {
-            @Override
-            public void onResponse(Bitmap response) {
-                viewHolder.image.setImageBitmap(response);
-                imageCache.put(songId, response);
-            }
-        }, 0, 0, ImageView.ScaleType.CENTER_CROP, Bitmap.Config.ARGB_8888,
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //do stuff
-                    }
-                });
-
-        requestQueue.add(imgRequest);
-
-    }
-
-    @Override
-    public void getSongImageRequestOnErrorResponse(VolleyError error) {
-
-    }
+//    @Override
+//    public void getSongImageRequestOnResponse(String imagePath) {
+//
+//        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+//
+//        ImageRequest imgRequest = new ImageRequest(imagePath, new Response.Listener<Bitmap>() {
+//            @Override
+//            public void onResponse(Bitmap response) {
+//                viewHolder.image.setImageBitmap(response);
+//                imageCache.put(songId, response);
+//            }
+//        }, 0, 0, ImageView.ScaleType.CENTER_CROP, Bitmap.Config.ARGB_8888,
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        //do stuff
+//                    }
+//                });
+//
+//        requestQueue.add(imgRequest);
+//
+//    }
+//
+//    @Override
+//    public void getSongImageRequestOnErrorResponse(VolleyError error) {
+//
+//    }
 }

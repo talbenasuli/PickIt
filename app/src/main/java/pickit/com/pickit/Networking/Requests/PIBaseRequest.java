@@ -28,7 +28,7 @@ public abstract class PIBaseRequest implements PIBaseNetworkingRequest, Response
     Context context;
 
     public PIBaseRequest (Context context) {
-        url = "http://10.160.17.248:1995/";
+        url = "http://192.168.43.36:1995/";
         urlSufix = "";
         queryParams = new HashMap();
         this.context = context;
