@@ -1,6 +1,7 @@
 package pickit.com.pickit.Networking.Requests;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -11,6 +12,7 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
+import java.io.Console;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -55,8 +57,11 @@ public abstract class PIBaseRequest implements PIBaseNetworkingRequest, Response
     @Override
     public void onResponse(JSONObject response) {
         parseData(response);
+        Log.i(getRequestName() + ": " , response.toString());
         notifySuccess();
     }
+
+    public abstract String getRequestName();
 
     protected abstract void parseData(JSONObject response);
 
@@ -68,9 +73,10 @@ public abstract class PIBaseRequest implements PIBaseNetworkingRequest, Response
 
         if(queryParams != null  && !queryParams.isEmpty()) {
             Iterator<Map.Entry<Integer, Integer>> iterator = queryParams.entrySet().iterator();
+            fullPath += "?";
             while(iterator.hasNext()) {
                 Map.Entry<Integer, Integer> query = iterator.next();
-                fullPath = fullPath + "?" + query.getKey() + "=" + query.getValue();
+                fullPath += query.getKey() + "=" + query.getValue();
             }
         }
     }
