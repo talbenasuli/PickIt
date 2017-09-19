@@ -6,18 +6,15 @@ import com.android.volley.VolleyError;
 
 import org.json.JSONObject;
 
+import pickit.com.pickit.Models.PIModel;
+
 /**
  * Created by Tal on 16/05/2017.
  */
 
 public class PIUpdatePickItRequest extends PIBaseRequest {
 
-    public interface PIUpdatePickItRequestListener {
-        void updatePickItRequestOnResponse();
-        void updatePickItRequestOnErrorResponse(VolleyError error);
-    }
-
-    public PIUpdatePickItRequestListener listener;
+    public PIModel.PIUpdatePickItRequestListener listener;
 
     public PIUpdatePickItRequest(Context context, String songID) {
         super(context);
@@ -39,5 +36,9 @@ public class PIUpdatePickItRequest extends PIBaseRequest {
     @Override
     protected void notifySuccess() {
         listener.updatePickItRequestOnResponse();
+    }
+
+    public void setListener(PIModel.PIUpdatePickItRequestListener listener) {
+        this.listener = listener;
     }
 }

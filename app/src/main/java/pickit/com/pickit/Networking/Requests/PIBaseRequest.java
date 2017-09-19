@@ -30,7 +30,7 @@ public abstract class PIBaseRequest implements PIBaseNetworkingRequest, Response
     Context context;
 
     public PIBaseRequest (Context context) {
-        url = "http://192.168.43.36:1995/";
+        url = "http://10.0.0.9:1995/";
         urlSufix = "";
         queryParams = new HashMap();
         this.context = context;
@@ -57,11 +57,8 @@ public abstract class PIBaseRequest implements PIBaseNetworkingRequest, Response
     @Override
     public void onResponse(JSONObject response) {
         parseData(response);
-        Log.i(getRequestName() + ": " , response.toString());
         notifySuccess();
     }
-
-    public abstract String getRequestName();
 
     protected abstract void parseData(JSONObject response);
 

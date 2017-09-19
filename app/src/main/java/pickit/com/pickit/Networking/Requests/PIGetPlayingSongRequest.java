@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 import pickit.com.pickit.Data.PIBaseData;
+import pickit.com.pickit.Models.PIModel;
 import pickit.com.pickit.Networking.Requests.Parsers.PIGetAllSongParser;
 
 /**
@@ -17,13 +18,8 @@ import pickit.com.pickit.Networking.Requests.Parsers.PIGetAllSongParser;
 
 public class PIGetPlayingSongRequest extends PIBaseRequest {
 
-    public interface PIGetPlayingSongListener {
-        void getPlayingSongOnResponse(PIBaseData songData);
-        void getPlayingSongOnErrorResponse(VolleyError error);
-    }
-
     PIBaseData songData;
-    private PIGetPlayingSongListener listener;
+    private PIModel.PIGetPlayingSongListener listener;
 
     public PIGetPlayingSongRequest(Context context) {
         super(context);
@@ -51,7 +47,7 @@ public class PIGetPlayingSongRequest extends PIBaseRequest {
         listener.getPlayingSongOnResponse(songData);
     }
 
-    public void setListener(PIGetPlayingSongListener listener) {
-        this.listener =listener;
+    public void setListener(PIModel.PIGetPlayingSongListener listener) {
+        this.listener = listener;
     }
 }

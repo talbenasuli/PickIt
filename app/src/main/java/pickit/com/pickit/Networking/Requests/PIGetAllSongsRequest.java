@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pickit.com.pickit.Data.PIBaseData;
+import pickit.com.pickit.Models.PIModel;
 import pickit.com.pickit.Networking.Requests.Parsers.PIGetAllSongParser;
 
 /**
@@ -18,12 +19,7 @@ import pickit.com.pickit.Networking.Requests.Parsers.PIGetAllSongParser;
 
 public class PIGetAllSongsRequest extends PIBaseRequest {
 
-    public interface PIGetAllSongsRequestListener {
-        void getAllSongsRequestOnResponse(List<PIBaseData> songList);
-        void getAllSongsRequestOnErrorResponse(VolleyError error);
-    }
-
-    public PIGetAllSongsRequestListener listener;
+    public PIModel.getAllSongsRequestListener listener;
     private List<PIBaseData> songList;
 
     public PIGetAllSongsRequest(Context context) {
@@ -40,7 +36,7 @@ public class PIGetAllSongsRequest extends PIBaseRequest {
 
     @Override
     protected void notifyError(VolleyError error) {
-        listener.getAllSongsRequestOnErrorResponse(error);
+        listener.getAllSongsRequestOnError(error);
     }
 
     @Override
@@ -48,5 +44,9 @@ public class PIGetAllSongsRequest extends PIBaseRequest {
         if(!songList.isEmpty()) {
             listener.getAllSongsRequestOnResponse(songList);
         }
+    }
+
+    public void setListener(PIModel.getAllSongsRequestListener listener) {
+        this.listener = listener;
     }
 }

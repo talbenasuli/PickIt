@@ -6,22 +6,20 @@ import com.github.nkzawa.socketio.client.Socket;
 
 import java.net.URISyntaxException;
 
+import pickit.com.pickit.Models.PIModel;
+
 /**
  * Created by Tal on 25/05/2017.
  */
 
 public class PISocketIORequest implements Emitter.Listener {
 
-   public interface PISocketIORequestListener {
-        public void shouldUpdateList();
-    }
-
-    private PISocketIORequestListener listener;
+    private PIModel.PISocketIORequestListener listener;
 
     public void sendSocketIOConnectRequest() {
 
         try {
-            Socket mSocket = IO.socket("http://192.168.43.36:1994/");
+            Socket mSocket = IO.socket("http://10.0.0.9:1994/");
             mSocket.on("true", this);
             mSocket.connect();
         }
@@ -36,7 +34,7 @@ public class PISocketIORequest implements Emitter.Listener {
         listener.shouldUpdateList();
     }
 
-    public void setListener(PISocketIORequestListener listener) {
+    public void setListener(PIModel.PISocketIORequestListener listener) {
         this.listener = listener;
     }
 }
