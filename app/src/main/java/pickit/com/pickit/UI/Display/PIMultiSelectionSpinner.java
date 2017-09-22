@@ -8,6 +8,9 @@ import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -109,7 +112,7 @@ public class PIMultiSelectionSpinner extends Spinner implements
         boolean foundOne = false;
 
         for (int i = 0; i < _items.length; ++i) {
-            if (mSelection[i]) {
+            if (didSelextItemAtIndex(i)) {
                 if (foundOne) {
                     sb.append(", ");
                 }
@@ -125,4 +128,19 @@ public class PIMultiSelectionSpinner extends Spinner implements
         return sb.toString();
     }
 
+    public ArrayList<String> getselectedItems() {
+
+        ArrayList<String> selectedGeners = new ArrayList();
+        for (int i = 0; i < _items.length; ++i) {
+            if (didSelextItemAtIndex(i)) {
+                selectedGeners.add(_items[i]);
+            }
+        }
+
+        return selectedGeners;
+    }
+
+    private Boolean didSelextItemAtIndex(int index){
+        return mSelection[index];
+    }
 }

@@ -78,7 +78,6 @@ public class PILoginFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         imagesList = new ArrayList<Integer>();
         imagesList.add( R.drawable.pickit1);
         imagesList.add( R.drawable.pickit2);
@@ -95,9 +94,7 @@ public class PILoginFragment extends Fragment {
     }
 
     protected void onnLoginSuccess(){
-        Intent intent = new Intent(getContext(), MainActivity.class);
-        startActivity(intent);
-        getActivity().finish();
+        ((PILoginActivity)getActivity()).moveToMainActivity();
     }
 
     @Override

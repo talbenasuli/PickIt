@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "374332638915",
+    "firebase_url": "https://pickit-7e698.firebaseio.com",
+    "project_id": "pickit-7e698",
+    "storage_bucket": "pickit-7e698.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:374332638915:android:6eecde2b1c47d43e",
+        "android_client_info": {
+          "package_name": "pickit.com.pickit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "374332638915-8ruahprfavuntq48tkcf78msqbe4opg0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_AZ1iI19_Hh-WgW36dl8gdjgr4H_1IO0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

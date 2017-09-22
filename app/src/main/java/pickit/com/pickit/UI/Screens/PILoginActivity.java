@@ -1,6 +1,7 @@
 package pickit.com.pickit.UI.Screens;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.widget.ImageButton;
 import java.util.List;
 
 import pickit.com.pickit.Adapters.PICustomSwipeAdapter;
+import pickit.com.pickit.Models.PIMyApplication;
 import pickit.com.pickit.R;
 
 /**
@@ -42,5 +44,11 @@ public class PILoginActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.loginContainerFrame, registrationFragment, PIRegistrationFragment.TAG).addToBackStack(null)
                 .commit();
+    }
+
+    public void moveToMainActivity(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        this.finish();
     }
 }

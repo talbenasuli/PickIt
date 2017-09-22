@@ -1,10 +1,12 @@
 package pickit.com.pickit.Models;
 
 import com.android.volley.VolleyError;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
 import pickit.com.pickit.Data.PIBaseData;
+import pickit.com.pickit.Data.PIUserData;
 import pickit.com.pickit.UI.Screens.HomeFragment;
 
 /**
@@ -13,6 +15,7 @@ import pickit.com.pickit.UI.Screens.HomeFragment;
 
 public class PIModel {
     private static final PIModel ourInstance = new PIModel();
+    PIFireBaseModel modelFireBase;
 
     public static PIModel getInstance() {
         return ourInstance;
@@ -21,6 +24,7 @@ public class PIModel {
 
     private PIModel() {
         requestModel = new PIRequestModel(PIMyApplication.getMyContext());
+        modelFireBase = new PIFireBaseModel();
     }
 
     public interface getAllSongsRequestListener {
@@ -59,4 +63,24 @@ public class PIModel {
         requestModel.registerServerUpdates(listener);
     }
 
+
+    //*******************fireBase*******************************
+
+    public interface PIRegisterListener {
+        public void registerOnComplete(FirebaseUser user);
+        public void registerOnCancel();
+    }
+
+    public void register(String email, String password, PIRegisterListener callback) {
+        modelFireBase.register(email,password,callback);
+    }
+
+
+    public interface PISaveUserDataListener {
+        public void saveUserDataOnComplete();
+        public void saveUserDataOnCancel();
+    }
+    public void saveUserDetailsAfterRegistration(PIUserData userData, PISaveUserDataListener listener ) {
+        modelFireBase.saveUserDetailsAfterRegistration(userData, listener);
+    }
 }
