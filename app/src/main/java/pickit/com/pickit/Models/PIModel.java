@@ -52,7 +52,7 @@ public class PIModel {
     }
 
     public interface PISocketIORequestListener {
-        public void shouldUpdateList();
+        public void updateList(String songId);
     }
 
     public void registerServerUpdates(PISocketIORequestListener listener) {

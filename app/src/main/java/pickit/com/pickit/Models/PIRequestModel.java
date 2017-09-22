@@ -75,8 +75,8 @@ public class PIRequestModel {
         PISocketIORequest registerServerUpdatesRequest = new PISocketIORequest();
         registerServerUpdatesRequest.setListener(new PIModel.PISocketIORequestListener() {
             @Override
-            public void shouldUpdateList() {
-                listener.shouldUpdateList();
+            public void updateList(String songId) {
+                listener.updateList(songId);
             }
         });
         registerServerUpdatesRequest.sendSocketIOConnectRequest();
