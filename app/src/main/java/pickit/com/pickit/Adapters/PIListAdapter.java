@@ -99,7 +99,7 @@ public class PIListAdapter extends PIBaseAdapter implements View.OnClickListener
             viewHolder.rightImageButton.setImageResource(rightImageButtonValue);
         }
 
-        int backgroundColor = position % 2 == 0 ? R.color.lightPurple : R.color.purpleSVG;
+        int backgroundColor = position % 2 == 0 ? R.color.gray2 : R.color.gray1;
         viewHolder.layout.setBackgroundColor(ContextCompat.getColor(context, backgroundColor));
         return convertView;
     }
