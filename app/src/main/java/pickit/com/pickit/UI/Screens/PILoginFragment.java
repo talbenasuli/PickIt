@@ -2,7 +2,6 @@ package pickit.com.pickit.UI.Screens;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,19 +9,25 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import pickit.com.pickit.Adapters.PICustomSwipeAdapter;
+import pickit.com.pickit.Models.PIModel;
+import pickit.com.pickit.Models.PIMyApplication;
 import pickit.com.pickit.R;
 
 /**
  * Created by or on 19/03/2017.
  */
 
-public class PILoginFragment extends Fragment {
+public class PILoginFragment extends Fragment implements View.OnClickListener, PIModel.LoginListener {
 
     public static final String TAG = "PILoginFragment";
     List<Integer> imagesList;
@@ -30,8 +35,11 @@ public class PILoginFragment extends Fragment {
     ImageButton loginButton;
     ImageButton registerButton;
     PICustomSwipeAdapter adapter;
+    EditText emailEditText;
+    EditText passwordEditText;
 
     private PILoginFragmentListener listener;
+
 
     public interface PILoginFragmentListener {
         void onRegistrationClicked();
@@ -87,13 +95,16 @@ public class PILoginFragment extends Fragment {
         viewPager.setAdapter(adapter);
 
         loginButton = (ImageButton) view.findViewById(R.id.loginImageButton);
-        loginButton.setOnClickListener(new LoginButtonListener());
+        loginButton.setOnClickListener(this);
 
         registerButton = (ImageButton)view.findViewById(R.id.pickItImageButton);
-        registerButton.setOnClickListener(new registrationButtonListener());
+        registerButton.setOnClickListener(this);
+
+        emailEditText = (EditText) view.findViewById(R.id.emailEditText);
+        passwordEditText = (EditText) view.findViewById(R.id.passwordEditText);
     }
 
-    protected void onnLoginSuccess(){
+    protected void onLoginSuccess(){
         ((PILoginActivity)getActivity()).moveToMainActivity();
     }
 
@@ -105,17 +116,38 @@ public class PILoginFragment extends Fragment {
     }
 
 
-    private class LoginButtonListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            onnLoginSuccess();
+    @Override
+    public void onClick(View view) {
+        if(view == loginButton){
+
+            ((PILoginActivity)getActivity()).showLoadingFragment(R.id.loginContainerFrame);
+            //try to log in
+            String email = emailEditText.getText().toString();
+            String password = passwordEditText.getText().toString();
+
+            if(email.equals("")  || password.equals("")){
+                ((PILoginActivity)getActivity()).hideLoadingFragment();
+                //TODO:toast
+                Toast.makeText(getContext(), "enter email and password", Toast.LENGTH_LONG).show();
+            }
+            else {
+                PIModel.getInstance().login(email, password, this);
+            }
+
+        }
+        else if(view == registerButton){
+            listener.onRegistrationClicked();
         }
     }
 
-    private class registrationButtonListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            listener.onRegistrationClicked();
-        }
+    @Override
+    public void loginOnComplete() {
+        onLoginSuccess();
+    }
+
+    @Override
+    public void loginOnCancel(String errorMessage) {
+        ((PILoginActivity)getActivity()).hideLoadingFragment();
+        Toast.makeText(PIMyApplication.getMyContext(), errorMessage , Toast.LENGTH_SHORT);
     }
 }

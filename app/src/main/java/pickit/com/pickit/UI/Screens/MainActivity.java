@@ -7,13 +7,14 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import pickit.com.pickit.R;
+import pickit.com.pickit.UI.Display.PIActivity;
 
 
 /**
  * Created by or on 12/01/2017.
  */
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends PIActivity
         implements View.OnClickListener,PIProfileFragment.PIProfileFragmentListener {
 
     //buttons:

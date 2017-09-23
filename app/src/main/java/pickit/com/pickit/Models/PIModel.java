@@ -68,6 +68,8 @@ public class PIModel {
 
     //*******************fireBase*******************************
 
+
+    //registration
     public interface PIRegisterListener {
         public void registerOnComplete(FirebaseUser user);
         public void registerOnCancel();
@@ -84,5 +86,16 @@ public class PIModel {
     }
     public void saveUserDetailsAfterRegistration(PIUserData userData, PISaveUserDataListener listener ) {
         modelFireBase.saveUserDetailsAfterRegistration(userData, listener);
+    }
+
+    //login
+
+    public interface LoginListener {
+        public void loginOnComplete();
+        public void loginOnCancel(String errorMessage);
+    }
+
+    public void login(String email, String password, LoginListener callback) {
+        modelFireBase.login(email,password,callback);
     }
 }

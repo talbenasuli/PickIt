@@ -13,12 +13,13 @@ import java.util.List;
 import pickit.com.pickit.Adapters.PICustomSwipeAdapter;
 import pickit.com.pickit.Models.PIMyApplication;
 import pickit.com.pickit.R;
+import pickit.com.pickit.UI.Display.PIActivity;
 
 /**
  * Created by Tal on 15/03/2017.
  */
 
-public class PILoginActivity extends AppCompatActivity
+public class PILoginActivity extends PIActivity
     implements PILoginFragment.PILoginFragmentListener
 {
 

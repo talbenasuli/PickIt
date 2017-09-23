@@ -61,4 +61,23 @@ public class PIFireBaseModel {
         });
     }
 
+    public void login(String email, String password, final PIModel.LoginListener callback) {
+        final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            currentUser = user;
+                            callback.loginOnComplete();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            callback.loginOnCancel("error");
+                        }
+                    }
+                });
+    }
+
 }

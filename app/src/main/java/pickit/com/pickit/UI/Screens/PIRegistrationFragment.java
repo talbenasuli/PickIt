@@ -72,10 +72,7 @@ public class PIRegistrationFragment extends Fragment implements View.OnClickList
     @Override
     public void onClick(View view) {
         if(view == registerButton) {
-            PILoadingFragment loadingFragment = new PILoadingFragment();
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .add(R.id.loginContainerFrame,loadingFragment, null).addToBackStack(null)
-                    .commit();
+            ((PILoginActivity)getActivity()).showLoadingFragment(R.id.loginContainerFrame);
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
             PIModel.getInstance().register(email,password,this);
@@ -95,6 +92,7 @@ public class PIRegistrationFragment extends Fragment implements View.OnClickList
 
     @Override
     public void registerOnCancel() {
+        ((PILoginActivity)getActivity()).hideLoadingFragment();
         //TODO: notidy the user with toast
     }
 
