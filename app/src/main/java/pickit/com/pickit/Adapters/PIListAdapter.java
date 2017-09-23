@@ -27,7 +27,7 @@ public class PIListAdapter extends PIBaseAdapter implements View.OnClickListener
     private HashMap<Integer,Bitmap> imageCache;
 
     public interface PIListAdapterListener {
-        public void onClickRightButton(int songId);
+        public void onClickRightButton(int position);
     }
 
     public PIListAdapterListener listener;
@@ -99,14 +99,15 @@ public class PIListAdapter extends PIBaseAdapter implements View.OnClickListener
             viewHolder.rightImageButton.setImageResource(rightImageButtonValue);
         }
 
-        int backgroundColor = position % 2 == 0 ? R.color.lightPurple : R.color.purpleSVG;
+        int backgroundColor = position % 2 == 0 ? R.color.gray2 : R.color.gray1;
         viewHolder.layout.setBackgroundColor(ContextCompat.getColor(context, backgroundColor));
         return convertView;
     }
 
     @Override
     public void onClick(View view) {
-        listener.onClickRightButton(songId);
+        int position = (Integer) view.getTag();
+        listener.onClickRightButton(position);
     }
 
 //    @Override

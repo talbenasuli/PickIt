@@ -4,9 +4,18 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
+    android:background="@color/gray1"
     android:focusable="true"
     android:focusableInTouchMode="true">
+
+    <include layout="@layout/pi_list_row"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="7dp"
+        android:layout_below="@+id/searchIconButton"
+        android:id="@+id/homeFragmentSongPlayer"
+        android:divider="@color/dividerColor"
+        android:dividerHeight="1dp"/>
 
     <ListView
         android:layout_width="match_parent"
@@ -24,18 +33,11 @@
         android:layout_alignBottom="@id/songList"
         android:layout_alignLeft="@id/songList"
         android:layout_alignRight="@id/songList"
-        android:background="@color/colorWhite"
         android:visibility="gone"
-        android:id="@+id/homeSearchSongList">
+        android:id="@id/searchSongList">
+
     </ListView>
 
-
-    <include layout="@layout/pi_list_row"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_marginTop="7dp"
-        android:layout_below="@+id/searchIconButton"
-        android:id="@+id/homeFragmentSongPlayer"/>
 
     <ImageButton
         android:layout_width="30dp"
@@ -56,19 +58,8 @@
        android:layout_marginTop="10dp"
        android:layout_toEndOf="@+id/searchIconButton"
        android:layout_toRightOf="@+id/searchIconButton"
-       android:layout_marginRight="10dp"
-       android:backgroundTint="@color/purpleSVG"
+       android:backgroundTint="@color/gray1"
        android:textColor="@color/colorBlack"/>
-
-    <ImageButton
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:src="@drawable/x_button"
-        android:scaleType="fitXY"
-        android:layout_alignTop="@+id/mainSearchEditText"
-        android:layout_marginTop="10dp"
-        android:layout_alignRight="@id/mainSearchEditText"
-        android:background="@color/colorTransparent"/>
 
     <ImageButton
         android:text="Button"

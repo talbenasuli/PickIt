@@ -1,10 +1,9 @@
 package pickit.com.pickit.UI.Screens;
 
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +23,6 @@ import pickit.com.pickit.Adapters.PIListAdapter;
 import pickit.com.pickit.Data.PIBaseData;
 import pickit.com.pickit.Data.PIListRowData;
 import pickit.com.pickit.Models.PIModel;
-import pickit.com.pickit.Networking.Requests.PIGetAllSongsRequest;
-import pickit.com.pickit.Networking.Requests.PIGetPlayingSongRequest;
-import pickit.com.pickit.Networking.Requests.PISocketIORequest;
-import pickit.com.pickit.Networking.Requests.PIUpdatePickItRequest;
 import pickit.com.pickit.R;
 
 /**
@@ -36,7 +31,7 @@ import pickit.com.pickit.R;
 
 public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapterListener, View.OnClickListener
         , PIModel.getAllSongsRequestListener, PIModel.PIGetPlayingSongListener, PIModel.PIUpdatePickItRequestListener,
-        PIModel.PISocketIORequestListener, TextWatcher {
+        PIModel.PISocketIORequestListener {
 
     //Parameters:
     public static final String TAG = "HomeFragment";
@@ -57,7 +52,6 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
     TextView playingNowTopTextView;
     TextView playingNowBottomTextView;
     TextView PlayingNowRightTexView;
-
     /**
      * creating new instance of HomeFragment
      *
@@ -86,10 +80,8 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
         PIModel.getInstance().registerServerUpdates(this);
 
         songList = new ArrayList<PIBaseData>();
-        searchSongList = new ArrayList<>();
         searchButton = (ImageButton) view.findViewById(R.id.searchIconButton);
         searchEditText = (EditText) view.findViewById(R.id.mainSearchEditText);
-        searchEditText.addTextChangedListener(this);
         searchButton.setOnClickListener(this);
 
         playingNowView = view.findViewById(R.id.homeFragmentSongPlayer);
@@ -100,6 +92,7 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
         playingNowBottomTextView = (TextView) playingNowView.findViewById(R.id.bottomTextView);
         PlayingNowRightTexView = (TextView) playingNowView.findViewById(R.id.rightTextView);
 
+
         playingNowRightImageButton.setImageResource(R.drawable.speaker);
         ((ViewGroup) playingNowPosition.getParent()).removeView(playingNowPosition);
         ((ViewGroup) PlayingNowRightTexView.getParent()).removeView(PlayingNowRightTexView);
@@ -108,30 +101,27 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
         PIModel.getInstance().getAllSongs(this);
 
         songsTableListView = (ListView) view.findViewById(R.id.songList);
-        searchSongListView = (ListView) view.findViewById(R.id.homeSearchSongList);
+        searchSongListView = (ListView) view.findViewById(R.id.searchSongList);
 
         listAdapter = new PIListAdapter(getContext(), R.layout.pi_list_row, R.drawable.like);
-        searchListAdapter = new PIListAdapter(getContext(),R.layout.pi_list_row, R.drawable.like);
-
+        searchListAdapter = new PIListAdapter(getContext(),R.layout.pi_list_row);
         listAdapter.listener = this;
-        searchListAdapter.listener = this;
-
         listAdapter.setDataList(songList);
-        searchListAdapter.setDataList(searchSongList);
-
         songsTableListView.setAdapter(listAdapter);
-        searchSongListView.setAdapter(searchListAdapter);
     }
 
     @Override
-    public void onClickRightButton(int songId) {
-        PIModel.getInstance().updatePickIt(String.valueOf(songId), this);
+    public void onClickRightButton(int position) {
+        PIListRowData presentData = (PIListRowData) songList.get(position);
+        int id = presentData.songId;
+        PIModel.getInstance().updatePickIt(String.valueOf(id), this);
     }
 
     @Override
     public void onClick(View view) {
         if (view == searchButton) {
             searchEditText.requestFocus();
+            searchSongListView.setVisibility(view.VISIBLE);
         }
     }
 
@@ -162,25 +152,15 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
     // PISocketIORequestListener
     @Override
     public void onPickIt(String songId) {
-        int songIdAsInt = Integer.valueOf(songId);
-        int songIndexAtSongList = getSongIndexById(Integer.valueOf(songId),songList);
-        PIListRowData song = (PIListRowData) songList.get(songIndexAtSongList);
+        int songIndex = getSongIndexById(Integer.valueOf(songId));
+        PIListRowData song = (PIListRowData) songList.get(songIndex);
         song.rightText = String.valueOf(Integer.valueOf(song.rightText) + 1);
-
-        if(searchSongList.size() != 0 && searchSongList != null && searchSongListView.getVisibility() == View.VISIBLE) {
-            int songIndexInSearchList = getSongIndexById(songIdAsInt,searchSongList);
-            PIListRowData songInSearchList = (PIListRowData) searchSongList.get(songIndexInSearchList);
-            songInSearchList.rightText = song.rightText;
-        }
-
-        updateListIfNeeded(songIndexAtSongList);
-        updateSearchList();
+        updateListIfNeeded(songIndex);
     }
 
     @Override
     public void onSongEnds(String songId, PIListRowData songData) {
         PIModel.getInstance().getPlayingSong(this);
-        songList.remove(0);
         songList.add(songData);
         updateList();
     }
@@ -198,10 +178,10 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
     }
 
     // Helpers Methods
-    private int getSongIndexById(int songId, List<PIBaseData> list) {
+    private int getSongIndexById(int songId) {
         int indexToReturn = -1; // -1 is not a valid index so is that function return -1 it's an error.
-        for (int i = 0; i < list.size(); i++) {
-            PIListRowData rowData = (PIListRowData) list.get(i);
+        for (int i = 0; i < songList.size(); i++) {
+            PIListRowData rowData = (PIListRowData) songList.get(i);
             if (rowData.songId == songId) {
                 indexToReturn = i;
                 break;
@@ -234,44 +214,5 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
             }
         }
         updateList();
-    }
-
-    private void updateSearchList() {
-        if(searchSongList != null) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    searchListAdapter.setDataList(searchSongList);
-                    searchListAdapter.notifyDataSetChanged();
-                }
-            });
-        }
-    }
-
-    private void searchSongByName(String name) {
-        searchSongList = new ArrayList<>();
-        for (PIBaseData data : songList) {
-            PIListRowData song = (PIListRowData) data;
-            if(song.topText.contains(name)) {
-                searchSongList.add(song);
-            }
-        }
-    }
-
-    // SearchTextFieldsListeners
-    @Override
-    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        searchSongListView.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        searchSongByName(charSequence.toString());
-        updateSearchList();
-    }
-
-    @Override
-    public void afterTextChanged(Editable editable) {
-
     }
 }
