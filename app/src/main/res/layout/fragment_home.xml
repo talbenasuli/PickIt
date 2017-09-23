@@ -24,11 +24,11 @@
         android:layout_alignBottom="@id/songList"
         android:layout_alignLeft="@id/songList"
         android:layout_alignRight="@id/songList"
+        android:background="@color/colorWhite"
         android:visibility="gone"
-        android:id="@id/searchSongList">
-
-
+        android:id="@+id/homeSearchSongList">
     </ListView>
+
 
     <include layout="@layout/pi_list_row"
         android:layout_height="wrap_content"
@@ -56,8 +56,19 @@
        android:layout_marginTop="10dp"
        android:layout_toEndOf="@+id/searchIconButton"
        android:layout_toRightOf="@+id/searchIconButton"
+       android:layout_marginRight="10dp"
        android:backgroundTint="@color/purpleSVG"
        android:textColor="@color/colorBlack"/>
+
+    <ImageButton
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@drawable/x_button"
+        android:scaleType="fitXY"
+        android:layout_alignTop="@+id/mainSearchEditText"
+        android:layout_marginTop="10dp"
+        android:layout_alignRight="@id/mainSearchEditText"
+        android:background="@color/colorTransparent"/>
 
     <ImageButton
         android:text="Button"

@@ -27,7 +27,7 @@ public class PIListAdapter extends PIBaseAdapter implements View.OnClickListener
     private HashMap<Integer,Bitmap> imageCache;
 
     public interface PIListAdapterListener {
-        public void onClickRightButton(int position);
+        public void onClickRightButton(int songId);
     }
 
     public PIListAdapterListener listener;
@@ -106,8 +106,7 @@ public class PIListAdapter extends PIBaseAdapter implements View.OnClickListener
 
     @Override
     public void onClick(View view) {
-        int position = (Integer) view.getTag();
-        listener.onClickRightButton(position);
+        listener.onClickRightButton(songId);
     }
 
 //    @Override
