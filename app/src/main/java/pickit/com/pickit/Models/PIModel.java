@@ -6,6 +6,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.List;
 
 import pickit.com.pickit.Data.PIBaseData;
+import pickit.com.pickit.Data.PIListRowData;
 import pickit.com.pickit.Data.PIUserData;
 import pickit.com.pickit.UI.Screens.HomeFragment;
 
@@ -56,7 +57,8 @@ public class PIModel {
     }
 
     public interface PISocketIORequestListener {
-        public void updateList(String songId);
+        public void onPickIt(String songId);
+        public void onSongEnds(String songId, PIListRowData songData);
     }
 
     public void registerServerUpdates(PISocketIORequestListener listener) {

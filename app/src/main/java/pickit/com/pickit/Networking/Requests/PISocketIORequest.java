@@ -4,8 +4,12 @@ import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 
+import org.json.JSONObject;
+
 import java.net.URISyntaxException;
 
+import pickit.com.pickit.Data.PIListRowData;
+import pickit.com.pickit.Data.PISocketIOData;
 import pickit.com.pickit.Models.PIModel;
 import pickit.com.pickit.Networking.Requests.Parsers.PISocketIOSongIDParser;
 
@@ -20,7 +24,7 @@ public class PISocketIORequest implements Emitter.Listener {
     public void sendSocketIOConnectRequest() {
 
         try {
-            Socket mSocket = IO.socket("http://10.0.0.16:1994/");
+            Socket mSocket = IO.socket("http://10.0.0.91:1994/");
             mSocket.on("true", this);
             mSocket.connect();
         }
@@ -33,8 +37,17 @@ public class PISocketIORequest implements Emitter.Listener {
     @Override
     public void call(Object... args) {
         PISocketIOSongIDParser parser = new PISocketIOSongIDParser();
-        String songId = parser.parse(args[0].toString());
-        listener.updateList(songId.toString());
+        PISocketIOData socketIOData = parser.parse((JSONObject) args[0]);
+        if (socketIOData.getAction().equals("0")) {
+            String songId = socketIOData.getSongId();
+            PIListRowData songData = socketIOData.getSongData();
+            listener.onSongEnds(songId,songData);
+        }
+
+        else if(socketIOData.getAction().equals("1")) {
+            String songId = socketIOData.getSongId();
+            listener.onPickIt(songId);
+        }
     }
 
     public void setListener(PIModel.PISocketIORequestListener listener) {

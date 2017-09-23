@@ -39,8 +39,11 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
     //Parameters:
     public static final String TAG = "HomeFragment";
     List<PIBaseData> songList;
+    List<PIBaseData> searchSongList;
     ListView songsTableListView;
+    ListView searchSongListView;
     PIListAdapter listAdapter;
+    PIListAdapter searchListAdapter;
     ImageButton searchButton;
     EditText searchEditText;
     View playingNowView;
@@ -101,7 +104,10 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
         PIModel.getInstance().getAllSongs(this);
 
         songsTableListView = (ListView) view.findViewById(R.id.songList);
+        searchSongListView = (ListView) view.findViewById(R.id.searchSongList);
+
         listAdapter = new PIListAdapter(getContext(), R.layout.pi_list_row, R.drawable.like);
+        searchListAdapter = new PIListAdapter(getContext(),R.layout.pi_list_row);
         listAdapter.listener = this;
         listAdapter.setDataList(songList);
         songsTableListView.setAdapter(listAdapter);
@@ -118,6 +124,7 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
     public void onClick(View view) {
         if (view == searchButton) {
             searchEditText.requestFocus();
+            searchSongListView.setVisibility(view.VISIBLE);
         }
     }
 
@@ -145,20 +152,23 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
         Toast.makeText(getContext(),"Could not update pickIt",Toast.LENGTH_LONG);
     }
 
+    // PISocketIORequestListener
     @Override
-    public void updateList(String songId) {
-        if(songId.equals("-1")) {
-            PIModel.getInstance().getPlayingSong(this);
-            PIModel.getInstance().getAllSongs(this);
-        }
-        else {
-            int songIndex = getSongIndexById(Integer.valueOf(songId));
-            PIListRowData song = (PIListRowData) songList.get(songIndex);
-            song.rightText = String.valueOf(Integer.valueOf(song.rightText) + 1);
-            updateListIfNeeded(songIndex);
-        }
+    public void onPickIt(String songId) {
+        int songIndex = getSongIndexById(Integer.valueOf(songId));
+        PIListRowData song = (PIListRowData) songList.get(songIndex);
+        song.rightText = String.valueOf(Integer.valueOf(song.rightText) + 1);
+        updateListIfNeeded(songIndex);
     }
 
+    @Override
+    public void onSongEnds(String songId, PIListRowData songData) {
+        PIModel.getInstance().getPlayingSong(this);
+        songList.add(songData);
+        updateList();
+    }
+
+    // PIGetPlayingSongRequest
     @Override
     public void getPlayingSongOnResponse(PIBaseData songData) {
         playingNowTopTextView.setText(songData.topText);
@@ -170,6 +180,7 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
         Toast.makeText(getContext(),"Could not load the playing song name",Toast.LENGTH_LONG);
     }
 
+    // Helpers Methods
     private int getSongIndexById(int songId) {
         int indexToReturn = -1; // -1 is not a valid index so is that function return -1 it's an error.
         for (int i = 0; i < songList.size(); i++) {
@@ -180,6 +191,18 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
             }
         }
         return indexToReturn;
+    }
+
+    private void updateList() {
+        if(songList != null) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    listAdapter.setDataList(songList);
+                    listAdapter.notifyDataSetChanged();
+                }
+            });
+        }
     }
 
     private void updateListIfNeeded(int songIndex) {
@@ -193,13 +216,6 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
                 songList.set(i - 1, temp);
             }
         }
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                listAdapter.setDataList(songList);
-                listAdapter.notifyDataSetChanged();
-            }
-        });
-
+        updateList();
     }
 }

@@ -7,6 +7,7 @@ import com.android.volley.VolleyError;
 import java.util.List;
 
 import pickit.com.pickit.Data.PIBaseData;
+import pickit.com.pickit.Data.PIListRowData;
 import pickit.com.pickit.Networking.Requests.PIGetAllSongsRequest;
 import pickit.com.pickit.Networking.Requests.PIGetPlayingSongRequest;
 import pickit.com.pickit.Networking.Requests.PISocketIORequest;
@@ -75,8 +76,12 @@ public class PIRequestModel {
         PISocketIORequest registerServerUpdatesRequest = new PISocketIORequest();
         registerServerUpdatesRequest.setListener(new PIModel.PISocketIORequestListener() {
             @Override
-            public void updateList(String songId) {
-                listener.updateList(songId);
+            public void onPickIt(String songId) {
+                listener.onPickIt(songId);
+            }
+
+            public void onSongEnds(String songId, PIListRowData songData) {
+                listener.onSongEnds(songId, songData);
             }
         });
         registerServerUpdatesRequest.sendSocketIOConnectRequest();

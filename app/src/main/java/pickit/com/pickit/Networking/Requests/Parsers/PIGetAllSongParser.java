@@ -27,10 +27,8 @@ public class PIGetAllSongParser {
             for (int i = 0; i < jsonArray.length(); i++) {
                 PIListRowData data = new PIListRowData();
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                data.songId = Integer.parseInt(jsonObject.getString("songID"));
-                data.topText = jsonObject.getString("songName");
-                data.bottomText = jsonObject.getString("artist");
-                data.rightText = jsonObject.getString("pickIts");
+                PISongParser songParser = new PISongParser();
+                data = songParser.parse(jsonObject);
                 songList.add(data);
             }
         }
@@ -39,5 +37,21 @@ public class PIGetAllSongParser {
         }
 
         return songList;
+    }
+}
+
+class PISongParser {
+
+    public PIListRowData parse(JSONObject jsonObject) {
+        PIListRowData data = new PIListRowData();
+        try {
+            data.songId = Integer.parseInt(jsonObject.getString("songID"));
+            data.topText = jsonObject.getString("songName");
+            data.bottomText = jsonObject.getString("artist");
+            data.rightText = jsonObject.getString("pickIts");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return data;
     }
 }
