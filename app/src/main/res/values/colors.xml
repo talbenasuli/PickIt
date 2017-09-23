@@ -9,10 +9,5 @@
     <color name="colorGray">#d1caca</color>
     <color name="lightPurple">#0a820ec0</color>
     <color name="purpleSVG">#2c620e8e</color>
-    <color name="gray2">#ffffff</color>
-    <color name="gray1">#ffffff</color> //svg
     <color name="purpleDark">#fc4e186b</color>
-    <color name="dividerColor">#ca7a06c7</color>
-    <color name="currentSongColor">#b56a59c1</color>
-    <!--#e0292929-->
 </resources>

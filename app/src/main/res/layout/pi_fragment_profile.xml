@@ -52,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:background="@color/gray2"
+        android:background="@color/lightPurple"
         android:id="@+id/myPickitsRecyclerView"
         android:paddingLeft="@dimen/activity_horizontal_margin"/>
 
@@ -67,7 +67,7 @@
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/gray2"
+        android:background="@color/lightPurple"
         android:layout_marginTop="5dp"
         android:id="@+id/placesVisitedRecyclerView"
         android:paddingLeft="@dimen/activity_horizontal_margin"/>
