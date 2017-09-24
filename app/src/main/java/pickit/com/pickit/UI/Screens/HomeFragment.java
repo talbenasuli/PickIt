@@ -84,8 +84,6 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
 
         PIModel.getInstance().registerServerUpdates(this);
         PIModel.getInstance().getPlaceName(this);
-         PIModel.getInstance().getUserPickits(this);
-
 
         songList = new ArrayList<PIBaseData>();
         searchSongList = new ArrayList<>();
@@ -164,6 +162,7 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
     @Override
     public void getAllSongsRequestOnResponse(List<PIBaseData> songList) {
         this.songList = songList;
+        PIModel.getInstance().getUserPickits(this);
         listAdapter.setDataList(songList);
         listAdapter.notifyDataSetChanged();
     }
@@ -298,6 +297,8 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
                 }
             }
         }
+        listAdapter.setDataList(songList);
+        listAdapter.notifyDataSetChanged();
     }
 
     // PIGetPlaceNameRequest
