@@ -21,6 +21,7 @@ public class PIUpdatePickItRequest extends PIBaseRequest {
 
         urlSufix = "updatePickIt";
         queryParams.put("id", songID);
+        queryParams.put("userId",  PIModel.getInstance().getUserId());
     }
 
     @Override

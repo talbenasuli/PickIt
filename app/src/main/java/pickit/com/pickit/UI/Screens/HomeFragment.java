@@ -24,10 +24,6 @@ import pickit.com.pickit.Adapters.PIListAdapter;
 import pickit.com.pickit.Data.PIBaseData;
 import pickit.com.pickit.Data.PIListRowData;
 import pickit.com.pickit.Models.PIModel;
-import pickit.com.pickit.Networking.Requests.PIGetAllSongsRequest;
-import pickit.com.pickit.Networking.Requests.PIGetPlayingSongRequest;
-import pickit.com.pickit.Networking.Requests.PISocketIORequest;
-import pickit.com.pickit.Networking.Requests.PIUpdatePickItRequest;
 import pickit.com.pickit.R;
 
 /**
@@ -36,12 +32,13 @@ import pickit.com.pickit.R;
 
 public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapterListener, View.OnClickListener
         , PIModel.getAllSongsRequestListener, PIModel.PIGetPlayingSongListener, PIModel.PIUpdatePickItRequestListener,
-        PIModel.PISocketIORequestListener, TextWatcher {
+        PIModel.PISocketIORequestListener, TextWatcher, PIModel.PIGetPlaceNameListener, PIModel.PIGetUserPickitsListener {
 
     //Parameters:
     public static final String TAG = "HomeFragment";
     List<PIBaseData> songList;
     List<PIBaseData> searchSongList;
+    List<String> userPickits;
     ListView songsTableListView;
     ListView searchSongListView;
     PIListAdapter listAdapter;
@@ -49,6 +46,8 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
     ImageButton searchButton;
     EditText searchEditText;
     View playingNowView;
+    TextView placeNameTextView;
+    ImageButton searchXButton;
 
     // Plating song view parameters:
     ImageButton playingNowRightImageButton;
@@ -84,6 +83,9 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
         super.onViewCreated(view, savedInstanceState);
 
         PIModel.getInstance().registerServerUpdates(this);
+        PIModel.getInstance().getPlaceName(this);
+         PIModel.getInstance().getUserPickits(this);
+
 
         songList = new ArrayList<PIBaseData>();
         searchSongList = new ArrayList<>();
@@ -107,6 +109,10 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
         PIModel.getInstance().getPlayingSong(this);
         PIModel.getInstance().getAllSongs(this);
 
+        placeNameTextView = (TextView) view.findViewById(R.id.homePlaceNameTextView);
+        searchXButton = (ImageButton) view.findViewById(R.id.homeSearchXButton);
+        searchXButton.setOnClickListener(this);
+
         songsTableListView = (ListView) view.findViewById(R.id.songList);
         searchSongListView = (ListView) view.findViewById(R.id.homeSearchSongList);
 
@@ -124,6 +130,12 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        searchSongListView.setVisibility(View.GONE);
+    }
+
+    @Override
     public void onClickRightButton(int songId) {
         PIModel.getInstance().updatePickIt(String.valueOf(songId), this);
     }
@@ -132,6 +144,10 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
     public void onClick(View view) {
         if (view == searchButton) {
             searchEditText.requestFocus();
+        }
+
+        else if(view == searchXButton) {
+            searchEditText.setText("");
         }
     }
 
@@ -166,11 +182,13 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
         int songIndexAtSongList = getSongIndexById(Integer.valueOf(songId),songList);
         PIListRowData song = (PIListRowData) songList.get(songIndexAtSongList);
         song.rightText = String.valueOf(Integer.valueOf(song.rightText) + 1);
+        song.didPickit = true;
 
         if(searchSongList.size() != 0 && searchSongList != null && searchSongListView.getVisibility() == View.VISIBLE) {
             int songIndexInSearchList = getSongIndexById(songIdAsInt,searchSongList);
             PIListRowData songInSearchList = (PIListRowData) searchSongList.get(songIndexInSearchList);
             songInSearchList.rightText = song.rightText;
+            songInSearchList.didPickit = song.didPickit;
         }
 
         updateListIfNeeded(songIndexAtSongList);
@@ -257,6 +275,40 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
             }
         }
     }
+
+    private void updateDataWithPickits() {
+
+        if(userPickits == null) {
+            return;
+        }
+
+        for(int i = 0; i<songList.size();i++) {
+            for(int j = 0; j<userPickits.size();j++) {
+                PIListRowData songData = (PIListRowData) songList.get(i);
+                if(songData.songId == Integer.parseInt(userPickits.get(j))) {
+                    songData.didPickit = true;
+                }
+            }
+        }
+    }
+
+    // PIGetPlaceNameRequest
+    @Override
+    public void placeNameOnResponse(String placeName) {
+        placeNameTextView.setText(placeName);
+    }
+
+    @Override
+    public void placeNameOnCancel(VolleyError error) {}
+
+    @Override
+    public void getUserPickitsOnResponse(List<String> userPickits) {
+        this.userPickits = userPickits;
+        updateDataWithPickits();
+    }
+
+    @Override
+    public void getUserPickitsOnCancel(VolleyError error) {}
 
     // SearchTextFieldsListeners
     @Override

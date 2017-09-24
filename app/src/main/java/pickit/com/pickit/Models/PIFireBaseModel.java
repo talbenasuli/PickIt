@@ -80,4 +80,7 @@ public class PIFireBaseModel {
                 });
     }
 
+    public String getCurrentUserId() {
+        return currentUser.getUid();
+    }
 }

@@ -10,4 +10,5 @@ import android.widget.ImageView;
 public class PIListRowData extends PIBaseData {
     public String rightText;
     public int songId;
+    public boolean didPickit = false;
 }

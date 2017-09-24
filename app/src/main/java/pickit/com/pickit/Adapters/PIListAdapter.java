@@ -19,7 +19,7 @@ import pickit.com.pickit.R;
  * Created by Tal on 03/03/2017.
  */
 
-public class PIListAdapter extends PIBaseAdapter implements View.OnClickListener{
+public class PIListAdapter extends PIBaseAdapter {
 
     private int rightImageButtonValue;
     private PIListViewHolder viewHolder;
@@ -72,13 +72,19 @@ public class PIListAdapter extends PIBaseAdapter implements View.OnClickListener
             viewHolder = (PIListViewHolder) convertView.getTag();
         }
 
-        PIListRowData data =(PIListRowData) getItem(position);
+        final PIListRowData data =(PIListRowData) getItem(position);
         songId = data.songId;
         viewHolder.topTextView.setText(data.topText);
         viewHolder.bottomTextView.setText(data.bottomText);
         viewHolder.rightTextView.setText(String.valueOf(data.rightText));
         viewHolder.rightImageButton.setTag(position);
-        viewHolder.rightImageButton.setOnClickListener(this);
+        viewHolder.rightImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onClickRightButton(data.songId);
+            }
+        });
+        viewHolder.rightImageButton.setEnabled(!data.didPickit);
         viewHolder.position.setText(String.valueOf(position + 1));
 
 //        if (data.bottomText != null || !data.bottomText.equals("") && imageCache.get(data.songId) == null) {
@@ -102,11 +108,6 @@ public class PIListAdapter extends PIBaseAdapter implements View.OnClickListener
         int backgroundColor = position % 2 == 0 ? R.color.gray2 : R.color.gray1;
         viewHolder.layout.setBackgroundColor(ContextCompat.getColor(context, backgroundColor));
         return convertView;
-    }
-
-    @Override
-    public void onClick(View view) {
-        listener.onClickRightButton(songId);
     }
 
 //    @Override

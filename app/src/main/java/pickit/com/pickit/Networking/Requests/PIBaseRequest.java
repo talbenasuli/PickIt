@@ -69,11 +69,20 @@ public abstract class PIBaseRequest implements PIBaseNetworkingRequest, Response
     private void addQueryParamsIfNeeded() {
 
         if(queryParams != null  && !queryParams.isEmpty()) {
+            boolean firstParam = true;
             Iterator<Map.Entry<Integer, Integer>> iterator = queryParams.entrySet().iterator();
             fullPath += "?";
             while(iterator.hasNext()) {
-                Map.Entry<Integer, Integer> query = iterator.next();
-                fullPath += query.getKey() + "=" + query.getValue();
+                if (firstParam) {
+                    Map.Entry<Integer, Integer> query = iterator.next();
+                    fullPath += query.getKey() + "=" + query.getValue();
+                    firstParam = false;
+                }
+                else {
+                    Map.Entry<Integer, Integer> query = iterator.next();
+                    fullPath += "&" + query.getKey() + "=" + query.getValue();
+                }
+
             }
         }
     }

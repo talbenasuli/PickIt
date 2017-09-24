@@ -49,13 +49,13 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:background="@color/colorWhite"
-        android:layout_below="@+id/mainPlacesButton"/>
+        android:layout_below="@+id/homePlaceNameTextView"/>
 
    <EditText
        android:layout_width="match_parent"
        android:layout_height="40dp"
        android:id="@+id/mainSearchEditText"
-       android:layout_below="@+id/mainPlacesButton"
+       android:layout_below="@+id/homePlaceNameTextView"
        android:layout_marginTop="10dp"
        android:layout_toEndOf="@+id/searchIconButton"
        android:layout_toRightOf="@+id/searchIconButton"
@@ -71,25 +71,14 @@
         android:layout_alignTop="@+id/mainSearchEditText"
         android:layout_marginTop="10dp"
         android:layout_alignRight="@id/mainSearchEditText"
+        android:id="@+id/homeSearchXButton"
         android:background="@color/colorTransparent"/>
-
-    <ImageButton
-        android:text="Button"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:scaleType="fitXY"
-        android:id="@+id/mainPlacesButton"
-        android:background="@color/colorTransparent"
-        android:src="@drawable/places_icon"
-        android:layout_alignBottom="@+id/textView5"
-        android:layout_toRightOf="@+id/searchIconButton"
-        android:layout_toEndOf="@+id/searchIconButton" />
 
     <TextView
         android:text="Place Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView5"
+        android:id="@+id/homePlaceNameTextView"
         android:textSize="36sp"
         android:textColor="@color/purpleDark"
         android:layout_marginTop="16dp"

@@ -9,7 +9,9 @@ import java.util.List;
 import pickit.com.pickit.Data.PIBaseData;
 import pickit.com.pickit.Data.PIListRowData;
 import pickit.com.pickit.Networking.Requests.PIGetAllSongsRequest;
+import pickit.com.pickit.Networking.Requests.PIGetPlaceNameRequest;
 import pickit.com.pickit.Networking.Requests.PIGetPlayingSongRequest;
+import pickit.com.pickit.Networking.Requests.PIGetUserPickItsRequest;
 import pickit.com.pickit.Networking.Requests.PISocketIORequest;
 import pickit.com.pickit.Networking.Requests.PIUpdatePickItRequest;
 
@@ -86,4 +88,40 @@ public class PIRequestModel {
         });
         registerServerUpdatesRequest.sendSocketIOConnectRequest();
     }
+
+    public void getPlaceName(final PIModel.PIGetPlaceNameListener listener) {
+        PIGetPlaceNameRequest request = new PIGetPlaceNameRequest(context);
+        request.setListener(new PIModel.PIGetPlaceNameListener() {
+            @Override
+            public void placeNameOnResponse(String placeName) {
+                listener.placeNameOnResponse(placeName);
+            }
+
+            @Override
+            public void placeNameOnCancel(VolleyError error) {
+                listener.placeNameOnCancel(error);
+            }
+        });
+
+        request.sendRequest();
+    }
+
+    public void getUserPickits(final PIModel.PIGetUserPickitsListener listener) {
+        PIGetUserPickItsRequest request = new PIGetUserPickItsRequest(context);
+        request.setListener(new PIModel.PIGetUserPickitsListener() {
+            @Override
+            public void getUserPickitsOnResponse(List<String> userPickits) {
+                listener.getUserPickitsOnResponse(userPickits);
+            }
+
+            @Override
+            public void getUserPickitsOnCancel(VolleyError error) {
+                listener.getUserPickitsOnCancel(error);
+            }
+        });
+
+        request.sendRequest();
+    }
+
+
 }

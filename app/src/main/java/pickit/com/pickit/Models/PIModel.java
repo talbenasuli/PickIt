@@ -3,6 +3,7 @@ package pickit.com.pickit.Models;
 import com.android.volley.VolleyError;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import pickit.com.pickit.Data.PIBaseData;
@@ -98,4 +99,29 @@ public class PIModel {
     public void login(String email, String password, LoginListener callback) {
         modelFireBase.login(email,password,callback);
     }
+
+    public interface PIGetPlaceNameListener {
+        public void placeNameOnResponse(String placeName);
+        public void placeNameOnCancel(VolleyError error);
+    }
+
+    public void getPlaceName(PIGetPlaceNameListener listener) {
+        requestModel.getPlaceName(listener);
+    }
+
+    public String getUserId() {
+        return modelFireBase.getCurrentUserId();
+    }
+
+    public interface PIGetUserPickitsListener {
+        public void getUserPickitsOnResponse(List<String> userPickits);
+        public void getUserPickitsOnCancel(VolleyError error);
+    }
+
+
+    public void getUserPickits(PIGetUserPickitsListener listener) {
+        requestModel.getUserPickits(listener);
+    }
+
+
 }
