@@ -7,8 +7,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +26,7 @@ import pickit.com.pickit.Data.PIUserData;
 public class PIFireBaseModel {
 
     private static String dataBaseName = "usersData";
+    private final int maxLastSongsListSize = 20;
     public static FirebaseUser currentUser;
 
     public void register(String email, String password, final PIModel.PIRegisterListener callback) {
@@ -53,6 +58,12 @@ public class PIFireBaseModel {
         value.put("last name", userData.getLastName());
         value.put("email", userData.getEmail());
         value.put("generes", userData.getFavoriteGeners());
+
+        Map<String, Object> lastSelectedSongsList = new HashMap<>();
+        lastSelectedSongsList.put("listSize" , 0);
+
+        value.put("lastSelectedSongsList" , lastSelectedSongsList);
+
         myRef.child(currentUser.getUid()).setValue(value).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -82,5 +93,42 @@ public class PIFireBaseModel {
 
     public String getCurrentUserId() {
         return currentUser.getUid();
+    }
+
+    public void saveSelectedSong( final String songName){
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference(dataBaseName + "/" + currentUser.getUid() + "/" + "lastSelectedSongsList" );
+
+
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int listSize = dataSnapshot.child("listSize").getValue(int.class);
+
+                if(listSize < maxLastSongsListSize){
+                    listSize++;
+                    myRef.child("listSize").setValue(listSize);
+                    myRef.child(String.valueOf(listSize)).setValue(songName);
+                }
+                else {
+                    Map<String, Object> value = new HashMap<>();
+                    value.put("listSize" , listSize);
+                    for (int i = 2 ; i <= maxLastSongsListSize ; i++){
+                        String name = dataSnapshot.child(String.valueOf(i)).getValue(String.class);
+                        value.put(String.valueOf(i-1) , name);
+                    }
+                    value.put(String.valueOf(maxLastSongsListSize) , songName);
+                    myRef.setValue(value);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

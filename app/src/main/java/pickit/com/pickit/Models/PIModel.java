@@ -66,6 +66,29 @@ public class PIModel {
         requestModel.registerServerUpdates(listener);
     }
 
+    public interface PIGetPlaceNameListener {
+        public void placeNameOnResponse(String placeName);
+        public void placeNameOnCancel(VolleyError error);
+    }
+
+    public void getPlaceName(PIGetPlaceNameListener listener) {
+        requestModel.getPlaceName(listener);
+    }
+
+    public String getUserId() {
+        return modelFireBase.getCurrentUserId();
+    }
+
+    public interface PIGetUserPickitsListener {
+        public void getUserPickitsOnResponse(List<String> userPickits);
+        public void getUserPickitsOnCancel(VolleyError error);
+    }
+
+
+    public void getUserPickits(PIGetUserPickitsListener listener) {
+        requestModel.getUserPickits(listener);
+    }
+
 
     //*******************fireBase*******************************
 
@@ -100,28 +123,9 @@ public class PIModel {
         modelFireBase.login(email,password,callback);
     }
 
-    public interface PIGetPlaceNameListener {
-        public void placeNameOnResponse(String placeName);
-        public void placeNameOnCancel(VolleyError error);
+    //songs selections list manegment
+
+    public void saveSelectedSong(String songName){
+        modelFireBase.saveSelectedSong(songName);
     }
-
-    public void getPlaceName(PIGetPlaceNameListener listener) {
-        requestModel.getPlaceName(listener);
-    }
-
-    public String getUserId() {
-        return modelFireBase.getCurrentUserId();
-    }
-
-    public interface PIGetUserPickitsListener {
-        public void getUserPickitsOnResponse(List<String> userPickits);
-        public void getUserPickitsOnCancel(VolleyError error);
-    }
-
-
-    public void getUserPickits(PIGetUserPickitsListener listener) {
-        requestModel.getUserPickits(listener);
-    }
-
-
 }

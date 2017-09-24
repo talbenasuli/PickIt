@@ -145,6 +145,8 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
             PIListRowData songInSearchList = (PIListRowData) searchSongList.get(songIndexInSearchList);
             songInSearchList.didPickit = songFromSongList.didPickit;
         }
+        String songName = songList.get(getSongIndexById(songId , songList)).topText;
+        PIModel.getInstance().saveSelectedSong(songName);
     }
 
     @Override
