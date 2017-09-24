@@ -138,6 +138,15 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
     @Override
     public void onClickRightButton(int songId) {
         PIModel.getInstance().updatePickIt(String.valueOf(songId), this);
+        int songIndex = getSongIndexById(songId,songList);
+        PIListRowData songFromSongList = (PIListRowData) songList.get(songIndex);
+        songFromSongList.didPickit = true;
+
+        if(searchSongList.size() != 0 && searchSongList != null && searchSongListView.getVisibility() == View.VISIBLE) {
+            int songIndexInSearchList = getSongIndexById(songId,searchSongList);
+            PIListRowData songInSearchList = (PIListRowData) searchSongList.get(songIndexInSearchList);
+            songInSearchList.didPickit = songFromSongList.didPickit;
+        }
     }
 
     @Override
@@ -182,13 +191,12 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
         int songIndexAtSongList = getSongIndexById(Integer.valueOf(songId),songList);
         PIListRowData song = (PIListRowData) songList.get(songIndexAtSongList);
         song.rightText = String.valueOf(Integer.valueOf(song.rightText) + 1);
-        song.didPickit = true;
 
         if(searchSongList.size() != 0 && searchSongList != null && searchSongListView.getVisibility() == View.VISIBLE) {
             int songIndexInSearchList = getSongIndexById(songIdAsInt,searchSongList);
             PIListRowData songInSearchList = (PIListRowData) searchSongList.get(songIndexInSearchList);
             songInSearchList.rightText = song.rightText;
-            songInSearchList.didPickit = song.didPickit;
+            //songInSearchList.didPickit = song.didPickit;
         }
 
         updateListIfNeeded(songIndexAtSongList);
