@@ -120,7 +120,7 @@ public class PILoginFragment extends Fragment implements View.OnClickListener, P
     public void onClick(View view) {
         if(view == loginButton){
 
-            ((PILoginActivity)getActivity()).showLoadingFragment(R.id.loginContainerFrame);
+            ((PILoginActivity)getActivity()).showLoadingFragment(R.id.loginContainerFrame, true);
             //try to log in
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();

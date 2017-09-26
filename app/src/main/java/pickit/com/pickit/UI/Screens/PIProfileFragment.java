@@ -16,13 +16,14 @@ import java.util.List;
 
 import pickit.com.pickit.Adapters.PIRecyclerViewAdapter;
 import pickit.com.pickit.Data.PIBaseData;
+import pickit.com.pickit.Models.PIModel;
 import pickit.com.pickit.R;
 
 /**
  * Created by Tal on 21/03/2017.
  */
 
-public class PIProfileFragment extends Fragment implements View.OnClickListener {
+public class PIProfileFragment extends Fragment implements View.OnClickListener, PIModel.getUserLastPickitsListener {
 
     RecyclerView songsRecyclerView;
     PIRecyclerViewAdapter adapter;
@@ -32,6 +33,7 @@ public class PIProfileFragment extends Fragment implements View.OnClickListener 
     public static final String TAG = "PIProfileFragment";
 
     private PIProfileFragmentListener listener;
+
 
     public interface PIProfileFragmentListener {
         void onSettingsImageButtonClicked();
@@ -95,6 +97,8 @@ public class PIProfileFragment extends Fragment implements View.OnClickListener 
         adapter.setData(dataList);
         songsRecyclerView.setAdapter(adapter);
         placesVisitedRecyclerView.setAdapter(adapter);
+
+        PIModel.getInstance().getUserLastPickits(this);
     }
 
     @Override
@@ -113,6 +117,13 @@ public class PIProfileFragment extends Fragment implements View.OnClickListener 
         if(v == this.settingsImageButton){
             listener.onSettingsImageButtonClicked();
         }
+    }
+
+    @Override
+    public void getUserLastPickitsOnComplete(ArrayList<PIBaseData> lastPickitsList) {
+        adapter.setData(lastPickitsList);
+        adapter.notifyDataSetChanged();
+        ((MainActivity)getActivity()).hideLoadingFragment();
     }
 }
 

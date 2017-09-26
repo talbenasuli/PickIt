@@ -14,9 +14,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import pickit.com.pickit.Data.PIBaseData;
 import pickit.com.pickit.Data.PIUserData;
 
 /**
@@ -123,6 +125,32 @@ public class PIFireBaseModel {
                     myRef.setValue(value);
                 }
 
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void getUserLastPickits(final PIModel.getUserLastPickitsListener listener){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference(dataBaseName + "/" + currentUser.getUid() + "/" + "lastSelectedSongsList" );
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<PIBaseData> lastPickitsList = new ArrayList<>();
+                int listSize = dataSnapshot.child("listSize").getValue(int.class);
+
+                for (int i = 1 ; i < listSize ; i++){
+                    PIBaseData song = new PIBaseData();
+                    song.topText = dataSnapshot.child(String.valueOf(i)).getValue(String.class);
+                    song.bottomText = String.valueOf(i);
+                    lastPickitsList.add(song);
+                }
+                listener.getUserLastPickitsOnComplete(lastPickitsList);
             }
 
             @Override

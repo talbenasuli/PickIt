@@ -122,6 +122,10 @@ public class MainActivity extends PIActivity
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmets_container, fragment, tag)
                 .commit();
+
+        if(v.getId() == R.id.profile_button){
+            showLoadingFragment(R.id.fragmets_container , false);
+        }
     }
 
 

@@ -72,7 +72,7 @@ public class PIRegistrationFragment extends Fragment implements View.OnClickList
     @Override
     public void onClick(View view) {
         if(view == registerButton) {
-            ((PILoginActivity)getActivity()).showLoadingFragment(R.id.loginContainerFrame);
+            ((PILoginActivity)getActivity()).showLoadingFragment(R.id.loginContainerFrame, true);
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
             PIModel.getInstance().register(email,password,this);

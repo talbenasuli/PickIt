@@ -128,4 +128,12 @@ public class PIModel {
     public void saveSelectedSong(String songName){
         modelFireBase.saveSelectedSong(songName);
     }
+
+
+    public interface getUserLastPickitsListener {
+        public void getUserLastPickitsOnComplete(ArrayList<PIBaseData> lastPickitsList);
+    }
+    public void getUserLastPickits(getUserLastPickitsListener listener){
+        modelFireBase.getUserLastPickits(listener);
+    }
 }

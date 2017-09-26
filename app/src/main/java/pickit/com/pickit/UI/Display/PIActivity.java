@@ -23,7 +23,8 @@ public class PIActivity extends AppCompatActivity {
 
     }
 
-    public void showLoadingFragment(int containerID){
+    public void showLoadingFragment(int containerID, Boolean isBackgroundClear){
+        loadingFragment.isBackgroundClear(isBackgroundClear);
         getSupportFragmentManager().beginTransaction()
                 .add(containerID,loadingFragment, null).addToBackStack(null)
                 .commit();
