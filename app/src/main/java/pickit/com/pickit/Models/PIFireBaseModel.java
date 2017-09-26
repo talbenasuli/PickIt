@@ -148,7 +148,7 @@ public class PIFireBaseModel {
                     PIBaseData song = new PIBaseData();
                     song.topText = dataSnapshot.child(String.valueOf(i)).getValue(String.class);
                     song.bottomText = String.valueOf(i);
-                    lastPickitsList.add(song);
+                    lastPickitsList.add(0, song);
                 }
                 listener.getUserLastPickitsOnComplete(lastPickitsList);
             }
