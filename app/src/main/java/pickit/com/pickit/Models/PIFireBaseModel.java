@@ -29,6 +29,7 @@ public class PIFireBaseModel {
 
     private static String dataBaseName = "usersData";
     private final int maxLastSongsListSize = 20;
+    private final int maxLastVisitedPlacesListSize = 10;
     public static FirebaseUser currentUser;
 
     public void register(String email, String password, final PIModel.PIRegisterListener callback) {
@@ -159,4 +160,66 @@ public class PIFireBaseModel {
             }
         });
     }
+
+    public void saveLastPlaceVisited( final String PlaceName){
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference(dataBaseName + "/" + currentUser.getUid() + "/" + "lastPlacesVisited" );
+
+
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                long listSize = dataSnapshot.getChildrenCount();
+
+                if(listSize < maxLastVisitedPlacesListSize){
+                    myRef.child(String.valueOf(listSize + 1)).setValue(PlaceName);
+                }
+                else {
+                    Map<String, Object> value = new HashMap<>();
+                    for (int i = 2 ; i <= maxLastVisitedPlacesListSize ; i++){
+                        String name = dataSnapshot.child(String.valueOf(i)).getValue(String.class);
+                        value.put(String.valueOf(i-1) , name);
+                    }
+                    value.put(String.valueOf(maxLastVisitedPlacesListSize) , PlaceName);
+                    myRef.setValue(value);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
+    public void getLastvisitedPlaces(final PIModel.GetLastVisitedPlacesListener listener){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference(dataBaseName + "/" + currentUser.getUid() + "/" + "lastPlacesVisited" );
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<PIBaseData> lastPickitsList = new ArrayList<>();
+                long listSize = dataSnapshot.getChildrenCount();
+
+                for (int i = 1 ; i < listSize ; i++){
+                    PIBaseData place = new PIBaseData();
+                    place.topText = dataSnapshot.child(String.valueOf(i)).getValue(String.class);
+                    place.bottomText = String.valueOf(i);
+                    lastPickitsList.add(0, place);
+                }
+                listener.getLastVisitedPlacesOnComplete(lastPickitsList);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 }

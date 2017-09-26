@@ -136,4 +136,18 @@ public class PIModel {
     public void getUserLastPickits(getUserLastPickitsListener listener){
         modelFireBase.getUserLastPickits(listener);
     }
+
+    //last visited palces list manegment
+
+    public void saveLastVisitedPlace(String placeName){
+        modelFireBase.saveLastPlaceVisited(placeName);
+    }
+
+    public interface GetLastVisitedPlacesListener {
+        public void getLastVisitedPlacesOnComplete(ArrayList<PIBaseData> lastVisitedPlacesList);
+    }
+
+    public void getLastVisitedPlaces(GetLastVisitedPlacesListener listener){
+        modelFireBase.getLastvisitedPlaces(listener);
+    }
 }

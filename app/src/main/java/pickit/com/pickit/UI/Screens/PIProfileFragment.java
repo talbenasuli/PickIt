@@ -23,17 +23,18 @@ import pickit.com.pickit.R;
  * Created by Tal on 21/03/2017.
  */
 
-public class PIProfileFragment extends Fragment implements View.OnClickListener, PIModel.getUserLastPickitsListener {
+public class PIProfileFragment extends Fragment implements View.OnClickListener, PIModel.getUserLastPickitsListener, PIModel.GetLastVisitedPlacesListener {
 
     RecyclerView songsRecyclerView;
-    PIRecyclerViewAdapter adapter;
+    PIRecyclerViewAdapter lastSongsAdapter;
+    PIRecyclerViewAdapter lastVisitedPlacesAdapter;
     ImageButton settingsImageButton;
     RecyclerView placesVisitedRecyclerView;
+    private int requestsCounter = 0;
 
     public static final String TAG = "PIProfileFragment";
 
     private PIProfileFragmentListener listener;
-
 
     public interface PIProfileFragmentListener {
         void onSettingsImageButtonClicked();
@@ -93,12 +94,17 @@ public class PIProfileFragment extends Fragment implements View.OnClickListener,
         dataList.add(ff);
 
 
-        adapter = new PIRecyclerViewAdapter();
-        adapter.setData(dataList);
-        songsRecyclerView.setAdapter(adapter);
-        placesVisitedRecyclerView.setAdapter(adapter);
+        lastSongsAdapter = new PIRecyclerViewAdapter();
+        lastSongsAdapter.setData(dataList);
+        lastVisitedPlacesAdapter = new PIRecyclerViewAdapter();
+        lastVisitedPlacesAdapter.setData(dataList);
+        songsRecyclerView.setAdapter(lastSongsAdapter);
+        placesVisitedRecyclerView.setAdapter(lastVisitedPlacesAdapter);
 
+        requestsCounter++;
         PIModel.getInstance().getUserLastPickits(this);
+        requestsCounter++;
+        PIModel.getInstance().getLastVisitedPlaces(this);
     }
 
     @Override
@@ -121,9 +127,23 @@ public class PIProfileFragment extends Fragment implements View.OnClickListener,
 
     @Override
     public void getUserLastPickitsOnComplete(ArrayList<PIBaseData> lastPickitsList) {
-        adapter.setData(lastPickitsList);
-        adapter.notifyDataSetChanged();
-        ((MainActivity)getActivity()).hideLoadingFragment();
+        lastSongsAdapter.setData(lastPickitsList);
+        lastSongsAdapter.notifyDataSetChanged();
+        requestsCounter--;
+        if (requestsCounter == 0){
+            ((MainActivity)getActivity()).hideLoadingFragment();
+        }
+    }
+
+    @Override
+    public void getLastVisitedPlacesOnComplete(ArrayList<PIBaseData> lastVisitedPlacesList) {
+        lastVisitedPlacesAdapter.setData(lastVisitedPlacesList);
+        lastVisitedPlacesAdapter.notifyDataSetChanged();
+        requestsCounter--;
+        if (requestsCounter == 0){
+            ((MainActivity)getActivity()).hideLoadingFragment();
+        }
+
     }
 }
 
