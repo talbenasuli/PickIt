@@ -23,7 +23,7 @@ import pickit.com.pickit.R;
  * Created by Tal on 21/03/2017.
  */
 
-public class PIProfileFragment extends Fragment implements View.OnClickListener, PIModel.getUserLastPickitsListener, PIModel.GetLastVisitedPlacesListener {
+public class PIProfileFragment extends Fragment implements View.OnClickListener, PIModel.GetUserLastPickitsListener, PIModel.GetLastVisitedPlacesListener {
 
     RecyclerView songsRecyclerView;
     PIRecyclerViewAdapter lastSongsAdapter;

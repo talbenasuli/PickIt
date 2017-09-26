@@ -9,7 +9,6 @@ import java.util.List;
 import pickit.com.pickit.Data.PIBaseData;
 import pickit.com.pickit.Data.PIListRowData;
 import pickit.com.pickit.Data.PIUserData;
-import pickit.com.pickit.UI.Screens.HomeFragment;
 
 /**
  * Created by Tal Ben Asuli on 18/09/2017.
@@ -130,10 +129,10 @@ public class PIModel {
     }
 
 
-    public interface getUserLastPickitsListener {
+    public interface GetUserLastPickitsListener {
         public void getUserLastPickitsOnComplete(ArrayList<PIBaseData> lastPickitsList);
     }
-    public void getUserLastPickits(getUserLastPickitsListener listener){
+    public void getUserLastPickits(GetUserLastPickitsListener listener){
         modelFireBase.getUserLastPickits(listener);
     }
 
