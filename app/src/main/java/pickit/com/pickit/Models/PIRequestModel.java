@@ -1,9 +1,11 @@
 package pickit.com.pickit.Models;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import com.android.volley.VolleyError;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import pickit.com.pickit.Data.PIBaseData;
@@ -11,7 +13,10 @@ import pickit.com.pickit.Data.PIListRowData;
 import pickit.com.pickit.Networking.Requests.PIGetAllSongsRequest;
 import pickit.com.pickit.Networking.Requests.PIGetPlaceNameRequest;
 import pickit.com.pickit.Networking.Requests.PIGetPlayingSongRequest;
+import pickit.com.pickit.Networking.Requests.PIGetSongImagePathRequest;
+import pickit.com.pickit.Networking.Requests.PIGetSongImageRequest;
 import pickit.com.pickit.Networking.Requests.PIGetUserPickItsRequest;
+import pickit.com.pickit.Networking.Requests.PISendSongSuggestRequest;
 import pickit.com.pickit.Networking.Requests.PISocketIORequest;
 import pickit.com.pickit.Networking.Requests.PIUpdatePickItRequest;
 
@@ -78,8 +83,8 @@ public class PIRequestModel {
         PISocketIORequest registerServerUpdatesRequest = new PISocketIORequest();
         registerServerUpdatesRequest.setListener(new PIModel.PISocketIORequestListener() {
             @Override
-            public void onPickIt(String songId) {
-                listener.onPickIt(songId);
+            public void onPickIt(String songId, int songPickIts) {
+                listener.onPickIt(songId, songPickIts);
             }
 
             public void onSongEnds(String songId, PIListRowData songData) {
@@ -123,5 +128,16 @@ public class PIRequestModel {
         request.sendRequest();
     }
 
+    public void sendSongSuggestRequest(final PIModel.PISendSongSuggestListener listener, String songName, String artist, String youtubeLink,
+                                       ArrayList<String> generes) {
 
+        PISendSongSuggestRequest request = new PISendSongSuggestRequest(context,songName,artist,youtubeLink,generes);
+        request.setListener(new PIModel.PISendSongSuggestListener() {
+            @Override
+            public void sendSongSuggestOnSuccess() {
+                listener.sendSongSuggestOnSuccess();
+            }
+        });
+        request.sendRequest();
+    }
 }

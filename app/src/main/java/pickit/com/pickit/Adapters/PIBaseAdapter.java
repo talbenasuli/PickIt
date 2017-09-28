@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class PIBaseAdapter extends ArrayAdapter<PIBaseData> {
         public TextView topTextView;
         public TextView bottomTextView;
         public TextView position;
+        public ProgressBar progressBar;
     }
 
     //Parameters:

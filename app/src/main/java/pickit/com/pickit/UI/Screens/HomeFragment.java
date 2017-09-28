@@ -1,5 +1,6 @@
 package pickit.com.pickit.UI.Screens;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,6 +25,7 @@ import pickit.com.pickit.Adapters.PIListAdapter;
 import pickit.com.pickit.Data.PIBaseData;
 import pickit.com.pickit.Data.PIListRowData;
 import pickit.com.pickit.Models.PIModel;
+import pickit.com.pickit.Networking.Requests.PISocketIORequest;
 import pickit.com.pickit.R;
 
 /**
@@ -51,6 +53,7 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
     View playingNowView;
     TextView placeNameTextView;
     ImageButton searchXButton;
+    boolean isDetached = false;
 
     // Plating song view parameters:
     ImageButton playingNowRightImageButton;
@@ -139,6 +142,20 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        isDetached = false;
+        updateList();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        isDetached = true;
+        PISocketIORequest.disconnectSocketIO();
+    }
+
+    @Override
     public void onClickRightButton(int songId) {
         PIModel.getInstance().updatePickIt(String.valueOf(songId), this);
         int songIndex = getSongIndexById(songId,songList);
@@ -192,11 +209,11 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
 
     // PISocketIORequestListener
     @Override
-    public void onPickIt(String songId) {
+    public void onPickIt(String songId, int songPickIts) {
         int songIdAsInt = Integer.valueOf(songId);
         int songIndexAtSongList = getSongIndexById(Integer.valueOf(songId),songList);
         PIListRowData song = (PIListRowData) songList.get(songIndexAtSongList);
-        song.rightText = String.valueOf(Integer.valueOf(song.rightText) + 1);
+        song.rightText = String.valueOf(songPickIts);
 
         if(searchSongList.size() != 0 && searchSongList != null && searchSongListView.getVisibility() == View.VISIBLE) {
             int songIndexInSearchList = getSongIndexById(songIdAsInt,searchSongList);
@@ -243,7 +260,7 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
     }
 
     private void updateList() {
-        if(songList != null) {
+        if(songList != null && !isDetached) {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -269,7 +286,7 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
     }
 
     private void updateSearchList() {
-        if(searchSongList != null) {
+        if(searchSongList != null && !isDetached) {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -344,7 +361,5 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
     }
 
     @Override
-    public void afterTextChanged(Editable editable) {
-
-    }
+    public void afterTextChanged(Editable editable) {}
 }

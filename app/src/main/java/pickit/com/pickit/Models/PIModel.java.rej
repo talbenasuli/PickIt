@@ -1,0 +1,9 @@
+diff a/app/src/main/java/pickit/com/pickit/Models/PIModel.java b/app/src/main/java/pickit/com/pickit/Models/PIModel.java	(rejected hunks)
+@@ -25,7 +25,6 @@
+      private static final PIModel ourInstance = new PIModel();
+      PIFireBaseModel modelFireBase;
+ +    PIFilesModel modelFiles;
+- 
+      PIRequestModel requestModel;
+      PISongImageModel songImageModel;
+  

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.webkit.URLUtil;
+import android.graphics.Bitmap;
 
 import com.android.volley.VolleyError;
 import com.google.firebase.auth.FirebaseUser;
@@ -14,6 +15,7 @@ import java.util.List;
 import pickit.com.pickit.Data.PIBaseData;
 import pickit.com.pickit.Data.PIListRowData;
 import pickit.com.pickit.Data.PIUserData;
+import pickit.com.pickit.Networking.Requests.PIGetSongImagePathRequest;
 
 /**
  * Created by Tal Ben Asuli on 18/09/2017.
@@ -23,15 +25,16 @@ public class PIModel {
     private static final PIModel ourInstance = new PIModel();
     PIFireBaseModel modelFireBase;
     PIFilesModel modelFiles;
-
+    PIRequestModel requestModel;
+    PISongImageModel songImageModel;
 
     public static PIModel getInstance() {
         return ourInstance;
     }
-    PIRequestModel requestModel;
 
     private PIModel() {
         requestModel = new PIRequestModel(PIMyApplication.getMyContext());
+        songImageModel = new PISongImageModel(PIMyApplication.getMyContext());
         modelFireBase = new PIFireBaseModel();
     }
 
@@ -64,7 +67,7 @@ public class PIModel {
     }
 
     public interface PISocketIORequestListener {
-        public void onPickIt(String songId);
+        public void onPickIt(String songId, int songPickIts);
         public void onSongEnds(String songId, PIListRowData songData);
     }
 
@@ -93,6 +96,31 @@ public class PIModel {
 
     public void getUserPickits(PIGetUserPickitsListener listener) {
         requestModel.getUserPickits(listener);
+    }
+
+    public interface PISendSongSuggestListener {
+        public void sendSongSuggestOnSuccess();
+    }
+
+    public void sendSongSuggest(PISendSongSuggestListener listener, String songName, String artist, String youtubeLink,
+                                ArrayList<String> generes) {
+        requestModel.sendSongSuggestRequest(listener,songName,artist,youtubeLink,generes);
+    }
+
+    public interface PIGetSongPathImageRequestListener {
+        public void getSongImageRequestOnResponse(String imagePath);
+        public void getSongImageRequestOnErrorResponse(VolleyError error);
+    }
+
+    public interface PIGetSongImageListener {
+        public void onResponse(Bitmap image);
+        public void onError(VolleyError error);
+    }
+
+    public void getSongImage( String artist, PIGetSongImageListener listener) {
+        if(artist != null) {
+            songImageModel.getSongImageRequest(listener,artist);
+        }
     }
 
 

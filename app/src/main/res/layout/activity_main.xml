@@ -55,7 +55,7 @@
             android:src="@drawable/game_icon"/>
 
         <ImageButton
-            android:id="@+id/social_button"
+            android:id="@+id/songSuggest_button"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

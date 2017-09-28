@@ -47,7 +47,12 @@ class PISongParser {
         try {
             data.songId = Integer.parseInt(jsonObject.getString("songID"));
             data.topText = jsonObject.getString("songName");
-            data.bottomText = jsonObject.getString("artist");
+            if(jsonObject.getString("artist").equals("null")) {
+                data.bottomText = null;
+            }
+            else {
+                data.bottomText = jsonObject.getString("artist");
+            }
             data.rightText = jsonObject.getString("pickIts");
         } catch (JSONException e) {
             e.printStackTrace();

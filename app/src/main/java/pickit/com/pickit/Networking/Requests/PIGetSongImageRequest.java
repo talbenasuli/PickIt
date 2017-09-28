@@ -1,53 +1,48 @@
 package pickit.com.pickit.Networking.Requests;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.widget.ImageView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.Volley;
 
-import org.json.JSONObject;
-
-import pickit.com.pickit.Networking.Requests.Parsers.PIGetSongImageParser;
+import pickit.com.pickit.Models.PIModel;
 
 /**
- * Created by Tal on 05/06/2017.
+ * Created by Omer on 27/09/2017.
  */
 
-public class PIGetSongImageRequest extends PIBaseRequest {
+public class PIGetSongImageRequest implements Response.Listener<Bitmap>, Response.ErrorListener {
 
-    public interface PIGetSongImageRequestListener {
-        public void getSongImageRequestOnResponse(String imagePath);
-        public void getSongImageRequestOnErrorResponse(VolleyError error);
-    }
-
-    private String artistName;
-    private String apiKey = "a16256d94a11ccbaecb710a24d549ee2";
-    private String format = "json";
-    private String imagePath;
-    private PIGetSongImageRequestListener listener;
+    RequestQueue requestQueue;
+    String imagePath;
+    PIModel.PIGetSongImageListener listener;
 
     public PIGetSongImageRequest(Context context, String imagePath) {
-        super(context);
-        this.artistName = imagePath;
-        url = "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=" + artistName + "&api_key=" + apiKey + "&format=" + format;
+        requestQueue = Volley.newRequestQueue(context);
+        this.imagePath = imagePath;
+    }
+
+    public void sendRequest() {
+        ImageRequest request = new ImageRequest(imagePath,this, 0, 0, ImageView.ScaleType.CENTER_CROP, Bitmap.Config.ARGB_8888,this);
+        requestQueue.add(request);
     }
 
     @Override
-    protected void parseData(JSONObject response) {
-        PIGetSongImageParser parser = new PIGetSongImageParser();
-        imagePath = parser.parse(response);
+    public void onResponse(Bitmap response) {
+        listener.onResponse(response);
     }
 
     @Override
-    protected void notifyError(VolleyError error) {
-        listener.getSongImageRequestOnErrorResponse(error);
+    public void onErrorResponse(VolleyError error) {
+        listener.onError(error);
     }
 
-    @Override
-    protected void notifySuccess() {
-       listener.getSongImageRequestOnResponse(imagePath);
-    }
-
-    public void setListener(PIGetSongImageRequestListener listener) {
+    public void setListener(PIModel.PIGetSongImageListener listener) {
         this.listener = listener;
     }
 }

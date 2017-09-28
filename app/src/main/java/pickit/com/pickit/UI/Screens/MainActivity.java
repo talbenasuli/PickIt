@@ -27,6 +27,7 @@ public class MainActivity extends PIActivity
     //fragments:
     HomeFragment homeFragment;
     PIGameFragment gameFragment;
+    PISongSuggestFragment songSuggestFragment;
     RecommendationsFragment recommendations;
     PISocialFragment socialFragment;
     PIProfileFragment profileFragment;
@@ -44,6 +45,7 @@ public class MainActivity extends PIActivity
         recommendations = RecommendationsFragment.newInstance();
         profileFragment = PIProfileFragment.newInstance();
         settingsFragment = PISettingsFragment.newInstance();
+        songSuggestFragment = PISongSuggestFragment.newInstance();
 
         //loading home fragment
         getSupportFragmentManager().beginTransaction()
@@ -60,7 +62,7 @@ public class MainActivity extends PIActivity
         navBarRecommendationButton = (ImageButton)findViewById(R.id.reccomendations_button);
         navBarRecommendationButton.setOnClickListener(this);
 
-        navBarSocialButton = (ImageButton)findViewById(R.id.social_button);
+        navBarSocialButton = (ImageButton)findViewById(R.id.songSuggest_button);
         navBarSocialButton.setOnClickListener(this);
 
         navBarProfileButton =(ImageButton)findViewById(R.id.profile_button);
@@ -99,12 +101,12 @@ public class MainActivity extends PIActivity
                 }
                 tag = RecommendationsFragment.TAG;
                 break;
-            case R.id.social_button:
-                if (PISocialFragment.TAG == null) {
-                    fragment = PISocialFragment.newInstance();
+            case R.id.songSuggest_button:
+                if (PISongSuggestFragment.TAG == null) {
+                    fragment = PISongSuggestFragment.newInstance();
                 }
                 else{
-                    fragment = socialFragment;
+                    fragment = songSuggestFragment;
                 }
                 tag = PISocialFragment.TAG;
                 break;

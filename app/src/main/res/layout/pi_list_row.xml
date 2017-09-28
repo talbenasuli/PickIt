@@ -21,12 +21,20 @@
             android:textColor="@color/colorBlack"
             android:gravity="center_vertical"/>
 
+        <ProgressBar
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/listViewProgressBar"
+            android:layout_gravity="center">
+        </ProgressBar>
+
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
             android:scaleType="fitStart"
             android:layout_gravity="center"
+            android:visibility="gone"
             app:srcCompat="@drawable/common_google_signin_btn_icon_dark_focused"
             android:src="@drawable/song_general_image"
             android:id="@+id/listRowImage"/>
