@@ -33,6 +33,9 @@ public class MainActivity extends PIActivity
     PIProfileFragment profileFragment;
     PISettingsFragment settingsFragment;
 
+    //variables
+    public String placeName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

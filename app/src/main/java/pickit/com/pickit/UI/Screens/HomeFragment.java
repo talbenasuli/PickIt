@@ -89,7 +89,7 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
         super.onViewCreated(view, savedInstanceState);
 
         PIModel.getInstance().registerServerUpdates(this);
-        if(placeName == null){
+        if(((MainActivity)getActivity()).placeName == null){
             PIModel.getInstance().getPlaceName(this);
         }
 
@@ -328,7 +328,7 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
     // PIGetPlaceNameRequest
     @Override
     public void placeNameOnResponse(String placeName) {
-        this.placeName = placeName;
+        ((MainActivity)getActivity()).placeName = placeName;
         placeNameTextView.setText(placeName);
         PIModel.getInstance().saveLastVisitedPlace(placeName);
     }

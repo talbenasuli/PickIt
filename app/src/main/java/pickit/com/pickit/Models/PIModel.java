@@ -14,6 +14,7 @@ import java.util.List;
 
 import pickit.com.pickit.Data.PIBaseData;
 import pickit.com.pickit.Data.PIListRowData;
+import pickit.com.pickit.Data.PIPlaceData;
 import pickit.com.pickit.Data.PIUserData;
 import pickit.com.pickit.Networking.Requests.PIGetSongImagePathRequest;
 
@@ -261,5 +262,13 @@ public class PIModel {
         modelFireBase.getProfileImageUrl(listener);
     }
 
+    //manage list of places that are working with pickit
 
+    public interface getAllWorkingPlacesInRangeListener{
+        void getAllWorkingPlacesInRangeListenerOnComplete(ArrayList<PIPlaceData> places);
+    }
+
+    public void getAllWorkingPlacesInRange(int range , getAllWorkingPlacesInRangeListener listener ){
+        modelFireBase.getAllWorkingPlacesInRange(range , listener);
+    }
 }

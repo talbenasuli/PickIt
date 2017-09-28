@@ -28,7 +28,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import pickit.com.pickit.Data.PIBaseData;
+import pickit.com.pickit.Data.PIGenreData;
+import pickit.com.pickit.Data.PIPlaceData;
 import pickit.com.pickit.Data.PIUserData;
+import pickit.com.pickit.UI.Screens.MainActivity;
 
 /**
  * Created by or on 19/09/2017.
@@ -36,7 +39,8 @@ import pickit.com.pickit.Data.PIUserData;
 
 public class PIFireBaseModel {
 
-    private static String dataBaseName = "usersData";
+    private static String usersDataBaseName = "usersData";
+    private static String workingPlacesDataBaseName = "working places";
     private final int maxLastSongsListSize = 20;
     private final int maxLastVisitedPlacesListSize = 10;
     public static FirebaseUser currentUser;
@@ -63,7 +67,7 @@ public class PIFireBaseModel {
     public void saveUserDetailsAfterRegistration(PIUserData userData, final PIModel.PISaveUserDataListener listener ){
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference(dataBaseName);
+        DatabaseReference myRef = database.getReference(usersDataBaseName);
         Map<String, Object> value = new HashMap<>();
 
         value.put("first name", userData.getFirstName());
@@ -110,7 +114,7 @@ public class PIFireBaseModel {
     public void saveSelectedSong( final String songName){
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference(dataBaseName + "/" + currentUser.getUid() + "/" + "lastSelectedSongsList" );
+        final DatabaseReference myRef = database.getReference(usersDataBaseName + "/" + currentUser.getUid() + "/" + "lastSelectedSongsList" );
 
 
 
@@ -146,7 +150,7 @@ public class PIFireBaseModel {
 
     public void getUserLastPickits(final PIModel.GetUserLastPickitsListener listener){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference(dataBaseName + "/" + currentUser.getUid() + "/" + "lastSelectedSongsList" );
+        final DatabaseReference myRef = database.getReference(usersDataBaseName + "/" + currentUser.getUid() + "/" + "lastSelectedSongsList" );
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -173,7 +177,7 @@ public class PIFireBaseModel {
     public void saveLastPlaceVisited( final String PlaceName){
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference(dataBaseName + "/" + currentUser.getUid() + "/" + "lastPlacesVisited" );
+        final DatabaseReference myRef = database.getReference(usersDataBaseName + "/" + currentUser.getUid() + "/" + "lastPlacesVisited" );
 
 
 
@@ -213,7 +217,7 @@ public class PIFireBaseModel {
 
     public void getLastvisitedPlaces(final PIModel.GetLastVisitedPlacesListener listener){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference(dataBaseName + "/" + currentUser.getUid() + "/" + "lastPlacesVisited" );
+        final DatabaseReference myRef = database.getReference(usersDataBaseName + "/" + currentUser.getUid() + "/" + "lastPlacesVisited" );
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -263,7 +267,7 @@ public class PIFireBaseModel {
 
     private void saveImageUrl(final String url , final PIModel.SaveImageListener listener ){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference(dataBaseName + "/" + currentUser.getUid() + "/profileImageUrl");
+        final DatabaseReference myRef = database.getReference(usersDataBaseName + "/" + currentUser.getUid() + "/profileImageUrl");
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -302,7 +306,7 @@ public class PIFireBaseModel {
 
     public void getProfileImageUrl(final PIModel.GetProfileImageUrlListener listener){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference(dataBaseName + "/" + currentUser.getUid() + "/profileImageUrl");
+        final DatabaseReference myRef = database.getReference(usersDataBaseName + "/" + currentUser.getUid() + "/profileImageUrl");
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -322,4 +326,74 @@ public class PIFireBaseModel {
             }
         });
     }
+
+    //manage list of places that are working with pickit
+
+    public void getAllWorkingPlacesInRange(int range , final PIModel.getAllWorkingPlacesInRangeListener listener ){
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference(workingPlacesDataBaseName);
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<PIPlaceData> placesList = new ArrayList();
+
+                for (DataSnapshot placeShot : dataSnapshot.getChildren()){
+                    PIPlaceData place = new PIPlaceData();
+                    place.topText = placeShot.getKey();
+                    place.genresList = getGenersArrayFromSnapShot(placeShot.child("genres"));
+                    place.bottomText = getStringFromGenresArray(place.genresList);
+                    place.placeTypesList = getTypesArrayFromSnapShot(placeShot.child("types"));
+                    placesList.add(place);
+                }
+                listener.getAllWorkingPlacesInRangeListenerOnComplete(placesList);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private String getStringFromGenresArray(ArrayList<PIGenreData> genres){
+        StringBuilder sb = new StringBuilder();
+        Boolean isFirst = true;
+        for (PIGenreData genre : genres) {
+            if(!isFirst){
+                sb.append(" | ");
+            }
+            isFirst = false;
+            sb.append(genre.name);
+        }
+
+        return sb.toString();
+    }
+
+    private ArrayList<PIGenreData> getGenersArrayFromSnapShot(DataSnapshot snapShot){
+        ArrayList<PIGenreData> genres = new ArrayList();
+
+        for(DataSnapshot genreShot : snapShot.getChildren()){
+            PIGenreData genre = new PIGenreData();
+
+            genre.name = genreShot.getKey();
+            genre.percentage = genreShot.getValue(long.class);
+            genres.add(genre);
+        }
+
+        return genres;
+    }
+
+    private ArrayList<String> getTypesArrayFromSnapShot(DataSnapshot snapShot){
+        ArrayList<String> types = new ArrayList();
+
+        for(DataSnapshot genreShot : snapShot.getChildren()){
+           String type = genreShot.getValue(String.class);
+            types.add(type);
+        }
+
+        return types;
+    }
+
 }

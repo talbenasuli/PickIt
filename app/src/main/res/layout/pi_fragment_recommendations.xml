@@ -12,15 +12,6 @@
         android:orientation="horizontal"
         android:weightSum="2">
 
-        <pickit.com.pickit.UI.Display.PIMultiSelectionSpinner
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:id="@+id/genreSpinner"
-            android:background="@drawable/drop_down_spinner_style"
-            android:layout_weight="1"
-            app:hintText="Genre"/>
 
         <pickit.com.pickit.UI.Display.PIMultiSelectionSpinner
             android:layout_width="match_parent"
@@ -31,7 +22,7 @@
             android:id="@+id/placesSpinner"
             android:background="@drawable/drop_down_spinner_style"
             android:layout_weight="1"
-            app:hintText="Places"/>
+            app:hintText="Place Type"/>
 
     </LinearLayout>
 
