@@ -34,6 +34,9 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
         , PIModel.getAllSongsRequestListener, PIModel.PIGetPlayingSongListener, PIModel.PIUpdatePickItRequestListener,
         PIModel.PISocketIORequestListener, TextWatcher, PIModel.PIGetPlaceNameListener, PIModel.PIGetUserPickitsListener {
 
+
+    private String placeName;
+
     //Parameters:
     public static final String TAG = "HomeFragment";
     List<PIBaseData> songList;
@@ -83,7 +86,9 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
         super.onViewCreated(view, savedInstanceState);
 
         PIModel.getInstance().registerServerUpdates(this);
-        PIModel.getInstance().getPlaceName(this);
+        if(placeName == null){
+            PIModel.getInstance().getPlaceName(this);
+        }
 
         songList = new ArrayList<PIBaseData>();
         searchSongList = new ArrayList<>();
@@ -306,11 +311,16 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
     // PIGetPlaceNameRequest
     @Override
     public void placeNameOnResponse(String placeName) {
+        this.placeName = placeName;
         placeNameTextView.setText(placeName);
+        PIModel.getInstance().saveLastVisitedPlace(placeName);
     }
 
     @Override
-    public void placeNameOnCancel(VolleyError error) {}
+    public void placeNameOnCancel(VolleyError error) {
+
+
+    }
 
     @Override
     public void getUserPickitsOnResponse(List<String> userPickits) {

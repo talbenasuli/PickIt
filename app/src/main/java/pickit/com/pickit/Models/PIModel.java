@@ -1,5 +1,10 @@
 package pickit.com.pickit.Models;
 
+import android.app.Activity;
+import android.graphics.Bitmap;
+import android.util.Log;
+import android.webkit.URLUtil;
+
 import com.android.volley.VolleyError;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -17,6 +22,8 @@ import pickit.com.pickit.Data.PIUserData;
 public class PIModel {
     private static final PIModel ourInstance = new PIModel();
     PIFireBaseModel modelFireBase;
+    PIFilesModel modelFiles;
+
 
     public static PIModel getInstance() {
         return ourInstance;
@@ -149,4 +156,82 @@ public class PIModel {
     public void getLastVisitedPlaces(GetLastVisitedPlacesListener listener){
         modelFireBase.getLastvisitedPlaces(listener);
     }
+
+    //image handeling
+
+    public interface SaveImageListener{
+        public void saveImageListenerOnComplete(String url);
+    }
+
+    public void saveImage(final Bitmap imageBmp, final String name, final SaveImageListener listener, final Activity activity) {
+        modelFireBase.saveImage(imageBmp, name, new SaveImageListener() {
+            @Override
+            public void saveImageListenerOnComplete(String url) {
+                String fileName = URLUtil.guessFileName(url, null, null);
+                modelFiles.saveImageToFile(imageBmp,fileName, activity);
+                listener.saveImageListenerOnComplete(url);
+            }
+        });
+    }
+
+    public interface GetImageListener{
+        void getImageListenerOnSuccess(Bitmap image);
+        void getImageListenerOnFail();
+    }
+    public void getImage(final Activity activity, final GetImageListener listener) {
+        //check if image exsist localy
+
+        getProfileImageUrl(new GetProfileImageUrlListener() {
+            @Override
+            public void profileImageUrlListenerOnComplete(final String url) {
+
+                final String fileName = URLUtil.guessFileName(url, null, null);
+                modelFiles.loadImageFromFileAsynch(fileName, new LoadImageFromFileAsynch() {
+                    @Override
+                    public void loadImageFromFileAsynchOnComplete(Bitmap bitmap) {
+                        if (bitmap != null){
+                            listener.getImageListenerOnSuccess(bitmap);
+                        }else {
+                            modelFireBase.getImage(url, new GetImageListener() {
+                                @Override
+                                public void getImageListenerOnSuccess(Bitmap image) {
+                                    String fileName = URLUtil.guessFileName(url, null, null);
+                                    Log.d("TAG","getImage from FB success " + fileName);
+                                    modelFiles.saveImageToFile(image,fileName, activity);
+                                    listener.getImageListenerOnSuccess(image);
+                                }
+
+                                @Override
+                                public void getImageListenerOnFail() {
+                                    Log.d("TAG","getImage from FB fail ");
+                                    listener.getImageListenerOnFail();
+                                }
+                            });
+
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void profileImageUrlListenerOnFail() {
+                listener.getImageListenerOnFail();
+            }
+        });
+
+    }
+
+    interface LoadImageFromFileAsynch{
+        void loadImageFromFileAsynchOnComplete(Bitmap bitmap);
+    }
+
+    public interface GetProfileImageUrlListener {
+        void profileImageUrlListenerOnComplete(String url);
+        void profileImageUrlListenerOnFail();
+    }
+    public void getProfileImageUrl(GetProfileImageUrlListener listener){
+        modelFireBase.getProfileImageUrl(listener);
+    }
+
+
 }

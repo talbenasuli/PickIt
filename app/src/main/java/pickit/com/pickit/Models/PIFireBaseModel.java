@@ -1,8 +1,14 @@
 package pickit.com.pickit.Models;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -12,7 +18,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -172,17 +182,23 @@ public class PIFireBaseModel {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 long listSize = dataSnapshot.getChildrenCount();
 
-                if(listSize < maxLastVisitedPlacesListSize){
-                    myRef.child(String.valueOf(listSize + 1)).setValue(PlaceName);
-                }
-                else {
-                    Map<String, Object> value = new HashMap<>();
-                    for (int i = 2 ; i <= maxLastVisitedPlacesListSize ; i++){
-                        String name = dataSnapshot.child(String.valueOf(i)).getValue(String.class);
-                        value.put(String.valueOf(i-1) , name);
+                String lastVisitedPlace = dataSnapshot.child(String.valueOf(listSize)).getValue(String.class);
+
+                if(!lastVisitedPlace.equals(PlaceName)) {
+
+                    if(listSize < maxLastVisitedPlacesListSize){
+                        myRef.child(String.valueOf(listSize + 1)).setValue(PlaceName);
                     }
-                    value.put(String.valueOf(maxLastVisitedPlacesListSize) , PlaceName);
-                    myRef.setValue(value);
+                    else {
+                        Map<String, Object> value = new HashMap<>();
+                        for (int i = 2 ; i <= maxLastVisitedPlacesListSize ; i++){
+                            String name = dataSnapshot.child(String.valueOf(i)).getValue(String.class);
+                            value.put(String.valueOf(i-1) , name);
+                        }
+                        value.put(String.valueOf(maxLastVisitedPlacesListSize) , PlaceName);
+                        myRef.setValue(value);
+                    }
+
                 }
 
             }
@@ -205,7 +221,7 @@ public class PIFireBaseModel {
                 ArrayList<PIBaseData> lastPickitsList = new ArrayList<>();
                 long listSize = dataSnapshot.getChildrenCount();
 
-                for (int i = 1 ; i < listSize ; i++){
+                for (int i = 1 ; i <= listSize ; i++){
                     PIBaseData place = new PIBaseData();
                     place.topText = dataSnapshot.child(String.valueOf(i)).getValue(String.class);
                     place.bottomText = String.valueOf(i);
@@ -221,4 +237,89 @@ public class PIFireBaseModel {
         });
     }
 
+    public void saveImage(Bitmap imageBmp, String id, final PIModel.SaveImageListener listener){
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference imagesRef = storage.getReference().child("images").child(id);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        imageBmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = imagesRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception exception) {
+
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                @SuppressWarnings("VisibleForTests") Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                saveImageUrl(downloadUrl.toString() , listener);
+            }
+        });
+    }
+
+    private void saveImageUrl(final String url , final PIModel.SaveImageListener listener ){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference(dataBaseName + "/" + currentUser.getUid() + "/profileImageUrl");
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                listener.saveImageListenerOnComplete(url);
+                myRef.removeEventListener(this);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        myRef.setValue(url);
+    }
+
+    public void getImage(String url, final PIModel.GetImageListener listener){
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference httpsReference = storage.getReferenceFromUrl(url);
+        final long ONE_MEGABYTE = 1024 * 1024;
+        httpsReference.getBytes(3* ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap image = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                listener.getImageListenerOnSuccess(image);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception exception) {
+                Log.d("TAG",exception.getMessage());
+                listener.getImageListenerOnFail();
+            }
+        });
+    }
+
+    public void getProfileImageUrl(final PIModel.GetProfileImageUrlListener listener){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference(dataBaseName + "/" + currentUser.getUid() + "/profileImageUrl");
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String url = dataSnapshot.getValue(String.class);
+                if(url != null){
+                    listener.profileImageUrlListenerOnComplete(url);
+                }
+                else{
+                    listener.profileImageUrlListenerOnFail();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 }
