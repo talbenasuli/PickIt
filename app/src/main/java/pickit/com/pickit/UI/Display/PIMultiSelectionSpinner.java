@@ -4,10 +4,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
+import android.net.sip.SipAudioCall;
 import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ public class PIMultiSelectionSpinner extends Spinner implements
     String[] _items = null;
     boolean[] mSelection = null;
     String hintText = "";
+    public  multiSelectionSpinnerListener listener;
 
     ArrayAdapter<String> simple_adapter;
 
@@ -51,13 +54,16 @@ public class PIMultiSelectionSpinner extends Spinner implements
     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
         if (mSelection != null && which < mSelection.length) {
             mSelection[which] = isChecked;
-
             simple_adapter.clear();
             simple_adapter.add(buildSelectedItemString());
         } else {
             throw new IllegalArgumentException(
                     "Argument 'which' is out of bounds.");
         }
+    }
+
+    public interface multiSelectionSpinnerListener{
+        void multiSelectionSpinnerListenerFinishSelection();
     }
 
     @Override
@@ -69,7 +75,9 @@ public class PIMultiSelectionSpinner extends Spinner implements
             @Override
             public void onClick(DialogInterface arg0, int arg1)
             {
-
+                if(listener != null){
+                    listener.multiSelectionSpinnerListenerFinishSelection();
+                }
             }
         });
 

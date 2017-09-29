@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pickit.com.pickit.Data.PIBaseData;
+import pickit.com.pickit.Data.PIGenreData;
 import pickit.com.pickit.Data.PIListRowData;
 import pickit.com.pickit.Data.PIPlaceData;
 import pickit.com.pickit.Data.PIUserData;
@@ -288,5 +289,12 @@ public class PIModel {
 
     public void getAllWorkingPlacesInRange(int range , getAllWorkingPlacesInRangeListener listener ){
         modelFireBase.getAllWorkingPlacesInRange(range , listener);
+    }
+
+    public interface getUserFavoriteGenresListener {
+        void getUserFavoriteGenresOnComplete(ArrayList<PIGenreData> userFavoriteGenres);
+    }
+    public void getUserFavoriteGenres(getUserFavoriteGenresListener listener){
+        modelFireBase.getUserFavoriteGenres(listener);
     }
 }

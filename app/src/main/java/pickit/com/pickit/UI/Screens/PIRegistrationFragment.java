@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.List;
 
+import pickit.com.pickit.Data.PIGenreData;
 import pickit.com.pickit.Data.PIUserData;
 import pickit.com.pickit.Models.PIModel;
 import pickit.com.pickit.R;
@@ -91,9 +92,17 @@ public class PIRegistrationFragment extends Fragment implements View.OnClickList
         String firstName = firstNameEditText.getText().toString();
         String lastName = lastNameEditText.getText().toString();
         String email = emailEditText.getText().toString();
-        ArrayList<String> favoriteGeners = spinner.getselectedItems();
-
-        PIUserData userData = new PIUserData(firstName, lastName, email, favoriteGeners);
+        ArrayList<String> favoriteGenersNames = spinner.getselectedItems();
+        ArrayList<PIGenreData> favoriteGenresData = new ArrayList();
+        //************only fo tests in future we need to get the precentage dynamicly******************
+        for (String genreName : favoriteGenersNames){
+            PIGenreData genreData = new PIGenreData();
+            genreData.name = genreName;
+            genreData.percentage = 100/favoriteGenersNames.size();//hard coded precentage should be dynamic
+            favoriteGenresData.add(genreData);
+        }
+        /****************************************************************************************************/
+        PIUserData userData = new PIUserData(firstName, lastName, email, favoriteGenresData);
         PIModel.getInstance().saveUserDetailsAfterRegistration(userData, this);
     }
 

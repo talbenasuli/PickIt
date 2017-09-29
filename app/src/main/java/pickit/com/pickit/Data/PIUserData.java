@@ -10,9 +10,9 @@ public class PIUserData {
     String firstName;
     String lastName;
     String email;
-    ArrayList<String> favoriteGeners;
+    ArrayList<PIGenreData> favoriteGeners;
 
-    public PIUserData(String firstName, String lastName, String email, ArrayList<String> favoriteGeners) {
+    public PIUserData(String firstName, String lastName, String email, ArrayList<PIGenreData> favoriteGeners) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -44,11 +44,11 @@ public class PIUserData {
         this.email = email;
     }
 
-    public ArrayList<String> getFavoriteGeners() {
+    public ArrayList<PIGenreData> getFavoriteGeners() {
         return favoriteGeners;
     }
 
-    public void setFavoriteGeners(ArrayList<String> favoriteGeners) {
+    public void setFavoriteGeners(ArrayList<PIGenreData> favoriteGeners) {
         this.favoriteGeners = favoriteGeners;
     }
 

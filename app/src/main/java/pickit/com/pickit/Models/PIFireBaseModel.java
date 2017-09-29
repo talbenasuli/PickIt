@@ -75,7 +75,12 @@ public class PIFireBaseModel {
         value.put("first name", userData.getFirstName());
         value.put("last name", userData.getLastName());
         value.put("email", userData.getEmail());
-        value.put("generes", userData.getFavoriteGeners());
+
+        Map<String , Long> genres = new HashMap();
+        for (PIGenreData genre: userData.getFavoriteGeners()) {
+            genres.put(genre.name , genre.percentage);
+        }
+        value.put("genres",genres);
 
         Map<String, Object> lastSelectedSongsList = new HashMap<>();
         lastSelectedSongsList.put("listSize" , 0);
@@ -435,5 +440,23 @@ public class PIFireBaseModel {
         }
 
         return types;
+    }
+
+    public void getUserFavoriteGenres(final PIModel.getUserFavoriteGenresListener listener){
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference(usersDataBaseName + "/" + currentUser.getUid());
+        myRef.child("genres").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<PIGenreData> favoriteGenresList = getGenersArrayFromSnapShot(dataSnapshot);
+                listener.getUserFavoriteGenresOnComplete(favoriteGenresList);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }
