@@ -359,7 +359,7 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
     // PIGetPlaceNameRequest
     @Override
     public void placeNameOnResponse(String placeName) {
-        this.placeName = placeName;
+        ((MainActivity)getActivity()).placeName = placeName;
         placeNameTextView.setText(placeName);
         PIModel.getInstance().saveLastVisitedPlace(placeName);
     }
