@@ -261,5 +261,13 @@ public class PIModel {
         modelFireBase.getProfileImageUrl(listener);
     }
 
+    public interface PIRestPasswordWithEmailListener {
+        public void resetPasswordOnComplete();
+    }
+
+    public void sendRestPasswordWithEmailRequest(PIRestPasswordWithEmailListener listener, String emailAddress) {
+        modelFireBase.sendRestPasswordWithEmail(listener, emailAddress);
+    }
+
 
 }

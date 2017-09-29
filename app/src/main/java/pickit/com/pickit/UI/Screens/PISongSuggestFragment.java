@@ -21,7 +21,7 @@ import pickit.com.pickit.R;
 import pickit.com.pickit.UI.Display.PIMultiSelectionSpinner;
 
 /**
- * Created by Omer on 26/09/2017.
+ * Created by Tal on 26/09/2017.
  */
 
 public class PISongSuggestFragment extends Fragment implements View.OnClickListener, PIModel.PISendSongSuggestListener, PIModel.PIGetPlaceNameListener {

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseUser;
 
@@ -75,7 +76,13 @@ public class PIRegistrationFragment extends Fragment implements View.OnClickList
             ((PILoginActivity)getActivity()).showLoadingFragment(R.id.loginContainerFrame, true);
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
-            PIModel.getInstance().register(email,password,this);
+            if(!email.equals("") || !password.equals("")) {
+                PIModel.getInstance().register(email,password,this);
+            }
+            else {
+                ((PILoginActivity)getActivity()).hideLoadingFragment();
+                Toast.makeText(getContext(),"Please Enter Your Details",Toast.LENGTH_LONG).show();
+            }
         }
     }
 

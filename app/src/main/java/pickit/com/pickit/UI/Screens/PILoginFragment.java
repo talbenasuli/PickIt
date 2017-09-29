@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseUser;
@@ -37,12 +38,14 @@ public class PILoginFragment extends Fragment implements View.OnClickListener, P
     PICustomSwipeAdapter adapter;
     EditText emailEditText;
     EditText passwordEditText;
+    TextView forgotYourPasswordTextView;
+
 
     private PILoginFragmentListener listener;
 
-
     public interface PILoginFragmentListener {
         void onRegistrationClicked();
+        void openForgotYourPasswordView();
     }
 
     @Override
@@ -100,6 +103,9 @@ public class PILoginFragment extends Fragment implements View.OnClickListener, P
         registerButton = (ImageButton)view.findViewById(R.id.pickItImageButton);
         registerButton.setOnClickListener(this);
 
+        forgotYourPasswordTextView = (TextView) view.findViewById(R.id.forgotYourPasswordTextView);
+        forgotYourPasswordTextView.setOnClickListener(this);
+
         emailEditText = (EditText) view.findViewById(R.id.emailEditText);
         passwordEditText = (EditText) view.findViewById(R.id.passwordEditText);
     }
@@ -118,25 +124,27 @@ public class PILoginFragment extends Fragment implements View.OnClickListener, P
 
     @Override
     public void onClick(View view) {
-        if(view == loginButton){
+        if (view == loginButton) {
 
-            ((PILoginActivity)getActivity()).showLoadingFragment(R.id.loginContainerFrame, true);
+            ((PILoginActivity) getActivity()).showLoadingFragment(R.id.loginContainerFrame, true);
             //try to log in
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
 
-            if(email.equals("")  || password.equals("")){
-                ((PILoginActivity)getActivity()).hideLoadingFragment();
+            if (/*email.equals("")  || password.equals("")*/false) {
+                ((PILoginActivity) getActivity()).hideLoadingFragment();
                 //TODO:toast
                 Toast.makeText(getContext(), "enter email and password", Toast.LENGTH_LONG).show();
-            }
-            else {
-                PIModel.getInstance().login(email, password, this);
+            } else {
+                PIModel.getInstance().login("talbenasuli@gmail.com", "123456", this);
             }
 
         }
-        else if(view == registerButton){
+        else if (view == registerButton) {
             listener.onRegistrationClicked();
+        }
+        else if (view == forgotYourPasswordTextView) {
+            listener.openForgotYourPasswordView();
         }
     }
 

@@ -26,7 +26,7 @@ public class MainActivity extends PIActivity
 
     //fragments:
     HomeFragment homeFragment;
-    PIGameFragment gameFragment;
+//    PIGameFragment gameFragment;
     PISongSuggestFragment songSuggestFragment;
     RecommendationsFragment recommendations;
     PISocialFragment socialFragment;
@@ -41,7 +41,7 @@ public class MainActivity extends PIActivity
         //fragments instances creation
         homeFragment = HomeFragment.newInstance();
         socialFragment = PISocialFragment.newInstance();
-        gameFragment = PIGameFragment.newInstance();
+//        gameFragment = PIGameFragment.newInstance();
         recommendations = RecommendationsFragment.newInstance();
         profileFragment = PIProfileFragment.newInstance();
         settingsFragment = PISettingsFragment.newInstance();
@@ -56,8 +56,8 @@ public class MainActivity extends PIActivity
         navBarHomeButton = (ImageButton)findViewById(R.id.home_button);
         navBarHomeButton.setOnClickListener(this);
 
-        navBarGameButton = (ImageButton)findViewById(R.id.game_button);
-        navBarGameButton.setOnClickListener(this);
+//        navBarGameButton = (ImageButton)findViewById(R.id.game_button);
+//        navBarGameButton.setOnClickListener(this);
 
         navBarRecommendationButton = (ImageButton)findViewById(R.id.reccomendations_button);
         navBarRecommendationButton.setOnClickListener(this);
@@ -83,15 +83,15 @@ public class MainActivity extends PIActivity
                 }
                 tag = HomeFragment.TAG;
                 break;
-            case R.id.game_button:
-                if (PIGameFragment.TAG == null){
-                    fragment = PIGameFragment.newInstance();
-                }
-                else{
-                    fragment = gameFragment;
-                }
-                tag = PIGameFragment.TAG;
-                break;
+//            case R.id.game_button:
+//                if (PIGameFragment.TAG == null){
+//                    fragment = PIGameFragment.newInstance();
+//                }
+//                else{
+//                    fragment = gameFragment;
+//                }
+//                tag = PIGameFragment.TAG;
+//                break;
             case R.id.reccomendations_button:
                 if (RecommendationsFragment.TAG == null){
                     fragment = RecommendationsFragment.newInstance();

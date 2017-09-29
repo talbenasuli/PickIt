@@ -1,6 +1,8 @@
 package pickit.com.pickit.UI.Screens;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,6 +65,7 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
     TextView playingNowTopTextView;
     TextView playingNowBottomTextView;
     TextView PlayingNowRightTexView;
+    ProgressBar playinNowProgressBar;
 
     /**
      * creating new instance of HomeFragment
@@ -89,9 +93,6 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
         super.onViewCreated(view, savedInstanceState);
 
         PIModel.getInstance().registerServerUpdates(this);
-        if(placeName == null){
-            PIModel.getInstance().getPlaceName(this);
-        }
 
         songList = new ArrayList<PIBaseData>();
         searchSongList = new ArrayList<>();
@@ -107,6 +108,9 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
         playingNowTopTextView = (TextView) playingNowView.findViewById(R.id.topTextView);
         playingNowBottomTextView = (TextView) playingNowView.findViewById(R.id.bottomTextView);
         PlayingNowRightTexView = (TextView) playingNowView.findViewById(R.id.rightTextView);
+        playinNowProgressBar = (ProgressBar) playingNowView.findViewById(R.id.listViewProgressBar);
+        playinNowProgressBar.getIndeterminateDrawable().setColorFilter(view.getResources().getColor(R.color.purpleDark), PorterDuff.Mode.MULTIPLY);
+
 
         playingNowRightImageButton.setImageResource(R.drawable.speaker);
         ((ViewGroup) playingNowPosition.getParent()).removeView(playingNowPosition);
@@ -116,6 +120,13 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
         PIModel.getInstance().getAllSongs(this);
 
         placeNameTextView = (TextView) view.findViewById(R.id.homePlaceNameTextView);
+        if(placeName == null){
+            PIModel.getInstance().getPlaceName(this);
+        }
+        else {
+            placeNameTextView.setText(placeName);
+        }
+
         searchXButton = (ImageButton) view.findViewById(R.id.homeSearchXButton);
         searchXButton.setOnClickListener(this);
 
@@ -219,7 +230,6 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
             int songIndexInSearchList = getSongIndexById(songIdAsInt,searchSongList);
             PIListRowData songInSearchList = (PIListRowData) searchSongList.get(songIndexInSearchList);
             songInSearchList.rightText = song.rightText;
-            //songInSearchList.didPickit = song.didPickit;
         }
 
         updateListIfNeeded(songIndexAtSongList);
@@ -235,10 +245,31 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
     }
 
     // PIGetPlayingSongRequest
+    private void setPlayinSongInitialImage() {
+        playingNowImageView.setImageResource(R.drawable.song_general_image);
+        playinNowProgressBar.setVisibility(View.GONE);
+        playingNowImageView.setVisibility(View.VISIBLE);
+    }
     @Override
     public void getPlayingSongOnResponse(PIBaseData songData) {
         playingNowTopTextView.setText(songData.topText);
         playingNowBottomTextView.setText(songData.bottomText);
+        if( songData.bottomText == null || songData.bottomText.isEmpty()) {
+            setPlayinSongInitialImage();
+        }
+        PIModel.getInstance().getSongImage(songData.bottomText, new PIModel.PIGetSongImageListener() {
+            @Override
+            public void onResponse(Bitmap image) {
+                playingNowImageView.setImageBitmap(image);
+                playinNowProgressBar.setVisibility(View.GONE);
+                playingNowImageView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                setPlayinSongInitialImage();
+            }
+        });
     }
 
     @Override

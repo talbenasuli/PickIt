@@ -86,32 +86,9 @@ public class PIProfileFragment extends Fragment implements View.OnClickListener,
 
         List<PIBaseData> dataList = new ArrayList<PIBaseData>();
 
-        PIBaseData firsData = new PIBaseData();
-        firsData.topText = "Eyal Golan";
-        firsData.bottomText = "this is how we do !!!!";
-
-        PIBaseData ss = new PIBaseData();
-        ss.topText = "Eyal Golan";
-        ss.bottomText = "this is how we do !!!!";
-
-        PIBaseData dd = new PIBaseData();
-        dd.topText = "Eyal Golan";
-        dd.bottomText = "this is how we do !!!!";
-        dataList.add(firsData);
-
-        PIBaseData ff = new PIBaseData();
-        ff.topText = "Eyal Golan";
-        ff.bottomText = "this is how we do !!!!";
-
-        dataList.add(firsData);
-        dataList.add(ss);
-        dataList.add(dd);
-        dataList.add(ff);
-
-
-        lastSongsAdapter = new PIRecyclerViewAdapter();
+        lastSongsAdapter = new PIRecyclerViewAdapter(PIRecyclerViewAdapter.PIRecyclerViewAdapterType.SONGS);
         lastSongsAdapter.setData(dataList);
-        lastVisitedPlacesAdapter = new PIRecyclerViewAdapter();
+        lastVisitedPlacesAdapter = new PIRecyclerViewAdapter(PIRecyclerViewAdapter.PIRecyclerViewAdapterType.PLACES);
         lastVisitedPlacesAdapter.setData(dataList);
         songsRecyclerView.setAdapter(lastSongsAdapter);
         placesVisitedRecyclerView.setAdapter(lastVisitedPlacesAdapter);

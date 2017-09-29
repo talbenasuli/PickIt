@@ -1,7 +1,7 @@
 package pickit.com.pickit.Data;
 
 /**
- * Created by Omer on 22/09/2017.
+ * Created by Tal on 22/09/2017.
  */
 
 public class PISocketIOData {

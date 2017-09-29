@@ -78,11 +78,11 @@ public class PISocialFragment extends Fragment {
         dataList.add(ff);
 
 
-        recentPicksadapter = new PIRecyclerViewAdapter();
+        //recentPicksadapter = new PIRecyclerViewAdapter();
         recentPicksadapter.setData(dataList);
         recentPicksRecyclerView.setAdapter(recentPicksadapter);
 
-        mostPickedSongsPicksadapter = new PIRecyclerViewAdapter();
+       // mostPickedSongsPicksadapter = new PIRecyclerViewAdapter();
         mostPickedSongsPicksadapter.setData(dataList);
         mostPickedSongsRecyclerView.setAdapter(mostPickedSongsPicksadapter);
     }

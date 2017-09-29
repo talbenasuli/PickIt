@@ -12,7 +12,7 @@ import pickit.com.pickit.Networking.Requests.PIGetSongImagePathRequest;
 import pickit.com.pickit.Networking.Requests.PIGetSongImageRequest;
 
 /**
- * Created by Omer on 28/09/2017.
+ * Created by Tal on 28/09/2017.
  */
 
 public class PISongImageModel {

@@ -1,17 +1,9 @@
 package pickit.com.pickit.UI.Screens;
 
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.ImageButton;
-
-import java.util.List;
-
-import pickit.com.pickit.Adapters.PICustomSwipeAdapter;
-import pickit.com.pickit.Models.PIMyApplication;
 import pickit.com.pickit.R;
 import pickit.com.pickit.UI.Display.PIActivity;
 
@@ -26,6 +18,7 @@ public class PILoginActivity extends PIActivity
     private static final String TAG = "PILoginActivity";
     PIRegistrationFragment registrationFragment;
     PILoginFragment loginFragment;
+    PIForgotYourPasswordFragment forgotYourPasswordFragment;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +37,14 @@ public class PILoginActivity extends PIActivity
     public void onRegistrationClicked() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.loginContainerFrame, registrationFragment, PIRegistrationFragment.TAG).addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void openForgotYourPasswordView() {
+        forgotYourPasswordFragment = PIForgotYourPasswordFragment.newInstance();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.loginContainerFrame, forgotYourPasswordFragment, PIForgotYourPasswordFragment.TAG).addToBackStack(null)
                 .commit();
     }
 

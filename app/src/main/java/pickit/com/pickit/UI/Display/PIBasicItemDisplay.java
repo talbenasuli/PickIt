@@ -4,7 +4,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * Created by Yehonatan Alfasi on 01/03/2017.
+ * Created by Or on 01/03/2017.
  */
 
 public class PIBasicItemDisplay {

@@ -13,7 +13,7 @@ import com.android.volley.toolbox.Volley;
 import pickit.com.pickit.Models.PIModel;
 
 /**
- * Created by Omer on 27/09/2017.
+ * Created by Tal on 27/09/2017.
  */
 
 public class PIGetSongImageRequest implements Response.Listener<Bitmap>, Response.ErrorListener {

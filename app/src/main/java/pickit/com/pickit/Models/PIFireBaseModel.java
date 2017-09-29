@@ -322,4 +322,18 @@ public class PIFireBaseModel {
             }
         });
     }
+
+    public void sendRestPasswordWithEmail(final PIModel.PIRestPasswordWithEmailListener listener, String emailAddress) {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        auth.sendPasswordResetEmail(emailAddress)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            listener.resetPasswordOnComplete();
+                        }
+                    }
+                });
+    }
 }

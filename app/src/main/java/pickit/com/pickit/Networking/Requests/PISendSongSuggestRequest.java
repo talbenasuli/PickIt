@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import pickit.com.pickit.Models.PIModel;
 
 /**
- * Created by Omer on 26/09/2017.
+ * Created by Tal on 26/09/2017.
  */
 
 public class PISendSongSuggestRequest extends PIBaseRequest {

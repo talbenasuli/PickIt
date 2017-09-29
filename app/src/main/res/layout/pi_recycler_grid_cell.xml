@@ -6,12 +6,19 @@
     android:layout_marginLeft="15dp"
     android:layout_marginRight="15dp">
 
+    <ProgressBar
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_gravity="center"
+        android:id="@+id/recyclerViewProgressBar"/>
+
     <ImageView
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_gravity="center"
         android:src="@drawable/beatless"
         android:scaleType="centerInside"
+        android:visibility="gone"
         android:id="@+id/image"/>
 
     <TextView
@@ -21,6 +28,7 @@
         android:layout_marginRight="15dp"
         android:textSize="15dp"
         android:text="Eyal Golan"
+        android:gravity="center"
         android:textColor="@color/colorBlack"
         android:layout_gravity="center"
         android:id="@+id/topText"/>
@@ -32,6 +40,7 @@
         android:layout_marginRight="15dp"
         android:textSize="15dp"
         android:gravity="center"
+        android:layout_gravity="center"
         android:textColor="@color/colorBlack"
         android:text="Besof Kol Yom"
         android:id="@+id/bottomText"/>

@@ -34,7 +34,7 @@
         android:layout_marginBottom="-10dp"
         android:text="Forgot your password?"
         android:textColor="@color/colorBlack"
-        android:id="@+id/forgotYourNumberText" />
+        android:id="@+id/forgotYourPasswordTextView" />
 
     <EditText
         android:layout_width="250dp"
@@ -62,48 +62,37 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
-        <ImageButton
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            app:srcCompat="@drawable/facebook_icon"
-            android:layout_gravity="center"
-            android:scaleType="fitCenter"
-            android:background="@color/colorTransparent"
-            android:layout_marginLeft="85dp"
-            android:id="@+id/facebookImageButton" />
 
-        <ImageButton
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            app:srcCompat="@drawable/circle"
-            android:layout_gravity="center"
-            android:src="@drawable/register_icon"
-            android:background="@color/colorTransparent"
-            android:scaleType="fitXY"
-            android:layout_marginLeft="140dp"
-            android:id="@+id/pickItImageButton" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="login with facebook "
-            android:textColor="@color/colorBlack"
-            android:layout_marginLeft="45dp"/>
+        android:orientation="vertical">
 
+        <ImageButton
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/register_icon"
+            android:background="@color/colorTransparent"
+            android:scaleType="centerInside"
+            android:layout_gravity="center"
+            android:id="@+id/pickItImageButton"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="register with pickIt "
-            android:textColor="@color/colorBlack"
-            android:layout_marginLeft="45dp"/>
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/colorBlack"/>
     </LinearLayout>
 
 </LinearLayout>

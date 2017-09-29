@@ -12,7 +12,7 @@ import pickit.com.pickit.Models.PIModel;
 import pickit.com.pickit.Networking.Requests.Parsers.PIGetPlaceNameParser;
 
 /**
- * Created by Omer on 23/09/2017.
+ * Created by Tal on 23/09/2017.
  */
 
 public class PIGetPlaceNameRequest extends PIBaseRequest {
