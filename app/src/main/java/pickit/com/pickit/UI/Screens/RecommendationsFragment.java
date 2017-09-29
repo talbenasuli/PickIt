@@ -82,12 +82,12 @@ public class RecommendationsFragment extends Fragment implements PIListAdapter.P
     @Override
     public void getAllWorkingPlacesInRangeListenerOnComplete(ArrayList<PIPlaceData> places) {
         placesList = places;
-        listAdapter.setDataList(places);
-        listAdapter.notifyDataSetChanged();
+        sortPlacesByUserFavoritGenres(places);
     }
 
     @Override
     public void multiSelectionSpinnerListenerFinishSelection() {
+        ((MainActivity)getActivity()).showLoadingFragment(R.id.fragmets_container , true);
         ArrayList<String> typesToSortBy = placeTypesSpinner.getselectedItems();
         ArrayList<PIPlaceData> listToShow;
         if(typesToSortBy.size() > 0){
@@ -123,8 +123,8 @@ public class RecommendationsFragment extends Fragment implements PIListAdapter.P
                 Collections.sort(listToSort , new PIPlacesComperator(userFavoriteGenres));
                 listAdapter.setDataList(listToSort);
                 listAdapter.notifyDataSetChanged();
+                ((MainActivity)getActivity()).hideLoadingFragment();
             }
         });
-      //  Collections.sort(listToSort , new PIPlacesComperator());
     }
 }

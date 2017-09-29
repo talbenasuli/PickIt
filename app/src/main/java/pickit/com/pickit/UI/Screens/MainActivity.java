@@ -128,7 +128,7 @@ public class MainActivity extends PIActivity
                 .replace(R.id.fragmets_container, fragment, tag)
                 .commit();
 
-        if(v.getId() == R.id.profile_button){
+        if(v.getId() == R.id.profile_button || v.getId() == R.id.reccomendations_button){
             showLoadingFragment(R.id.fragmets_container , false);
         }
     }
