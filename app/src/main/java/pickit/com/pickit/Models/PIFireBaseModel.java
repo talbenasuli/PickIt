@@ -10,7 +10,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -340,6 +342,32 @@ public class PIFireBaseModel {
                     }
                 });
     }
+
+
+    public void changeUserPassword(final PIModel.PIChangePaswordListener listener, String oldPassword, final String newPassword) {
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), oldPassword);
+        user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            user.updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        listener.changePasswordOnComplete();
+                                    } else {
+                                        listener.changePasswordOnFail();
+                                    }
+                                }
+                            });
+                        } else {
+                            listener.changePasswordCredentialFail();
+                        }
+                    }
+                });
+    }
+
     //manage list of places that are working with pickit
 
     public void getAllWorkingPlacesInRange(int range , final PIModel.getAllWorkingPlacesInRangeListener listener ){
@@ -408,5 +436,4 @@ public class PIFireBaseModel {
 
         return types;
     }
-
 }

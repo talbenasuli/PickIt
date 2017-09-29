@@ -270,6 +270,16 @@ public class PIModel {
         modelFireBase.sendRestPasswordWithEmail(listener, emailAddress);
     }
 
+    public interface PIChangePaswordListener {
+        public void changePasswordOnComplete();
+        public void changePasswordOnFail();
+        public void changePasswordCredentialFail();
+    }
+
+    public void changeUserPassword(PIChangePaswordListener listener,String oldPassword, String newPassword) {
+        modelFireBase.changeUserPassword(listener,oldPassword,newPassword);
+    }
+
     //manage list of places that are working with pickit
 
     public interface getAllWorkingPlacesInRangeListener{

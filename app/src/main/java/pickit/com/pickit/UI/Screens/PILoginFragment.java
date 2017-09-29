@@ -2,6 +2,7 @@ package pickit.com.pickit.UI.Screens;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -131,12 +132,12 @@ public class PILoginFragment extends Fragment implements View.OnClickListener, P
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
 
-            if (/*email.equals("")  || password.equals("")*/false) {
+            if (email.equals("")  || password.equals("")) {
                 ((PILoginActivity) getActivity()).hideLoadingFragment();
                 //TODO:toast
                 Toast.makeText(getContext(), "enter email and password", Toast.LENGTH_LONG).show();
             } else {
-                PIModel.getInstance().login("talbenasuli@gmail.com", "123456", this);
+                PIModel.getInstance().login(email, password, this);
             }
 
         }
@@ -150,6 +151,12 @@ public class PILoginFragment extends Fragment implements View.OnClickListener, P
 
     @Override
     public void loginOnComplete() {
+        String email = emailEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+        SharedPreferences.Editor prefEd = getActivity().getSharedPreferences("userDefaults", Context.MODE_PRIVATE).edit();
+        prefEd.putString("email", email);
+        prefEd.putString("password", password);
+        prefEd.commit();
         onLoginSuccess();
     }
 
