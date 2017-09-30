@@ -8,6 +8,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="fitXY"
+            android:background="@color/colorTransparent"
+            android:src="@drawable/disconnect_button"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/profileDisconnectButton"/>
+
         <ImageView
             android:layout_width="150dp"
             android:layout_height="150dp"

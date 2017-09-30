@@ -2,6 +2,7 @@ package pickit.com.pickit.UI.Screens;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -22,6 +23,7 @@ import java.util.List;
 import pickit.com.pickit.Adapters.PIRecyclerViewAdapter;
 import pickit.com.pickit.Data.PIBaseData;
 import pickit.com.pickit.Models.PIModel;
+import pickit.com.pickit.Models.PIMyApplication;
 import pickit.com.pickit.R;
 
 /**
@@ -38,6 +40,7 @@ public class PIProfileFragment extends Fragment implements View.OnClickListener,
     ImageView profilePictureImageView;
     Bitmap profileImageBitmap;
     RecyclerView placesVisitedRecyclerView;
+    ImageButton disconnectImageButton;
     private int requestsCounter = 0;
 
     public static final String TAG = "PIProfileFragment";
@@ -76,6 +79,10 @@ public class PIProfileFragment extends Fragment implements View.OnClickListener,
 
         profilePictureImageView = (ImageView) view.findViewById(R.id.profilePictureImageView);
         requestsCounter++;
+
+        disconnectImageButton = (ImageButton) view.findViewById(R.id.profileDisconnectButton);
+        disconnectImageButton.setOnClickListener(this);
+
         PIModel.getInstance().getImage(getActivity(),this);
 
         songsRecyclerView =(RecyclerView) view.findViewById(R.id.myPickitsRecyclerView);
@@ -117,6 +124,14 @@ public class PIProfileFragment extends Fragment implements View.OnClickListener,
         }
         else if(v == cameraImageButton){
             openCamera();
+        }
+
+        else if(v == disconnectImageButton) {
+            SharedPreferences userDefaults = PIMyApplication.getMyContext().getSharedPreferences("userDefaults", 0);
+            SharedPreferences.Editor editor = userDefaults.edit();
+            editor.clear();
+            editor.commit();
+            moveToNextActivity(PILoginActivity.class);
         }
     }
 
@@ -182,6 +197,12 @@ public class PIProfileFragment extends Fragment implements View.OnClickListener,
         if(requestsCounter == 0){
             ((MainActivity)getActivity()).hideLoadingFragment();
         }
+    }
+
+    protected void moveToNextActivity(Class nextActivity){
+        Intent intent = new Intent(getActivity(), nextActivity);
+        startActivity(intent);
+        getActivity().finish();
     }
 }
 

@@ -80,7 +80,7 @@ public class PIPlacesAdapter extends ArrayAdapter<PIPlaceData> {
 
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
 
         if(convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
@@ -97,13 +97,16 @@ public class PIPlacesAdapter extends ArrayAdapter<PIPlaceData> {
             viewHolder.progressBar.getIndeterminateDrawable().setColorFilter(convertView.getResources().getColor(R.color.purpleDark), PorterDuff.Mode.MULTIPLY);
             viewHolder.layout = convertView.findViewById(R.id.listRowLayout);
 
+            viewHolder.rightImageButton.setVisibility(View.GONE);
+            viewHolder.rightTextView.setVisibility(View.GONE);
+
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (PIPlacesAdapter.ViewHolder) convertView.getTag();
         }
 
         final PIPlaceData data = (PIPlaceData)getItem(position);
-        viewHolder.image.setTag(data.bottomText);
+        viewHolder.image.setTag(data.imageURL);
         viewHolder.topTextView.setText(data.topText);
         viewHolder.bottomTextView.setText(data.bottomText);
         viewHolder.rightTextView.setText(String.valueOf(15));
@@ -115,10 +118,39 @@ public class PIPlacesAdapter extends ArrayAdapter<PIPlaceData> {
             }
         });
 
-        viewHolder.position.setText(String.valueOf(position + 1));
+        if(data.imageURL != null  && !data.imageURL.isEmpty()) {
+            PIModel.getInstance().getImageByURL(data.imageURL, new PIModel.GetImageListener() {
+                @Override
+                public void getImageListenerOnSuccess(Bitmap image) {
+                    if(data.imageURL.equals(viewHolder.image.getTag().toString())) {
+                        viewHolder.image.setImageBitmap(image);
+                        viewHolder.progressBar.setVisibility(View.GONE);
+                        viewHolder.image.setVisibility(View.VISIBLE);
+                    }
 
-        viewHolder.image.setVisibility(View.VISIBLE);
-        viewHolder.progressBar.setVisibility(View.GONE);
+                    else {
+                        viewHolder.image.setImageResource(R.drawable.song_general_image);
+                        viewHolder.progressBar.setVisibility(View.GONE);
+                        viewHolder.image.setVisibility(View.VISIBLE);
+                    }
+                }
+
+                @Override
+                public void getImageListenerOnFail() {
+                    viewHolder.image.setImageResource(R.drawable.song_general_image);
+                    viewHolder.progressBar.setVisibility(View.GONE);
+                    viewHolder.image.setVisibility(View.VISIBLE);
+                }
+            });
+        }
+
+        else {
+            viewHolder.image.setImageResource(R.drawable.song_general_image);
+            viewHolder.progressBar.setVisibility(View.GONE);
+            viewHolder.image.setVisibility(View.VISIBLE);
+        }
+
+        viewHolder.position.setText(String.valueOf(position + 1));
 
         if (rightImageButtonValue != 0) {
             viewHolder.rightImageButton.setImageResource(rightImageButtonValue);

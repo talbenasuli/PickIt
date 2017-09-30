@@ -10,4 +10,5 @@ public class PIBaseData {
     public Bitmap image;
     public String topText;
     public String bottomText;
+    public String imageURL;
 }

@@ -389,6 +389,7 @@ public class PIFireBaseModel {
                     place.topText = placeShot.getKey();
                     place.genresList = getGenersArrayFromSnapShot(placeShot.child("genres"));
                     place.bottomText = getStringFromGenresArray(place.genresList);
+                    place.imageURL = String.valueOf(placeShot.child("imageURL").getValue());
                     place.placeTypesList = getTypesArrayFromSnapShot(placeShot.child("types"));
                     placesList.add(place);
                 }

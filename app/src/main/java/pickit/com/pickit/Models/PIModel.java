@@ -251,6 +251,10 @@ public class PIModel {
 
     }
 
+    public void getImageByURL(String url, GetImageListener listener) {
+        modelFireBase.getImage(url,listener);
+    }
+
     interface LoadImageFromFileAsynch{
         void loadImageFromFileAsynchOnComplete(Bitmap bitmap);
     }
