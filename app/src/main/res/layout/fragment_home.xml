@@ -9,22 +9,23 @@
     android:focusableInTouchMode="true">
     
 
-    <include layout="@layout/pi_list_row"
+    <include layout="@layout/pi_playing_song_view"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_marginTop="7dp"
-        android:layout_below="@+id/searchIconButton"
         android:id="@+id/homeFragmentSongPlayer"
         android:divider="@color/dividerColor"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
         android:dividerHeight="1dp"
-        />
+        android:layout_below="@+id/homePlaceNameTextView" />
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/homeFragmentSongPlayer"
+        android:layout_below="@+id/homeSearchView"
         android:layout_alignParentLeft="true"
+        android:layout_marginTop="5dp"
         android:layout_alignParentStart="true"
         android:id="@+id/songList" />
 
@@ -40,48 +41,26 @@
         android:id="@+id/homeSearchSongList">
     </ListView>
 
-    <ImageButton
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/search_icon"
-        android:id="@+id/searchIconButton"
-        android:scaleType="centerCrop"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:background="@color/colorWhite"
-        android:layout_below="@+id/homePlaceNameTextView"/>
+    <include layout="@layout/pi_search_text_field"
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:id="@+id/homeSearchView"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/homeFragmentSongPlayer"
+        android:layout_centerHorizontal="true">
 
-   <EditText
-       android:layout_width="match_parent"
-       android:layout_height="40dp"
-       android:id="@+id/mainSearchEditText"
-       android:layout_below="@+id/homePlaceNameTextView"
-       android:layout_marginTop="10dp"
-       android:layout_toEndOf="@+id/searchIconButton"
-       android:layout_toRightOf="@+id/searchIconButton"
-       android:layout_marginRight="10dp"
-       android:backgroundTint="@color/gray1"
-       android:textColor="@color/colorBlack"/>
-
-    <ImageButton
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:src="@drawable/x_button"
-        android:scaleType="fitXY"
-        android:layout_alignTop="@+id/mainSearchEditText"
-        android:layout_marginTop="10dp"
-        android:layout_alignRight="@id/mainSearchEditText"
-        android:id="@+id/homeSearchXButton"
-        android:background="@color/colorTransparent"/>
+    </include>
 
     <TextView
         android:text="Place Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/homePlaceNameTextView"
-        android:textSize="36sp"
+        android:textSize="20sp"
         android:textColor="@color/purpleDark"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="2dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 

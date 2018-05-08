@@ -90,7 +90,6 @@ public class PIPlacesAdapter extends ArrayAdapter<PIPlaceData> {
             viewHolder.image = (ImageView) convertView.findViewById(R.id.listRowImage);
             viewHolder.topTextView = (TextView) convertView.findViewById(R.id.topTextView);
             viewHolder.bottomTextView = (TextView) convertView.findViewById(R.id.bottomTextView);;
-            viewHolder.position = (TextView) convertView.findViewById(R.id.position);
             viewHolder.rightImageButton = (ImageButton) convertView.findViewById(R.id.rightImageButton);
             viewHolder.rightTextView = (TextView) convertView.findViewById(R.id.rightTextView);
             viewHolder.progressBar = (ProgressBar) convertView.findViewById(R.id.listViewProgressBar);
@@ -149,8 +148,6 @@ public class PIPlacesAdapter extends ArrayAdapter<PIPlaceData> {
             viewHolder.progressBar.setVisibility(View.GONE);
             viewHolder.image.setVisibility(View.VISIBLE);
         }
-
-        viewHolder.position.setText(String.valueOf(position + 1));
 
         if (rightImageButtonValue != 0) {
             viewHolder.rightImageButton.setImageResource(rightImageButtonValue);

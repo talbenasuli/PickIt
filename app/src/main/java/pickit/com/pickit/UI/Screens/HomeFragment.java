@@ -56,15 +56,14 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
     View playingNowView;
     TextView placeNameTextView;
     ImageButton searchXButton;
+    View searchView;
     boolean isDetached = false;
 
     // Plating song view parameters:
     ImageButton playingNowRightImageButton;
     ImageView playingNowImageView;
-    TextView playingNowPosition;
     TextView playingNowTopTextView;
     TextView playingNowBottomTextView;
-    TextView PlayingNowRightTexView;
     ProgressBar playinNowProgressBar;
 
     /**
@@ -96,25 +95,25 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
 
         songList = new ArrayList<PIBaseData>();
         searchSongList = new ArrayList<>();
-        searchButton = (ImageButton) view.findViewById(R.id.searchIconButton);
-        searchEditText = (EditText) view.findViewById(R.id.mainSearchEditText);
-        searchEditText.addTextChangedListener(this);
-        searchButton.setOnClickListener(this);
+
 
         playingNowView = view.findViewById(R.id.homeFragmentSongPlayer);
         playingNowRightImageButton = (ImageButton) playingNowView.findViewById(R.id.rightImageButton);
         playingNowImageView = (ImageView) playingNowView.findViewById(R.id.listRowImage);
-        playingNowPosition = (TextView) playingNowView.findViewById(R.id.position);
         playingNowTopTextView = (TextView) playingNowView.findViewById(R.id.topTextView);
         playingNowBottomTextView = (TextView) playingNowView.findViewById(R.id.bottomTextView);
-        PlayingNowRightTexView = (TextView) playingNowView.findViewById(R.id.rightTextView);
         playinNowProgressBar = (ProgressBar) playingNowView.findViewById(R.id.listViewProgressBar);
         playinNowProgressBar.getIndeterminateDrawable().setColorFilter(view.getResources().getColor(R.color.purpleDark), PorterDuff.Mode.MULTIPLY);
 
+        searchView = view.findViewById(R.id.homeSearchView);
+        searchXButton = (ImageButton) searchView.findViewById(R.id.homeSearchXButton);
+        searchXButton.setOnClickListener(this);
+        searchButton = (ImageButton) searchView.findViewById(R.id.searchIconButton);
+        searchButton.setOnClickListener(this);
+        searchEditText = (EditText) searchView.findViewById(R.id.mainSearchEditText);
+        searchEditText.addTextChangedListener(this);
 
         playingNowRightImageButton.setImageResource(R.drawable.speaker);
-        ((ViewGroup) playingNowPosition.getParent()).removeView(playingNowPosition);
-        ((ViewGroup) PlayingNowRightTexView.getParent()).removeView(PlayingNowRightTexView);
 
         PIModel.getInstance().getPlayingSong(this);
         PIModel.getInstance().getAllSongs(this);
@@ -127,8 +126,6 @@ public class HomeFragment extends Fragment implements PIListAdapter.PIListAdapte
             placeNameTextView.setText(placeName);
         }
 
-        searchXButton = (ImageButton) view.findViewById(R.id.homeSearchXButton);
-        searchXButton.setOnClickListener(this);
 
         songsTableListView = (ListView) view.findViewById(R.id.songList);
         searchSongListView = (ListView) view.findViewById(R.id.homeSearchSongList);

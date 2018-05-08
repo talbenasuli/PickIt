@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/listRowLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <ProgressBar
+        android:id="@+id/listViewProgressBar"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:visibility="visible"
+        android:layout_gravity="center"></ProgressBar>
+
+    <ImageView
+        android:id="@+id/listRowImage"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:scaleType="fitXY"
+        android:src="@drawable/song_general_image"
+        android:visibility="gone"
+        app:srcCompat="@drawable/common_google_signin_btn_icon_dark_focused" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorTransparent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/topTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="7dp"
+                android:ellipsize="end"
+                android:lines="1"
+                android:scrollHorizontally="true"
+                android:text="The name of the song"
+                android:textColor="@color/colorBlack"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/bottomTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="The name of the Author"
+                android:textColor="@color/colorBlack"
+                android:textSize="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layoutDirection="rtl"
+            android:orientation="horizontal">
+
+
+            <ImageButton
+                android:id="@+id/rightImageButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="10dp"
+                android:background="@color/colorTransparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/speaker" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

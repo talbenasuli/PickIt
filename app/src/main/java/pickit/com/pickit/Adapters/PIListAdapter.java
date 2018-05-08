@@ -69,7 +69,6 @@ public class PIListAdapter extends PIBaseAdapter {
             viewHolder.image = (ImageView) convertView.findViewById(R.id.listRowImage);
             viewHolder.topTextView = (TextView) convertView.findViewById(R.id.topTextView);
             viewHolder.bottomTextView = (TextView) convertView.findViewById(R.id.bottomTextView);;
-            viewHolder.position = (TextView) convertView.findViewById(R.id.position);
             viewHolder.rightImageButton = (ImageButton) convertView.findViewById(R.id.rightImageButton);
             viewHolder.rightTextView = (TextView) convertView.findViewById(R.id.rightTextView);
             viewHolder.progressBar = (ProgressBar) convertView.findViewById(R.id.listViewProgressBar);
@@ -95,7 +94,6 @@ public class PIListAdapter extends PIBaseAdapter {
             }
         });
         viewHolder.rightImageButton.setEnabled(!data.didPickit);
-        viewHolder.position.setText(String.valueOf(position + 1));
 
         viewHolder.image.setVisibility(View.GONE);
         viewHolder.progressBar.setVisibility(View.VISIBLE);

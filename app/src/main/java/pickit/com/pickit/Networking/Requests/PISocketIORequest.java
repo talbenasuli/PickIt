@@ -25,7 +25,7 @@ public class PISocketIORequest implements Emitter.Listener {
     public void sendSocketIOConnectRequest() {
 
         try {
-            mSocket = IO.socket("http://10.0.0.91:1994/");
+            mSocket = IO.socket("http://192.168.1.124:1994/");
             mSocket.on("true", this);
             mSocket.connect();
         }
